@@ -20,12 +20,13 @@
  */
 
 
+//throw error if block is not found
 function registerBlock($block,$BLOCKS_DIR){
     if(!register_block_type_from_metadata( $BLOCKS_DIR.'/'.$block )){
 		// throw new WP_Error('NOT_FOUND','incorrect block '. $block .' entered for register block');
 	}
 }
-function resgisterAllBlock($BLOCKS_DIR){
+function registerAllBlock($BLOCKS_DIR){
     $blockfolders = scandir($BLOCKS_DIR);
     if ($blockfolders) {
         $blockfolders = array_diff($blockfolders,['..','.']);

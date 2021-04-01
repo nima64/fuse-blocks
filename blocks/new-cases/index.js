@@ -34,27 +34,55 @@ registerBlockType( 'fusedesk/new-case', {
 	attributes: {
 		caseCreation: {
 			type: 'array',
-			default: {},
+			default: {
+				department: false,
+				rep: false,
+				casetagids: '',
+			},
 		},
 		newCaseForm: {
 			type: 'array',
-			default: {},
+			default: {
+				hideknowndata: false,
+				sucessredirct: '',
+			},
 		},
 		caseTitle: {
 			type: 'array',
-			default: {},
+			default: {
+				showtitle: false, //show title field
+				titletext: '', //
+				titleoptions: false,
+			},
 		},
 		formText: {
 			type: 'array',
-			default: {},
+			default: {
+				nametext: '',
+				emailtext: '',
+				buttontext: '',
+				creatingtext: '',
+				successtext: '',
+			},
 		},
 		suggestedPosts: {
 			type: 'array',
-			default: {},
+			default: {
+				sugestionplacement:'after',
+				suggestionstext: '',
+				suggestionlimit: 10,
+				suggestioncategories:'',
+			},
 		},
 		fileUploads: {
 			type: 'array',
-			default: {},
+			default: {
+				fileupload: false,
+				filerequired: false,
+				filesmultiple: true,
+				filetext: '',
+				filetypesallowed: '',
+			},
 		},
 	},
 
