@@ -1,0 +1,1 @@
+npx wp-scripts build $(Get-ChildItem .\blocks -Directory -Name | Foreach-Object {'.\/blocks\/' + $_}) --output-path=.\build

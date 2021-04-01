@@ -1,0 +1,15 @@
+{
+	"apiVersion": 2,
+	"name": "fusedesk/my-cases",
+	"title": "My Cases",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "Example block written with ESNext standard and JSX support – build step required.",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "my-cases",
+	"editorScript": "file:../../build/my-cases.js",
+	"editorStyle": "file:../../build/my-cases.css",
+	"style": "file:../../build/style-my-cases.css"
+}

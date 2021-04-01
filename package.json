@@ -1,0 +1,21 @@
+{
+  "name": "fusedesk-blocks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:js": "npx wp-scripts lint-js",
+    "buildall": "npx wp-scripts build $(for d in $(dir ./blocks);do echo './blocks/'$d ; done) --output-path=./build",
+    "startall": "npx wp-scripts start $(for d in $(dir ./blocks);do echo './blocks/'$d ; done) --output-path=./build",
+    "buildblock": "npx wp-scripts build ./blocks/$npm_config_block --output-path=./build",
+    "startblock": "npx wp-scripts start ./blocks/$npm_config_block --output-path=./build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@wordpress/block-editor": "^5.3.0",
+    "@wordpress/scripts": "^14.0.1"
+  }
+}

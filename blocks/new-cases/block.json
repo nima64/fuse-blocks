@@ -1,0 +1,15 @@
+{
+	"apiVersion": 2,
+	"name": "fusedesk/new-case",
+	"title": "New Case",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "Allow your website visitors to create a new case in FuseDesk",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "new-case",
+	"editorScript": "file:../../build/new-cases.js",
+	"editorStyle": "file:../../build/new-cases.css",
+	"style": "file:../../build/style-new-cases.css"
+}
