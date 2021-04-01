@@ -26,7 +26,7 @@ function registerBlock($block,$BLOCKS_DIR){
 		// throw new WP_Error('NOT_FOUND','incorrect block '. $block .' entered for register block');
 	}
 }
-function registerAllBlock($BLOCKS_DIR){
+function registerAllBlocks($BLOCKS_DIR){
     $blockfolders = scandir($BLOCKS_DIR);
     if ($blockfolders) {
         $blockfolders = array_diff($blockfolders,['..','.']);
@@ -37,7 +37,8 @@ function registerAllBlock($BLOCKS_DIR){
 }
 function fusedesk_blocks_init() {
     $BLOCKS_DIR = __DIR__.'/blocks';
-	registerBlock( 'new-cases',$BLOCKS_DIR );
+	// registerBlock( 'new-cases',$BLOCKS_DIR );
+    registerAllBlocks($BLOCKS_DIR);
     //single block for faster debugging
 	// register_block_type_from_metadata( 'new-cases',$BLOCKS_DIR );
 

@@ -44,7 +44,7 @@ registerBlockType( 'fusedesk/new-case', {
 			type: 'array',
 			default: {
 				hideknowndata: false,
-				sucessredirct: '',
+				sucessredirect: '',
 			},
 		},
 		caseTitle: {

@@ -238,6 +238,10 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function Edit(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
+  var newCaseForm = attributes.newCaseForm,
+      caseTitle = attributes.caseTitle,
+      formText = attributes.formText,
+      suggestedPosts = attributes.suggestedPosts;
 
   var mutAryItem = function mutAryItem(newval, i, aryName) {
     var temp = _objectSpread({}, attributes[aryName]);
@@ -264,11 +268,14 @@ function Edit(props) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["Panel"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelBody"], {
       title: "Case Creationg"
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["SelectControl"], {
-      lablel: "Department"
+      label: "Department",
+      options: options.department
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["SelectControl"], {
-      lablel: "Rep Assingment"
+      label: "Rep Assingment",
+      options: options.repAssignment
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["SelectControl"], {
-      lablel: "Case Tags to Apply"
+      label: "Case Tags to Apply",
+      options: options.caseTagsToApply
     })));
   };
 
@@ -276,10 +283,18 @@ function Edit(props) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["Panel"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelBody"], {
       title: "New Case Form"
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["CheckboxControl"], {
-      lablel: "Hide Known Data?"
+      label: "Hide Known Data?",
+      checked: newCaseForm.hideknowndata,
+      onChange: function onChange() {
+        mutAryItem(!newCaseForm.hideknowndata, 'hideknowndata', 'newCaseForm');
+      }
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["TextControl"], {
       label: "Sucess Redirect URL",
-      placeholder: "Don't Redirect"
+      placeholder: "Don't Redirect",
+      value: newCaseForm.sucessredirect,
+      onChange: function onChange(v) {
+        return mutAryItem(v, 'sucessredirect', 'newCaseForm');
+      }
     })));
   };
 
@@ -287,13 +302,25 @@ function Edit(props) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["Panel"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelBody"], {
       title: "Case Title"
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["CheckboxControl"], {
-      label: "Show a title field?"
+      label: "Show a title field?",
+      checked: caseTitle.showtitle,
+      onChange: function onChange() {
+        return mutAryItem(!caseTitle.showtitle, 'showtitle', 'caseTitle');
+      }
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["TextControl"], {
       label: "Case Title Label",
-      placeholder: "Briefly, what is the request about?"
+      placeholder: "Briefly, what is the request about?",
+      value: caseTitle.titletext,
+      onChange: function onChange(v) {
+        return mutAryItem(v, 'titletext', 'caseTitle');
+      }
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["TextControl"], {
-      label: "Case Titel Options (for a drop down selection)",
-      placeholder: "Case Title Options, oner per line, optional"
+      label: "Case Title Options (for a drop down selection)",
+      placeholder: "Case Title Options, oner per line, optional",
+      value: caseTitle.titleoptions,
+      onChange: function onChange(v) {
+        return mutAryItem(v, 'titleoptions', 'caseTitle');
+      }
     })));
   };
 
@@ -328,11 +355,18 @@ function Edit(props) {
 
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("p", null, " ", "".concat(k, ": ").concat(v));
     });
-  };
+  }; // displayShortCodeAtts(newCaseForm)
+
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["useBlockProps"])(), getInspectorControls(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["Placeholder"], {
     label: "FuseDesk New Cases",
     instructions: "Placeholder that will display a form to allow your customers to create a new case"
+  }), Object.entries(attributes).map(function (_ref3) {
+    var _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref3, 2),
+        k = _ref4[0],
+        v = _ref4[1];
+
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("h4", null, k), displayShortCodeAtts(v));
   }));
 }
 
@@ -410,7 +444,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('fus
       type: 'array',
       default: {
         hideknowndata: false,
-        sucessredirct: ''
+        sucessredirect: ''
       }
     },
     caseTitle: {

@@ -333,13 +333,14 @@ function Edit(props) {
     };
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["Panel"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelBody"], {
       title: "Display"
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(Select // label="Columns"
-    , {
-      isMulti: true // defaultValue={selectedOption}
-      // onChange={setSelectedOption}
-      ,
-      options: options.columns
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(SelectControl, {
+    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["SelectControl"], {
+      label: "Columns",
+      value: display.columns,
+      options: options.columns,
+      onChange: function onChange(v) {
+        return mutAryItem(v, 'columns', 'display');
+      }
+    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["SelectControl"], {
       label: "Case Statuses",
       value: display.status,
       options: options.status,
@@ -347,14 +348,14 @@ function Edit(props) {
         mutAryItem(v, 'status', 'display');
         console.log(v);
       }
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(SelectControl, {
+    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["SelectControl"], {
       label: "User Filterable Statuses",
       value: display.userstatuses,
       options: options.userstatus,
       onChange: function onChange(v) {
         return mutAryItem(v, 'userstatuses', 'display');
       }
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(SelectControl, {
+    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["SelectControl"], {
       label: "Case Order",
       value: display.orderby,
       options: options.orderby,

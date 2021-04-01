@@ -43,7 +43,7 @@ import "./editor.scss";
 
 export default function Edit( props ) {
 	const { attributes, setAttributes } = props;
-
+	const {newCaseForm,caseTitle,formText,suggestedPosts} = attributes;
 	let mutAryItem = ( newval, i, aryName ) => {
 		let temp = { ...attributes[ aryName ] };
 		temp[ i ] = newval;
@@ -51,7 +51,9 @@ export default function Edit( props ) {
 	};
 	const getCaseCreationPanel = () => {
 		const options = {
-			department: [ { label: 'Department', value: 'department' } ],
+			department: [ 
+				{ label: 'Department', value: 'department' } 
+			],
 			repAssignment: [
 				{ label: 'Assign Randomly', value: 'Assign Randomly' },
 			],
@@ -60,9 +62,18 @@ export default function Edit( props ) {
 		return (
 			<Panel>
 				<PanelBody title="Case Creationg">
-					<SelectControl lablel="Department" />
-					<SelectControl lablel="Rep Assingment" />
-					<SelectControl lablel="Case Tags to Apply" />
+					<SelectControl 
+						label="Department" 
+						options={options.department}
+					/>
+					<SelectControl 
+						label="Rep Assingment" 
+						options ={options.repAssignment}
+					/>
+					<SelectControl 
+						label="Case Tags to Apply" 
+						options= {options.caseTagsToApply}
+					/>
 				</PanelBody>
 			</Panel>
 		);
@@ -71,10 +82,16 @@ export default function Edit( props ) {
 		return (
 			<Panel>
 				<PanelBody title="New Case Form">
-					<CheckboxControl lablel="Hide Known Data?" />
+					<CheckboxControl 
+						label="Hide Known Data?"
+						checked={newCaseForm.hideknowndata}
+						onChange= {()=> {mutAryItem(!newCaseForm.hideknowndata,'hideknowndata','newCaseForm')} }
+					/>
 					<TextControl
 						label="Sucess Redirect URL"
 						placeholder="Don't Redirect"
+						value = {newCaseForm.sucessredirect}
+						onChange= { (v) => mutAryItem(v,'sucessredirect','newCaseForm') }
 					/>
 				</PanelBody>
 			</Panel>
@@ -84,14 +101,22 @@ export default function Edit( props ) {
 		return (
 			<Panel>
 				<PanelBody title="Case Title">
-					<CheckboxControl label="Show a title field?" />
+					<CheckboxControl 
+						label="Show a title field?"
+						checked = {caseTitle.showtitle}
+						onChange = {() => mutAryItem(!caseTitle.showtitle,'showtitle','caseTitle')}
+					/>
 					<TextControl
 						label="Case Title Label"
 						placeholder="Briefly, what is the request about?"
+						value = {caseTitle.titletext}
+						onChange = {(v) => mutAryItem(v,'titletext','caseTitle')}
 					/>
 					<TextControl
-						label="Case Titel Options (for a drop down selection)"
+						label="Case Title Options (for a drop down selection)"
 						placeholder="Case Title Options, oner per line, optional"
+						value = {caseTitle.titleoptions}
+						onChange = {(v) => mutAryItem(v,'titleoptions','caseTitle')}
 					/>
 				</PanelBody>
 			</Panel>
@@ -136,6 +161,8 @@ export default function Edit( props ) {
 		Object.entries( ary ).map( ( [ k, v ] ) => (
 			<p> { `${ k }: ${ v }` }</p>
 		) );
+
+	// displayShortCodeAtts(newCaseForm)
 	return (
 		<div { ...useBlockProps() }>
 			{ getInspectorControls() }
@@ -143,7 +170,14 @@ export default function Edit( props ) {
 				label="FuseDesk New Cases"
 				instructions="Placeholder that will display a form to allow your customers to create a new case"
 			/>
-			{/* { displayShortCodeAtts() } */}
+			{
+			Object.entries( attributes ).map( ([k,v]) => (
+				<>
+				<h4>{k}</h4>
+				{displayShortCodeAtts(v)}
+				</>
+			)) 
+			 }
 		</div>
 	);
 }

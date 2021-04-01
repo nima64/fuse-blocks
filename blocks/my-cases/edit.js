@@ -13,7 +13,7 @@ import { __ } from "@wordpress/i18n";
  */
 import { useBlockProps ,InspectorControls} from "@wordpress/block-editor";
 import {Panel,PanelRow,PanelBody,PanelGroup,Placeholder} from "@wordpress/components";
-import { TextControl, RangeControl} from "@wordpress/components";
+import { TextControl, RangeControl,SelectControl} from "@wordpress/components";
 // import Select from 'react-select';
 // import {useState} from 'react';
 /**
@@ -108,19 +108,19 @@ export default function Edit(props) {
 		return (
 			<Panel>
 				<PanelBody title="Display">
-					<Select 
+					{/* <Select 
 						// label="Columns"
 						isMulti={true}
 						// defaultValue={selectedOption}
 						// onChange={setSelectedOption}
 						options={options.columns}
-					/>
-					{/* <SelectControl 
+					/> */}
+					<SelectControl 
 						label="Columns"
 						value={display.columns}
 						options={options.columns}
 						onChange={(v)=>mutAryItem(v,'columns','display')}
-					/> */}
+					/>
 					<SelectControl 
 						label="Case Statuses"
 						value={display.status}
