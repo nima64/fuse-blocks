@@ -37,7 +37,7 @@ function registerAllBlocks($BLOCKS_DIR){
 }
 function fusedesk_blocks_init() {
     $BLOCKS_DIR = __DIR__.'/blocks';
-	// registerBlock( 'new-cases',$BLOCKS_DIR );
+	// registerBlock( 'my-cases',$BLOCKS_DIR );
     registerAllBlocks($BLOCKS_DIR);
     //single block for faster debugging
 	// register_block_type_from_metadata( 'new-cases',$BLOCKS_DIR );

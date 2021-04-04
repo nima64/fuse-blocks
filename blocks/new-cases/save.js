@@ -25,18 +25,16 @@ import { RawHTML } from '@wordpress/element';
  */
 export default function save( props ) {
 	const { attributes, setAttributes } = props;
-	const { text, display } = attributes;
-	const filterStr = ( s ) => ( typeof s == 'string' ? s.toLowerCase() : s );
+	const {caseCreation,newCaseForm,caseTitle,formText,suggestedPosts,fileUploads} = attributes;
 	const genShortCodeStr = ( aryObj ) =>
 		Object.entries( aryObj )
 			.map( ( [ k, v ] ) => ( !! v ? `${ k }="${ v }"` : '' ) )
 			.join( ' ' );
-	// const shortCodeStr =
-	// 	genShortCodeStr( text ) + ' ' + genShortCodeStr( display );
+	const shortCodeStr = genShortCodeStr( caseTitle[0] );
 	return (
 		<div { ...useBlockProps.save() }>
-			{/* <RawHTML>{ '[fusedesk_mycases ' + shortCodeStr + ']' }</RawHTML>
-			{ shortCodeStr } */}
+			<RawHTML>{ '[fusedesk_newcase ' + shortCodeStr + ']' }</RawHTML>
+			{/* { shortCodeStr }  */}
 		</div>
 	);
 }

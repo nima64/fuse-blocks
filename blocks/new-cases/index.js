@@ -4,7 +4,8 @@
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 import { registerBlockType } from '@wordpress/blocks';
-// import {people,Icon} from '@wordpress/icons';
+import {Icon} from '@wordpress/icons';
+import fdico from '../../fdico';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -31,59 +32,64 @@ registerBlockType( 'fusedesk/new-case', {
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
 	apiVersion: 2,
+	icon: <Icon icon={fdico} />,
 	attributes: {
 		caseCreation: {
 			type: 'array',
-			default: {
+			default: [{
 				department: false,
 				rep: false,
-				casetagids: '',
-			},
+				casetagids: false,
+			}],
 		},
 		newCaseForm: {
 			type: 'array',
-			default: {
+			default: [{
 				hideknowndata: false,
 				sucessredirect: '',
-			},
+			}],
 		},
 		caseTitle: {
 			type: 'array',
-			default: {
+			default: [{
 				showtitle: false, //show title field
 				titletext: '', //
 				titleoptions: false,
-			},
+			}],
 		},
 		formText: {
 			type: 'array',
-			default: {
+			default: [{
 				nametext: '',
 				emailtext: '',
-				buttontext: '',
-				creatingtext: '',
-				successtext: '',
-			},
+				buttontext: 'Create Support Case',
+				creatingtext: 'Submitting Case...',
+				successtext: 'Thanks! Your case has been created. We will get back to you shortly',
+			}],
 		},
 		suggestedPosts: {
 			type: 'array',
-			default: {
-				sugestionplacement:'after',
+			default: [{
+				suggestionplacement:'after',
 				suggestionstext: '',
 				suggestionlimit: 10,
 				suggestioncategories:'',
-			},
+			}],
 		},
 		fileUploads: {
 			type: 'array',
-			default: {
+			default: [{
 				fileupload: false,
 				filerequired: false,
 				filesmultiple: true,
-				filetext: '',
-				filetypesallowed: '',
-			},
+				filetext: 'Attach a File',
+				filetypesallowed: 'image/*,audio/*,application/pdf',
+			}],
 		},
+		refreshMe:{
+			type: 'int',
+			default: 0,
+		}
 	},
 
 	/**

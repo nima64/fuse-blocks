@@ -3,8 +3,7 @@
 	"name": "fusedesk/my-cases",
 	"title": "My Cases",
 	"category": "widgets",
-	"icon": "smiley",
-	"description": "Example block written with ESNext standard and JSX support – build step required.",
+	"description": "Show your logged in users a list of their FuseDesk cases.",
 	"supports": {
 		"html": false
 	},

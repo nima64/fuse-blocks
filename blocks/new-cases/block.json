@@ -3,7 +3,6 @@
 	"name": "fusedesk/new-case",
 	"title": "New Case",
 	"category": "widgets",
-	"icon": "smiley",
 	"description": "Allow your website visitors to create a new case in FuseDesk",
 	"supports": {
 		"html": false

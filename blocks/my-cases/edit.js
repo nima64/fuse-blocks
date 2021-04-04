@@ -14,6 +14,7 @@ import { __ } from "@wordpress/i18n";
 import { useBlockProps ,InspectorControls} from "@wordpress/block-editor";
 import {Panel,PanelRow,PanelBody,PanelGroup,Placeholder} from "@wordpress/components";
 import { TextControl, RangeControl,SelectControl} from "@wordpress/components";
+import MultiSelect from './MultiSelect';
 // import Select from 'react-select';
 // import {useState} from 'react';
 /**
@@ -37,11 +38,18 @@ export default function Edit(props) {
 	const {attributes,setAttributes} = props;
 	const {display,text} = attributes;
 
-	let mutAryItem = (newval,i,aryName) =>{ 
-		let temp = {...attributes[aryName]}; 
-		temp[i] = newval;
-		setAttributes({[aryName]:temp});
-	}
+	/**
+	 * Change an Attribute Array's key value
+	 * @param  {string} newval 
+	 * @param  {string} key 
+	 * @param  {string} aryName an attribute of type array
+	 * @return {void}
+	*/
+	let mutAryItem = ( newval, key, aryName ) => {
+		let temp = [{...attributes[ aryName ][0]}] ;
+		temp[0][ key ] = newval;
+		setAttributes( { [ aryName ]: temp } );
+	};
 
 	const getTextPanel = () => {
 		return (
@@ -108,22 +116,16 @@ export default function Edit(props) {
 		return (
 			<Panel>
 				<PanelBody title="Display">
-					{/* <Select 
-						// label="Columns"
-						isMulti={true}
-						// defaultValue={selectedOption}
-						// onChange={setSelectedOption}
-						options={options.columns}
-					/> */}
-					<SelectControl 
+					<MultiSelect
 						label="Columns"
-						value={display.columns}
-						options={options.columns}
-						onChange={(v)=>mutAryItem(v,'columns','display')}
+						placeholder="Case Number, Date Updated, Status"
+						value = {display[0].columns}
+						onChange = {(v) => mutAryItem(v,'columns','display')}
+						options = {options.columns}
 					/>
 					<SelectControl 
 						label="Case Statuses"
-						value={display.status}
+						value={display[0].status}
 						options={options.status}
 						onChange = {(v) => {
 							mutAryItem(v,'status','display');
@@ -132,19 +134,19 @@ export default function Edit(props) {
 					/>
 					<SelectControl 
 						label="User Filterable Statuses"
-						value={display.userstatuses}
+						value={display[0].userstatuses}
 						options={options.userstatus}
 						onChange={(v)=>mutAryItem(v,'userstatuses','display')}
 					/>
 					<SelectControl 
 						label="Case Order"
-						value={display.orderby}
+						value={display[0].orderby}
 						options={options.orderby}
 						onChange={(v)=>mutAryItem(v,'orderby','display')}
 					/>
 					<TextControl
 						label="Date Format"
-						value={display.dateformat}
+						value={display[0].dateformat}
 						options={options.dateformat}
 						onChange={(v)=>mutAryItem(v,'dateformat','display')}
 					/>
@@ -152,7 +154,7 @@ export default function Edit(props) {
 						label="How many cases should we display?"
 						min={1}
 						max={80}
-						initialPosition = {display.limit}
+						initialPosition = {display[0].limit}
 						onChange={(v)=>mutAryItem(v,'limit','display')}
 					/>
 				</PanelBody>
@@ -168,12 +170,24 @@ export default function Edit(props) {
 			</InspectorControls>
 		) 
 	} 
+
 	//for debugging purposes only
-	const displayShortCodeAtts = () => (
-		Object.entries(display).map(([k,v]) => (
-			<p> {`${k}: ${v}`}</p>
+	const displayShortCodeAtts = ([ary]) =>(
+		Object.entries( ary ).map( ( [ k, v ] ) => (
+			<p> { `${ k }: ${ v }` }</p>
 		))
-	)
+	);
+
+	const displayAllShortCodeAtts = () =>(
+		Object.entries( attributes ).map( ([k,v]) => (
+			v.constructor == Array &&
+			<>
+				<h4>{k}</h4>
+				{displayShortCodeAtts(v)}
+			</>
+		)) 
+	);
+
 	return (
 		<div { ...useBlockProps() }>
 			{getInspectorControls()}
@@ -181,7 +195,7 @@ export default function Edit(props) {
 				label="FuseDesk My Cases"
 				instructions="Placeholder that will display your cases"
 			/>
-			{displayShortCodeAtts()}
+			{/* {displayAllShortCodeAtts()} */}
 		</div>
 	);
 }

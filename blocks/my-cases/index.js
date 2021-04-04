@@ -5,7 +5,7 @@
  */
 import { registerBlockType } from '@wordpress/blocks';
 import {people,Icon} from '@wordpress/icons';
-
+import fdico from '../../fdico';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used
@@ -31,10 +31,11 @@ registerBlockType( 'fusedesk/my-cases', {
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
 	apiVersion: 2,
+	icon: <Icon icon={fdico} />,
 	attributes: {
 		display:{
 			type: 'array',
-			default: {
+			default: [{
 				// columns:'',
 				// status:'',
 				// userstatuses:'',
@@ -48,16 +49,16 @@ registerBlockType( 'fusedesk/my-cases', {
 				orderby:'date_opened, date_updated',
 				dateformat:'M j, Y g:ia',
 				limit:50,
-			}
+			}]
 		},
 		text:{
 			type: 'array',
-			default: {
+			default: [{
 				casenum_name:'',
 				status_name:'',
 				errornotloggedin:'',
 				errornocases:'',
-			}
+			}]
 		}
 	},
 

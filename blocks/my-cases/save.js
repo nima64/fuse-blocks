@@ -26,20 +26,19 @@ import {RawHTML} from '@wordpress/element';
  */
 export default function save(props) {
 	const {attributes,setAttributes} = props;
-	const {text,display} = attributes;
-	const filterStr = (s) => (typeof s == 'string') ? s.toLowerCase() : s;	
-	const genShortCodeStr = (aryObj) =>(
-		Object.entries(aryObj).map(
-				([k,v]) => (
-					!!v ? `${k}="${v}"` : ''
-				)
-			).join(' ')
-	) 
-	const shortCodeStr = genShortCodeStr(text) + ' ' + genShortCodeStr(display)
+	// const filterStr = (s) => (typeof s == 'string') ? s.toLowerCase() : s;	
+	// const genShortCodeStr = (aryObj) =>(
+	// 	Object.entries(aryObj).map(
+	// 			([k,v]) => (
+	// 				!!v ? `${k}="${v}"` : ''
+	// 			)
+	// 		).join(' ')
+	// ) 
+	// const shortCodeStr = genShortCodeStr(text) + ' ' + genShortCodeStr(display)
 	return (
 		<div { ...useBlockProps.save() }>
-			<RawHTML>{"[fusedesk_mycases "+ shortCodeStr +"]"}</RawHTML>
-			{shortCodeStr}
+			{/* <RawHTML>{"[fusedesk_mycases "+ shortCodeStr +"]"}</RawHTML> */}
+			{/* {shortCodeStr} */}
 		</div>
 	);
 }
