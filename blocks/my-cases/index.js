@@ -43,7 +43,7 @@ registerBlockType( 'fusedesk/my-cases', {
 				// dateformat:'M j, Y g:ia',
 				// limit:50,
 				// columns:'casenum,date_updated,status,summary',
-				columns:'casenum,summary',
+				columns:[],
 				status:'all',
 				userstatuses:'all',
 				orderby:'date_opened, date_updated',
@@ -56,10 +56,17 @@ registerBlockType( 'fusedesk/my-cases', {
 			default: [{
 				casenum_name:'',
 				status_name:'',
+				date_updated_name:'',
+				summary_name:'',
 				errornotloggedin:'',
 				errornocases:'',
 			}]
+		},
+		customStyles:{
+			type:'text',
 		}
+
+		
 	},
 
 	/**

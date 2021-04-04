@@ -11,7 +11,7 @@ import { __ } from "@wordpress/i18n";
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
-import { useBlockProps ,InspectorControls} from "@wordpress/block-editor";
+import { useBlockProps ,InspectorControls, InspectorAdvancedControls} from "@wordpress/block-editor";
 import {Panel,PanelRow,PanelBody,PanelGroup,Placeholder} from "@wordpress/components";
 import { TextControl, RangeControl,SelectControl} from "@wordpress/components";
 import MultiSelect from './MultiSelect';
@@ -51,41 +51,49 @@ export default function Edit(props) {
 		setAttributes( { [ aryName ]: temp } );
 	};
 
-	const getTextPanel = () => {
-		return (
-			<Panel>
-				<PanelBody title="Text">
+	const renderControlObj = (obj,attAry) => {
+		switch (obj.type) {
+			case 'check':
+				return (
+					<CheckboxControl  
+						label={obj.label}
+						checked={attributes[attAry][0][obj.bind]} 
+						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)}  />);	
+			case 'text' :
+				return (					
 					<TextControl 
-						label="Case Number Column"
-						placeholder="Case #"
-						value={text.casenum_name}
-						onChange={(v) => mutAryItem(v,'casenum_name','text')}
-					/>
-					<TextControl 
-						label="Status Column"
-						placeholder="Status"
-						value={text.status_name}
-						onChange={(v) => mutAryItem(v,'status_name','text')}
-					/>
-					<TextControl 
-						label="Error, Not Logged In"
-						placeholder="Please login to view your cases"
-						value={text.errornotloggedin}
-						onChange={(v) => mutAryItem(v,'errornotloggedin','text')}
-					/>
-					<TextControl 
-						label="Error, No Cases"
-						placeholder="Looks like you don't have any support cases!"
-						value={text.errornocases}
-						onChange={(v) => mutAryItem(v,'errornocases','text')}
-					/>
-				</PanelBody>
-			</Panel>
-		);
+						label={obj.label}
+						value={attributes[attAry][0][obj.bind]} 
+						placeholder={obj.placeholder}
+						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)} />);
+			case 'select':
+				return (					
+					<SelectControl 
+						label={obj.label}
+						value={attributes[attAry][0][obj.bind]} 
+						options={obj.options}
+						onChange={(newval) => {mutAryItem(newval,obj.bind,attAry); console.log(newval)}} />);
+
+			case 'multiSelect':
+				return (					
+					<MultiSelect 
+						label={obj.label}
+						value={attributes[attAry][0][obj.bind]} 
+						options={obj.options}
+						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)} />);
+
+			case 'range' :
+				return (
+					<RangeControl 
+						min={obj.min}	
+						max={obj.max}
+						value={attributes[attAry][0][obj.bind]}
+						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)} />
+				);
+		}
 	}
 
 	const getDisplayPanel = () => {
-		//group options into one array
 		const statusShared = [
 			{label: "All",value:"all"},
 			{label: "Active",value:"active"},
@@ -113,60 +121,65 @@ export default function Edit(props) {
 			],
 		}
 
+		const controlsData = [
+			{type:'multiSelect',label:'Columns',options:options.columns,bind:'columns'},
+			{type:'select',label:'Case Statuses',options:options.status,bind:'status'},
+			{type:'select',label:'User Filterable Statuses',options:options.userstatus,bind:'userstatuses'},
+			{type:'select',label:'Case Order',options:options.orderby,bind:'orderby'},
+			{type:'text',label:'Date Format',options:options.dateformat,bind:'dateformat'},
+			{type:'range',label:'How many cases should we display?',min:1,max:80,bind:'limit'},
+		]
+
 		return (
 			<Panel>
 				<PanelBody title="Display">
-					<MultiSelect
-						label="Columns"
-						placeholder="Case Number, Date Updated, Status"
-						value = {display[0].columns}
-						onChange = {(v) => mutAryItem(v,'columns','display')}
-						options = {options.columns}
-					/>
-					<SelectControl 
-						label="Case Statuses"
-						value={display[0].status}
-						options={options.status}
-						onChange = {(v) => {
-							mutAryItem(v,'status','display');
-							console.log(v);
-						}}
-					/>
-					<SelectControl 
-						label="User Filterable Statuses"
-						value={display[0].userstatuses}
-						options={options.userstatus}
-						onChange={(v)=>mutAryItem(v,'userstatuses','display')}
-					/>
-					<SelectControl 
-						label="Case Order"
-						value={display[0].orderby}
-						options={options.orderby}
-						onChange={(v)=>mutAryItem(v,'orderby','display')}
-					/>
-					<TextControl
-						label="Date Format"
-						value={display[0].dateformat}
-						options={options.dateformat}
-						onChange={(v)=>mutAryItem(v,'dateformat','display')}
-					/>
-					<RangeControl
-						label="How many cases should we display?"
-						min={1}
-						max={80}
-						initialPosition = {display[0].limit}
-						onChange={(v)=>mutAryItem(v,'limit','display')}
-					/>
+					{controlsData.map((v) => renderControlObj(v,'display'))}
 				</PanelBody>
 			</Panel>
 		);
 	}
 
+	const getTextPanel = () => {
+		const columnControls = {
+			casenum : {type:'text',label:'Case Number Column', placeholder:'Case #',bind:'case_name'},
+			date_updated : {type:'text',label:'Date Updated Column', placeholder:'rename dateupdated col',bind:'status_name'},
+			status : {type:'text',label:'Status Column', placeholder:'rename status col',bind:'case_name'},
+			summary: {type:'text',label:'Summary Column', placeholder:'rename summary updated',bind:'status_name'},
+		}
+		const errorControls = [
+			{type:'text',label:'Error, Not Logged In', placeholder:'Please login to view your cases',bind:'errornotloggedin'},
+			{type:'text',label:'Error, No Cases', placeholder:"Looks like you don't have any support cases!",bind:'errornocases'},
+		]
+		// const columns = ['casenum','date_updated','status','summary']
+		// if display.columns contains hash key then reder
+		return (
+			<Panel>
+				<PanelBody title="Text">
+					{ display[0].columns && display[0].columns.map((v) => renderControlObj( columnControls[v.value] ,'display') ) }
+					{/* {(display.columns).map((v) => console.log(v))} */}
+					{errorControls.map((v) => renderControlObj(v,'text'))}
+				
+				</PanelBody>
+			</Panel>
+		);
+	}
+	const getAdvancedControls = () => (
+		<InspectorAdvancedControls>
+			<TextControl 
+				label="Custom Styles"
+				value = {attributes.customStyles}
+				onChange = { (customStyles) => setAttributes({customStyles}) }
+				about="ex: padding:10px; background-color:blue;"
+			/>
+		</InspectorAdvancedControls>
+	);
 	const getInspectorControls = () => {
 		return(
 			<InspectorControls>
 				{getDisplayPanel()}
 				{getTextPanel()}
+				{getAdvancedControls()}
+				
 			</InspectorControls>
 		) 
 	} 
@@ -187,6 +200,7 @@ export default function Edit(props) {
 			</>
 		)) 
 	);
+
 
 	return (
 		<div { ...useBlockProps() }>

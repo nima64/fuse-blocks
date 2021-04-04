@@ -33,7 +33,7 @@ export default function save( props ) {
 	const shortCodeStr = genShortCodeStr( caseTitle[0] );
 	return (
 		<div { ...useBlockProps.save() }>
-			<RawHTML>{ '[fusedesk_newcase ' + shortCodeStr + ']' }</RawHTML>
+			{/* <RawHTML>{ '[fusedesk_newcase ' + shortCodeStr + ']' }</RawHTML> */}
 			{/* { shortCodeStr }  */}
 		</div>
 	);

@@ -26,14 +26,17 @@ import {RawHTML} from '@wordpress/element';
  */
 export default function save(props) {
 	const {attributes,setAttributes} = props;
-	// const filterStr = (s) => (typeof s == 'string') ? s.toLowerCase() : s;	
-	// const genShortCodeStr = (aryObj) =>(
-	// 	Object.entries(aryObj).map(
-	// 			([k,v]) => (
-	// 				!!v ? `${k}="${v}"` : ''
-	// 			)
-	// 		).join(' ')
-	// ) 
+	// const colnamesToStr = (ary) => ary.map((v) => v.value + "_name,").join('');
+
+	const genShortCodeStr = (aryObj) =>(
+		Object.entries(aryObj).map(
+				([k,v]) => {
+					if (k == 'columns')
+						
+					return !!v ? `${k}="${v}"` : '';
+				}
+			).join(' ')
+	) 
 	// const shortCodeStr = genShortCodeStr(text) + ' ' + genShortCodeStr(display)
 	return (
 		<div { ...useBlockProps.save() }>

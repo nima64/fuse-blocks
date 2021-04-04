@@ -354,42 +354,61 @@ function Edit(props) {
     setAttributes(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()({}, aryName, temp));
   };
 
-  var getTextPanel = function getTextPanel() {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["Panel"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelBody"], {
-      title: "Text"
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["TextControl"], {
-      label: "Case Number Column",
-      placeholder: "Case #",
-      value: text.casenum_name,
-      onChange: function onChange(v) {
-        return mutAryItem(v, 'casenum_name', 'text');
-      }
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["TextControl"], {
-      label: "Status Column",
-      placeholder: "Status",
-      value: text.status_name,
-      onChange: function onChange(v) {
-        return mutAryItem(v, 'status_name', 'text');
-      }
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["TextControl"], {
-      label: "Error, Not Logged In",
-      placeholder: "Please login to view your cases",
-      value: text.errornotloggedin,
-      onChange: function onChange(v) {
-        return mutAryItem(v, 'errornotloggedin', 'text');
-      }
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["TextControl"], {
-      label: "Error, No Cases",
-      placeholder: "Looks like you don't have any support cases!",
-      value: text.errornocases,
-      onChange: function onChange(v) {
-        return mutAryItem(v, 'errornocases', 'text');
-      }
-    })));
+  var renderControlObj = function renderControlObj(obj, attAry) {
+    switch (obj.type) {
+      case 'check':
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(CheckboxControl, {
+          label: obj.label,
+          checked: attributes[attAry][0][obj.bind],
+          onChange: function onChange(newval) {
+            return mutAryItem(newval, obj.bind, attAry);
+          }
+        });
+
+      case 'text':
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["TextControl"], {
+          label: obj.label,
+          value: attributes[attAry][0][obj.bind],
+          placeholder: obj.placeholder,
+          onChange: function onChange(newval) {
+            return mutAryItem(newval, obj.bind, attAry);
+          }
+        });
+
+      case 'select':
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["SelectControl"], {
+          label: obj.label,
+          value: attributes[attAry][0][obj.bind],
+          options: obj.options,
+          onChange: function onChange(newval) {
+            mutAryItem(newval, obj.bind, attAry);
+            console.log(newval);
+          }
+        });
+
+      case 'multiSelect':
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_MultiSelect__WEBPACK_IMPORTED_MODULE_6__["default"], {
+          label: obj.label,
+          value: attributes[attAry][0][obj.bind],
+          options: obj.options,
+          onChange: function onChange(newval) {
+            return mutAryItem(newval, obj.bind, attAry);
+          }
+        });
+
+      case 'range':
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["RangeControl"], {
+          min: obj.min,
+          max: obj.max,
+          value: attributes[attAry][0][obj.bind],
+          onChange: function onChange(newval) {
+            return mutAryItem(newval, obj.bind, attAry);
+          }
+        });
+    }
   };
 
   var getDisplayPanel = function getDisplayPanel() {
-    //group options into one array
     var statusShared = [{
       label: "All",
       value: "all"
@@ -434,58 +453,109 @@ function Edit(props) {
         label: 'M j, Y g:ia'
       }]
     };
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["Panel"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelBody"], {
-      title: "Display"
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_MultiSelect__WEBPACK_IMPORTED_MODULE_6__["default"], {
-      label: "Columns",
-      placeholder: "Case Number, Date Updated, Status",
-      value: display[0].columns,
-      onChange: function onChange(v) {
-        return mutAryItem(v, 'columns', 'display');
-      },
-      options: options.columns
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["SelectControl"], {
-      label: "Case Statuses",
-      value: display[0].status,
+    var controlsData = [{
+      type: 'multiSelect',
+      label: 'Columns',
+      options: options.columns,
+      bind: 'columns'
+    }, {
+      type: 'select',
+      label: 'Case Statuses',
       options: options.status,
-      onChange: function onChange(v) {
-        mutAryItem(v, 'status', 'display');
-        console.log(v);
-      }
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["SelectControl"], {
-      label: "User Filterable Statuses",
-      value: display[0].userstatuses,
+      bind: 'status'
+    }, {
+      type: 'select',
+      label: 'User Filterable Statuses',
       options: options.userstatus,
-      onChange: function onChange(v) {
-        return mutAryItem(v, 'userstatuses', 'display');
-      }
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["SelectControl"], {
-      label: "Case Order",
-      value: display[0].orderby,
+      bind: 'userstatuses'
+    }, {
+      type: 'select',
+      label: 'Case Order',
       options: options.orderby,
-      onChange: function onChange(v) {
-        return mutAryItem(v, 'orderby', 'display');
-      }
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["TextControl"], {
-      label: "Date Format",
-      value: display[0].dateformat,
+      bind: 'orderby'
+    }, {
+      type: 'text',
+      label: 'Date Format',
       options: options.dateformat,
-      onChange: function onChange(v) {
-        return mutAryItem(v, 'dateformat', 'display');
-      }
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["RangeControl"], {
-      label: "How many cases should we display?",
+      bind: 'dateformat'
+    }, {
+      type: 'range',
+      label: 'How many cases should we display?',
       min: 1,
       max: 80,
-      initialPosition: display[0].limit,
-      onChange: function onChange(v) {
-        return mutAryItem(v, 'limit', 'display');
-      }
+      bind: 'limit'
+    }];
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["Panel"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelBody"], {
+      title: "Display"
+    }, controlsData.map(function (v) {
+      return renderControlObj(v, 'display');
     })));
   };
 
+  var getTextPanel = function getTextPanel() {
+    var columnControls = {
+      casenum: {
+        type: 'text',
+        label: 'Case Number Column',
+        placeholder: 'Case #',
+        bind: 'case_name'
+      },
+      date_updated: {
+        type: 'text',
+        label: 'Date Updated Column',
+        placeholder: 'rename dateupdated col',
+        bind: 'status_name'
+      },
+      status: {
+        type: 'text',
+        label: 'Status Column',
+        placeholder: 'rename status col',
+        bind: 'case_name'
+      },
+      summary: {
+        type: 'text',
+        label: 'Summary Column',
+        placeholder: 'rename summary updated',
+        bind: 'status_name'
+      }
+    };
+    var errorControls = [{
+      type: 'text',
+      label: 'Error, Not Logged In',
+      placeholder: 'Please login to view your cases',
+      bind: 'errornotloggedin'
+    }, {
+      type: 'text',
+      label: 'Error, No Cases',
+      placeholder: "Looks like you don't have any support cases!",
+      bind: 'errornocases'
+    }]; // const columns = ['casenum','date_updated','status','summary']
+    // if display.columns contains hash key then reder
+
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["Panel"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelBody"], {
+      title: "Text"
+    }, display[0].columns && display[0].columns.map(function (v) {
+      return renderControlObj(columnControls[v.value], 'display');
+    }), errorControls.map(function (v) {
+      return renderControlObj(v, 'text');
+    })));
+  };
+
+  var getAdvancedControls = function getAdvancedControls() {
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["InspectorAdvancedControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["TextControl"], {
+      label: "Custom Styles",
+      value: attributes.customStyles,
+      onChange: function onChange(customStyles) {
+        return setAttributes({
+          customStyles: customStyles
+        });
+      },
+      about: "ex: padding:10px; background-color:blue;"
+    }));
+  };
+
   var getInspectorControls = function getInspectorControls() {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["InspectorControls"], null, getDisplayPanel(), getTextPanel());
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["InspectorControls"], null, getDisplayPanel(), getTextPanel(), getAdvancedControls());
   }; //for debugging purposes only
 
 
@@ -600,7 +670,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('fus
         // dateformat:'M j, Y g:ia',
         // limit:50,
         // columns:'casenum,date_updated,status,summary',
-        columns: 'casenum,summary',
+        columns: [],
         status: 'all',
         userstatuses: 'all',
         orderby: 'date_opened, date_updated',
@@ -613,9 +683,14 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('fus
       default: [{
         casenum_name: '',
         status_name: '',
+        date_updated_name: '',
+        summary_name: '',
         errornotloggedin: '',
         errornocases: ''
       }]
+    },
+    customStyles: {
+      type: 'text'
     }
   },
 
@@ -642,12 +717,15 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('fus
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return save; });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 /**
@@ -677,17 +755,20 @@ __webpack_require__.r(__webpack_exports__);
 
 function save(props) {
   var attributes = props.attributes,
-      setAttributes = props.setAttributes; // const filterStr = (s) => (typeof s == 'string') ? s.toLowerCase() : s;	
-  // const genShortCodeStr = (aryObj) =>(
-  // 	Object.entries(aryObj).map(
-  // 			([k,v]) => (
-  // 				!!v ? `${k}="${v}"` : ''
-  // 			)
-  // 		).join(' ')
-  // ) 
-  // const shortCodeStr = genShortCodeStr(text) + ' ' + genShortCodeStr(display)
+      setAttributes = props.setAttributes; // const colnamesToStr = (ary) => ary.map((v) => v.value + "_name,").join('');
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"].save());
+  var genShortCodeStr = function genShortCodeStr(aryObj) {
+    return Object.entries(aryObj).map(function (_ref) {
+      var _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref, 2),
+          k = _ref2[0],
+          v = _ref2[1];
+
+      if (k == 'columns') return !!v ? "".concat(k, "=\"").concat(v, "\"") : '';
+    }).join(' ');
+  }; // const shortCodeStr = genShortCodeStr(text) + ' ' + genShortCodeStr(display)
+
+
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save());
 }
 
 /***/ }),
