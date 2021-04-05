@@ -1,6 +1,6 @@
 ## About ##
 These are a set of gutenberg blocks made for the plugin fusedesk.  
-All blocks are located in the blocks folder and local dependencies are located in lib.  
+The source for all blocks are located in the blocks folder and local dependencies are located in lib.  
 
 The blocks are registered through their block.jsons'.  
 The main file fusedesk-blocks.php will search the blocks directory and grab the block's blocks.json and register them. 
