@@ -53,7 +53,8 @@ registerBlockType( 'fusedesk/new-case', {
 			type: 'array',
 			default: [{
 				showtitle: false, //show title field
-				titletext: '', //
+				// titletext: '', //
+				titletext: 'helloworld', //
 				titleoptions: false,
 			}],
 		},

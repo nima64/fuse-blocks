@@ -49,8 +49,10 @@ const CASETAGS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_casetags&ref
 let repOptions = [{label:'please Refresh', value:false}];
 let deptOptions = [{label:'please Refresh', value:false}];
 let casetagOptions = [{label:'please Refresh', value:false}];
-//normalize reps json into {label,value} form for select
+
+//normalize reps json into {label,value} format for Select Components
 const normRepsToOptions = (repsJson) => Object.entries(repsJson).map(([v,k]) => ({label:k,value:v}) );
+
 const fetchOptions = (options, endpoint) => {
 	fetch(WP_BASEURL + endpoint,{
 	    method:'GET'
@@ -92,12 +94,12 @@ export default function Edit( props ) {
 	 * @param  {string} attName name of the attribute of type array
 	 * @returns {void}
 	*/
-
 	const mutAryItem = ( newval, key, attName ) => {
 		let temp = [{...attributes[ attName ][0]}] ;
 		temp[0][ key ] = newval;
 		setAttributes( { [ attName ]: temp } );
 	};
+
 	const renderControlObj = createControlRenderer(props);
 
 	const getCaseCreationPanel = () => {
@@ -221,7 +223,6 @@ export default function Edit( props ) {
 			{type:'text',label:'File Upload Label',placeholder:'Attach a file',bind:'filetext'},
 			{type:'text',label:'Allowed File MIME types',placeholder:'image/*,audio/*,application/pdf',bind:'filetypesallowed'},
 		]
-
 		return (
 			<Panel>
 				<PanelBody title="File Uploads">

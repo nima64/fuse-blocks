@@ -25,16 +25,19 @@ import { RawHTML } from '@wordpress/element';
  */
 export default function save( props ) {
 	const { attributes, setAttributes } = props;
-	const {caseCreation,newCaseForm,caseTitle,formText,suggestedPosts,fileUploads} = attributes;
-	const genShortCodeStr = ( aryObj ) =>
+
+	//grab settings related attributes and store them into an array
+	const blockSettings = (({caseCreation,newCaseForm,caseTitle,formText,suggestedPosts,fileUploads}) => [caseCreation[0],newCaseForm[0],caseTitle[0],formText[0],suggestedPosts[0],fileUploads[0]])(attributes);
+
+	const genShortCodeAtt = ( aryObj ) =>
 		Object.entries( aryObj )
-			.map( ( [ k, v ] ) => ( !! v ? `${ k }="${ v }"` : '' ) )
+			.map( ( [ k, v ] ) => ( !! v ? `${ k }="${ v }" ` : '' ) )
 			.join( ' ' );
-	const shortCodeStr = genShortCodeStr( caseTitle[0] );
+
 	return (
 		<div { ...useBlockProps.save() }>
-			{/* <RawHTML>{ '[fusedesk_newcase ' + shortCodeStr + ']' }</RawHTML> */}
-			{/* { shortCodeStr }  */}
+			<RawHTML>{ '[fusedesk_newcase ' +  blockSettings.map( (v) => genShortCodeAtt(v) )+ ']' }</RawHTML>
+			{/* { blockSettings.map((v) => genShortCodeStr(v) ) } */}
 		</div>
 	);
 }

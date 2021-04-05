@@ -692,7 +692,8 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('fus
       default: [{
         showtitle: false,
         //show title field
-        titletext: '',
+        // titletext: '', //
+        titletext: 'helloworld',
         //
         titleoptions: false
       }]
@@ -794,25 +795,35 @@ __webpack_require__.r(__webpack_exports__);
 function save(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
-  var caseCreation = attributes.caseCreation,
-      newCaseForm = attributes.newCaseForm,
-      caseTitle = attributes.caseTitle,
-      formText = attributes.formText,
-      suggestedPosts = attributes.suggestedPosts,
-      fileUploads = attributes.fileUploads;
+
+  var blockSettings = function (_ref) {
+    var caseCreation = _ref.caseCreation,
+        newCaseForm = _ref.newCaseForm,
+        caseTitle = _ref.caseTitle,
+        formText = _ref.formText,
+        suggestedPosts = _ref.suggestedPosts,
+        fileUploads = _ref.fileUploads;
+    return [caseCreation[0], newCaseForm[0], caseTitle[0], formText[0], suggestedPosts[0], fileUploads[0]];
+  }(attributes); // const genShortCodeStr = ( aryObj ) =>
+  // 	Object.entries( aryObj )
+  // 		.map( ( [ k, v ] ) => ( !! v ? `${ k }="${ v }"` : '' ) )
+  // 		.join( ' ' );
+
 
   var genShortCodeStr = function genShortCodeStr(aryObj) {
-    return Object.entries(aryObj).map(function (_ref) {
-      var _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref, 2),
-          k = _ref2[0],
-          v = _ref2[1];
+    return Object.entries(aryObj).map(function (_ref2) {
+      var _ref3 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref2, 2),
+          k = _ref3[0],
+          v = _ref3[1];
 
-      return !!v ? "".concat(k, "=\"").concat(v, "\"") : '';
+      return !!v ? "".concat(k, "=\"").concat(v, "\" ") : '';
     }).join(' ');
-  };
+  }; // const shortCodeStr = genShortCodeStr( caseTitle[0] );
 
-  var shortCodeStr = genShortCodeStr(caseTitle[0]);
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save());
+
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), blockSettings.map(function (v) {
+    return genShortCodeStr(v);
+  }));
 }
 
 /***/ }),
