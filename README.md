@@ -5,7 +5,7 @@ The source for all blocks are located in the blocks folder and local dependencie
 The blocks are registered through their block.jsons'.  
 The main file fusedesk-blocks.php will search the blocks directory and grab the block's blocks.json and register them. 
 
-## Buiding ##
+## Building ##
 To build the blocks run either  
 ```
 npm run buildall
