@@ -23,7 +23,7 @@ import {
 	TextControl,
 	RangeControl,
 } from '@wordpress/components';
-import { addFilter } from '@wordpress/hooks';
+import createControlRenderer from '../../lib/createControlRenderer';
 import {rotateLeft,Icon} from '@wordpress/icons';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -63,24 +63,25 @@ const fetchOptions = (options, endpoint) => {
 		let refreshbtn = document.body.querySelector('#refreshme');
 		if(refreshbtn)
 			refreshbtn.click();
-// 		//REFRESH TEST
-// 		// setTimeout(() => {
-// 		// 	let refreshbtn = document.body.querySelector('#refreshme');
-// 		// 	if (refreshbtn) { 
-// 		// 	// 	setAtts({refreshMe:1}); 
-// 		// 		refreshbtn.click();
-// 		// 	}
-// 		// 	console.log(reps, normRepsToOptions(reps))
-// 		// },1000);
 	});
 }
 
-//fetch calls needs to be in componentDidMount
-fetchOptions(repOptions,REPS_ENDPOINT)
-fetchOptions(deptOptions,DEPTS_ENDPOINT);
-fetchOptions(casetagOptions,CASETAGS_ENDPOINT);
-
+//Singleton that pulls data on mount and updates options
+class OptionsPuller extends React.Component{
+	constructor (props){
+		super(props);
+	}
+	componentDidMount(){
+		fetchOptions(repOptions,REPS_ENDPOINT);
+		fetchOptions(deptOptions,DEPTS_ENDPOINT);
+		fetchOptions(casetagOptions,CASETAGS_ENDPOINT);
+	}
+	render(){
+		return '';
+	}
+}
 export default function Edit( props ) {
+	
 	const { attributes, setAttributes } = props;
 	const {caseCreation,newCaseForm,caseTitle,formText,suggestedPosts,fileUploads,test} = attributes;
 
@@ -89,46 +90,15 @@ export default function Edit( props ) {
 	 * @param  {string} newval 
 	 * @param  {string} key 
 	 * @param  {string} attName name of the attribute of type array
-	 * @return {void}
+	 * @returns {void}
 	*/
-	let mutAryItem = ( newval, key, attName ) => {
+
+	const mutAryItem = ( newval, key, attName ) => {
 		let temp = [{...attributes[ attName ][0]}] ;
 		temp[0][ key ] = newval;
 		setAttributes( { [ attName ]: temp } );
 	};
-
-	const renderControlObj = (obj,attAry) => {
-		switch (obj.type) {
-			case 'check':
-				return (
-					<CheckboxControl  
-						label={obj.label}
-						checked={attributes[attAry][0][obj.bind]} 
-						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)}  />);	
-			case 'text' :
-				return (					
-					<TextControl 
-						label={obj.label}
-						value={attributes[attAry][0][obj.bind]} 
-						placeholder={obj.placeholder}
-						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)} />);
-			case 'select':
-				return (					
-					<SelectControl 
-						label={obj.label}
-						value={attributes[attAry][0][obj.bind]} 
-						options={obj.options}
-						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)} />);
-			case 'range' :
-				return (
-					<RangeControl 
-						min={obj.min}	
-						max={obj.max}
-						value={attributes[attAry][0][obj.bind]}
-						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)} />
-				);
-		}
-	}
+	const renderControlObj = createControlRenderer(props);
 
 	const getCaseCreationPanel = () => {
 		const controlsData = [
@@ -164,6 +134,7 @@ export default function Edit( props ) {
 		);
 	};
 	const getCaseTitlePanel = () => {
+
 		return (
 			<Panel>
 				<PanelBody title="Case Title">
@@ -222,38 +193,21 @@ export default function Edit( props ) {
 				{label:'All Categories',value: 'All Categories'},
 			]
 		}
+		const controlsData = [
+			{type:'select',label:'Suggestions Placement',options:options.placement,bind:'suggestionplacement'},
+			{type:'text',label:'Suggestions Label',placeholder:"May we suggest one of the following posts?",bind:'suggestionstext'},
+			{type:'range', min:1,max:100,label:'Suggestions Limit', bind:'suggestionlimit'},
+			{type:'select',label:'Suggestions Category',options:options.category,bind:'suggestioncategories'},
+		]
 		return (
 			<Panel>
 				<PanelBody title="Suggested Posts">
-					<SelectControl 
-						label="Suggestions Placement"
-						value={suggestedPosts[0].suggestionplacement}
-						onChange={(v) => mutAryItem(v,'suggestionplacement','suggestedPosts') } 
-						options={options.placement}
-					/>
 					{
-						//only render/show when none is not selected
-						suggestedPosts[0].suggestionplacement != 'none' &&
-						<>
-						<TextControl
-							label="Suggestions Label"
-							placeholder="May we suggest one of the following posts?"
-							value={suggestedPosts[0].suggestionstext}
-							onChange={ (v) => mutAryItem(v,'suggestionstext','suggestedPosts') }
-						/>
-						<RangeControl 
-							min={1}	
-							max={100}
-							value={suggestedPosts[0].suggestionlimit}
-							onChange={ (v) => mutAryItem(v,'suggestionlimit','suggestedPosts') }
-						/>
-						<SelectControl 
-							label="Suggestion Category"
-							value={suggestedPosts[0].suggestioncategories}
-							onChange={(v) => mutAryItem(v,'suggestioncategories','suggestedPosts') } 
-							options={options.category}
-						/>
-						</>
+						//only render/show rest when none is not selected
+						suggestedPosts[0].suggestionplacement != 'none' ?
+							controlsData.map((v) => renderControlObj(v,'suggestedPosts'))
+							:
+							renderControlObj(controlsData[0],'suggestedPosts')
 					}
 				</PanelBody>
 			</Panel>
@@ -328,6 +282,7 @@ export default function Edit( props ) {
 	return (
 		<div { ...useBlockProps() }>
 			{ getInspectorControls() }
+			<OptionsPuller />
 			<Placeholder
 				label="FuseDesk New Case"
 				instructions="Click on the settings gear icon to get started!"

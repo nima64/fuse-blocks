@@ -663,13 +663,6 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('fus
     display: {
       type: 'array',
       default: [{
-        // columns:'',
-        // status:'',
-        // userstatuses:'',
-        // orderby:'',
-        // dateformat:'M j, Y g:ia',
-        // limit:50,
-        // columns:'casenum,date_updated,status,summary',
         columns: [],
         status: 'all',
         userstatuses: 'all',

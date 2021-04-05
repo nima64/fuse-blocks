@@ -23,7 +23,8 @@ import {
 	TextControl,
 	RangeControl,
 } from '@wordpress/components';
-import { addFilter } from '@wordpress/hooks';
+// import {useState} from '@wordpress/element';
+import Select from 'react-select';
 import {rotateLeft,Icon} from '@wordpress/icons';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -59,7 +60,6 @@ const fetchOptions = (options, endpoint) => {
 	.then(json => {
 		normRepsToOptions(json).forEach((v,i) => { options[i] = v }); //takes normalized options and inserts them into options
 		console.log(options, json);
-		console.log('executed fetch from new-case');
 		let refreshbtn = document.body.querySelector('#refreshme');
 		if(refreshbtn)
 			refreshbtn.click();
@@ -75,13 +75,11 @@ const fetchOptions = (options, endpoint) => {
 	});
 }
 
-//fetch calls needs to be in componentDidMount
-fetchOptions(repOptions,REPS_ENDPOINT)
+fetchOptions(repOptions,REPS_ENDPOINT);
 fetchOptions(deptOptions,DEPTS_ENDPOINT);
 fetchOptions(casetagOptions,CASETAGS_ENDPOINT);
 
 export default function Edit( props ) {
-	
 	const { attributes, setAttributes } = props;
 	const {caseCreation,newCaseForm,caseTitle,formText,suggestedPosts,fileUploads,test} = attributes;
 
@@ -89,13 +87,13 @@ export default function Edit( props ) {
 	 * Change an Attribute Array's key value
 	 * @param  {string} newval 
 	 * @param  {string} key 
-	 * @param  {string} attName name of the attribute of type array
+	 * @param  {string} aryName an attribute of type array
 	 * @return {void}
 	*/
-	let mutAryItem = ( newval, key, attName ) => {
-		let temp = [{...attributes[ attName ][0]}] ;
+	let mutAryItem = ( newval, key, aryName ) => {
+		let temp = [{...attributes[ aryName ][0]}] ;
 		temp[0][ key ] = newval;
-		setAttributes( { [ attName ]: temp } );
+		setAttributes( { [ aryName ]: temp } );
 	};
 
 	const renderControlObj = (obj,attAry) => {
@@ -113,34 +111,58 @@ export default function Edit( props ) {
 						value={attributes[attAry][0][obj.bind]} 
 						placeholder={obj.placeholder}
 						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)} />);
-			case 'select':
-				return (					
-					<SelectControl 
-						label={obj.label}
-						value={attributes[attAry][0][obj.bind]} 
-						options={obj.options}
-						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)} />);
 			case 'range' :
 				return (
 					<RangeControl 
-						min={obj.min}	
-						max={obj.max}
-						value={attributes[attAry][0][obj.bind]}
-						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)} />
+						min={1}	
+						max={100}
+						value={suggestedPosts[0].suggestionlimit}
+						onChange={ (v) => mutAryItem(v,'suggestionlimit','suggestedPosts') }
+					/>
 				);
 		}
 	}
 
 	const getCaseCreationPanel = () => {
-		const controlsData = [
-			{type:'select',label:'Department',options:repOptions,bind:'department'},
-			{type:'select',label:'Rep Assignment',options:deptOptions,bind:'rep'},
-			{type:'select',label:'Case Tags to Apply',options:casetagOptions,bind:'casetagids'},
-		]
+		const options = {
+			department: [ 
+				{ label: 'Department', value: 'department' },
+				{ label: '324', value: 'fsd' } ,
+				{ label: 'fsd', value: '342' } ,
+			],
+			repAssignment: [
+				{ label: 'Assign Randomly', value: 'Assign Randomly' },
+			],
+			caseTagsToApply: [ { label: 'Tags', value: 'Tags' } ],
+		};
 		return (
 			<Panel>
 				<PanelBody title="Case Creation">
-					{controlsData.map((v) => renderControlObj(v,'caseCreation'))}
+					{/* <Select
+						// defaultValue = {placementOptions[2]}
+						value = {caseCreation[0].department}
+						onChange = {(v) => mutAryItem(v,'department','caseCreation')}
+						options = {reps}
+						// isMulti = {true}
+					/> */}
+					<SelectControl 
+						label="Department" 
+						options={deptOptions}
+						value = {caseCreation[0].department}
+						onChange = { (v) => mutAryItem(v,'department','caseCreation') }
+					/>
+					<SelectControl 
+						label="Rep Assingment" 
+						options={repOptions}
+						value = {caseCreation[0].rep}
+						onChange = { (v) => mutAryItem(v,'rep','caseCreation') }
+					/>
+					<SelectControl 
+						label="Case Tags to Apply" 
+						value = {caseCreation[0].casetagids}
+						options= {casetagOptions}
+						onChange = { (v) => mutAryItem(v,'casetagids','caseCreation') }
+					/>
 				</PanelBody>
 			</Panel>
 		);
@@ -197,32 +219,39 @@ export default function Edit( props ) {
 	};
 	const getFormTextPanel = () => {
 		const textControldata = [
-			{type:'text', label:'Name Label',placeholder:'Your Name',bind:'nametext'},
-			{type:'text', label:'Email Label',placeholder:'Your Email Adress',bind:'emailtext'},
-			{type:'text', label:'Button Text',placeholder:'Create Support Case',bind:'buttontext'},
-			{type:'text', label:'Creating Text',placeholder:'Submitting Case...',bind:'creatingtext'},
-			{type:'text', label:'Sucess Text',placeholder:'Thanks! Your case has been created, We will gl...',bind:'successtext'},
+			{label:'Name Label',placeholder:'Your Name',bind:'nametext'},
+			{label:'Email Label',placeholder:'Your Email Adress',bind:'emailtext'},
+			{label:'Button Text',placeholder:'Create Support Case',bind:'buttontext'},
+			{label:'Creating Text',placeholder:'Submitting Case...',bind:'creatingtext'},
+			{label:'Sucess Text',placeholder:'Thanks! Your case has been created, We will gl...',bind:'successtext'},
 		]
 		return (
 			<Panel>
 				<PanelBody title="Form Text">
-					{ textControldata.map((v) => renderControlObj(v,'formText')) }
+					{
+						textControldata.map( ( {label,placeholder,bind} ) => (
+							<TextControl
+								label={label}
+								value = {formText[0][bind]}
+								placeholder = {placeholder}
+								onChange = {(v) => mutAryItem(v,bind,'formText')}
+							/>
+						))
+					}
 				</PanelBody>
 			</Panel>
 		);
 	};
 	const getSuggestedPostsPanel = () => {
-		const options = {
-			placement:[
-				{label:'before',value:'before'},
-				{label:'after',value: 'after'},
-				{label:'end',value: 'end'},
-				{label:'none',value: 'none'},	
-			],
-			category:[
-				{label:'All Categories',value: 'All Categories'},
-			]
-		}
+		const placementOptions = [
+			{label:'before',value:'before'},
+			{label:'after',value: 'after'},
+			{label:'end',value: 'end'},
+			{label:'none',value: 'none'},
+		];
+		const categoryOptions = [
+			{label:'All Categories',value: 'All Categories'},
+		];
 		return (
 			<Panel>
 				<PanelBody title="Suggested Posts">
@@ -230,7 +259,7 @@ export default function Edit( props ) {
 						label="Suggestions Placement"
 						value={suggestedPosts[0].suggestionplacement}
 						onChange={(v) => mutAryItem(v,'suggestionplacement','suggestedPosts') } 
-						options={options.placement}
+						options={placementOptions}
 					/>
 					{
 						//only render/show when none is not selected
@@ -252,7 +281,7 @@ export default function Edit( props ) {
 							label="Suggestion Category"
 							value={suggestedPosts[0].suggestioncategories}
 							onChange={(v) => mutAryItem(v,'suggestioncategories','suggestedPosts') } 
-							options={options.category}
+							options={categoryOptions}
 						/>
 						</>
 					}
@@ -261,7 +290,7 @@ export default function Edit( props ) {
 		);
 	};
 	const getFileUploadsPanel = () => {
-		const controlsData = [
+		const inputData = [
 			{type:'check',label:'Allow file uploads?',bind:'fileupload'},
 			{type:'check',label:'Require a file upload?',bind:'filerequired'},
 			{type:'check',label:'Allow Multiple Files?',bind:'filesmultiple'},
@@ -274,9 +303,9 @@ export default function Edit( props ) {
 				<PanelBody title="File Uploads">
 				{
 					fileUploads[0].fileupload?
-						controlsData.map((v) => renderControlObj(v,'fileUploads')) //render all
+						inputData.map((v) => renderControlObj(v),'fileUploads') //render all
 					:
-						renderControlObj(controlsData[0],'fileUploads')
+						renderControlObj(inputData[0],'fileUploads')
 				}
 				</PanelBody>
 			</Panel>

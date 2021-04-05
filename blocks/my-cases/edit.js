@@ -146,6 +146,7 @@ export default function Edit(props) {
 			status : {type:'text',label:'Status Column', placeholder:'rename status col',bind:'case_name'},
 			summary: {type:'text',label:'Summary Column', placeholder:'rename summary updated',bind:'status_name'},
 		}
+		
 		const errorControls = [
 			{type:'text',label:'Error, Not Logged In', placeholder:'Please login to view your cases',bind:'errornotloggedin'},
 			{type:'text',label:'Error, No Cases', placeholder:"Looks like you don't have any support cases!",bind:'errornocases'},

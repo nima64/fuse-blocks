@@ -36,13 +36,6 @@ registerBlockType( 'fusedesk/my-cases', {
 		display:{
 			type: 'array',
 			default: [{
-				// columns:'',
-				// status:'',
-				// userstatuses:'',
-				// orderby:'',
-				// dateformat:'M j, Y g:ia',
-				// limit:50,
-				// columns:'casenum,date_updated,status,summary',
 				columns:[],
 				status:'all',
 				userstatuses:'all',
