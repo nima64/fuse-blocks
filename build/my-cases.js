@@ -493,30 +493,31 @@ function Edit(props) {
   };
 
   var getTextPanel = function getTextPanel() {
+    // const columnCheck = {type:'text',label:'Case Number Column', placeholder:'Case #',bind:''}
     var columnControls = {
       casenum: {
         type: 'text',
         label: 'Case Number Column',
         placeholder: 'Case #',
-        bind: 'case_name'
+        bind: 'casenum_name'
       },
       date_updated: {
         type: 'text',
         label: 'Date Updated Column',
         placeholder: 'rename dateupdated col',
-        bind: 'status_name'
+        bind: 'date_updated_name'
       },
       status: {
         type: 'text',
         label: 'Status Column',
         placeholder: 'rename status col',
-        bind: 'case_name'
+        bind: 'status_name'
       },
       summary: {
         type: 'text',
         label: 'Summary Column',
         placeholder: 'rename summary updated',
-        bind: 'status_name'
+        bind: 'summary_name'
       }
     };
     var errorControls = [{
@@ -529,9 +530,7 @@ function Edit(props) {
       label: 'Error, No Cases',
       placeholder: "Looks like you don't have any support cases!",
       bind: 'errornocases'
-    }]; // const columns = ['casenum','date_updated','status','summary']
-    // if display.columns contains hash key then reder
-
+    }];
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["Panel"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelBody"], {
       title: "Text"
     }, display[0].columns && display[0].columns.map(function (v) {
@@ -749,19 +748,31 @@ __webpack_require__.r(__webpack_exports__);
 function save(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes; // const colnamesToStr = (ary) => ary.map((v) => v.value + "_name,").join('');
+  //grab settings related attributes and store them into an array
 
-  var genShortCodeStr = function genShortCodeStr(aryObj) {
-    return Object.entries(aryObj).map(function (_ref) {
-      var _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref, 2),
-          k = _ref2[0],
-          v = _ref2[1];
+  var blockSettings = function (_ref) {
+    var display = _ref.display,
+        text = _ref.text;
+    return [display[0], text[0]];
+  }(attributes);
 
-      if (k == 'columns') return !!v ? "".concat(k, "=\"").concat(v, "\"") : '';
+  var genShortCodeAtt = function genShortCodeAtt(aryObj) {
+    return Object.entries(aryObj).map(function (_ref2) {
+      var _ref3 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref2, 2),
+          k = _ref3[0],
+          v = _ref3[1];
+
+      return !!v && k != 'columns' ? "".concat(k, "=\"").concat(v, "\" ") : '';
     }).join(' ');
-  }; // const shortCodeStr = genShortCodeStr(text) + ' ' + genShortCodeStr(display)
+  };
 
+  var genAllShortCodeAtts = function genAllShortCodeAtts() {
+    return blockSettings.map(function (v) {
+      return genShortCodeAtt(v);
+    }).join('');
+  };
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save());
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["RawHTML"], null, "[fusedesk_mycases " + genAllShortCodeAtts() + "]"), "[" + genAllShortCodeAtts() + "]");
 }
 
 /***/ }),

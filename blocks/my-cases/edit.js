@@ -140,24 +140,24 @@ export default function Edit(props) {
 	}
 
 	const getTextPanel = () => {
+		// const columnCheck = {type:'text',label:'Case Number Column', placeholder:'Case #',bind:''}
 		const columnControls = {
-			casenum : {type:'text',label:'Case Number Column', placeholder:'Case #',bind:'case_name'},
-			date_updated : {type:'text',label:'Date Updated Column', placeholder:'rename dateupdated col',bind:'status_name'},
-			status : {type:'text',label:'Status Column', placeholder:'rename status col',bind:'case_name'},
-			summary: {type:'text',label:'Summary Column', placeholder:'rename summary updated',bind:'status_name'},
+			casenum : {type:'text',label:'Case Number Column', placeholder:'Case #',bind:'casenum_name'},
+			date_updated : {type:'text',label:'Date Updated Column', placeholder:'rename dateupdated col',bind:'date_updated_name'},
+			status : {type:'text',label:'Status Column', placeholder:'rename status col',bind:'status_name'},
+			summary: {type:'text',label:'Summary Column', placeholder:'rename summary updated',bind:'summary_name'},
 		}
 		
 		const errorControls = [
 			{type:'text',label:'Error, Not Logged In', placeholder:'Please login to view your cases',bind:'errornotloggedin'},
 			{type:'text',label:'Error, No Cases', placeholder:"Looks like you don't have any support cases!",bind:'errornocases'},
 		]
-		// const columns = ['casenum','date_updated','status','summary']
-		// if display.columns contains hash key then reder
 		return (
 			<Panel>
 				<PanelBody title="Text">
+					
+					{/* display columns text if display.columns contains hash key then reder */}
 					{ display[0].columns && display[0].columns.map((v) => renderControlObj( columnControls[v.value] ,'display') ) }
-					{/* {(display.columns).map((v) => console.log(v))} */}
 					{errorControls.map((v) => renderControlObj(v,'text'))}
 				
 				</PanelBody>

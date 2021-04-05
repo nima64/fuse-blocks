@@ -26,21 +26,21 @@ import {RawHTML} from '@wordpress/element';
  */
 export default function save(props) {
 	const {attributes,setAttributes} = props;
-	// const colnamesToStr = (ary) => ary.map((v) => v.value + "_name,").join('');
 
-	const genShortCodeStr = (aryObj) =>(
-		Object.entries(aryObj).map(
-				([k,v]) => {
-					if (k == 'columns')
-						
-					return !!v ? `${k}="${v}"` : '';
-				}
-			).join(' ')
-	) 
-	// const shortCodeStr = genShortCodeStr(text) + ' ' + genShortCodeStr(display)
+	//grab settings related attributes and store them into an array
+	const blockSettings = (({display,text}) => [display[0],text[0]])(attributes);
+
+	const genShortCodeAtt = ( aryObj ) =>
+		Object.entries( aryObj )
+			.map( ( [ k, v ] ) => ( !! v && k != 'columns' ? `${ k }="${ v }" ` : '' ) )
+			.join( ' ' );
+
+	const genAllShortCodeAtts = () => blockSettings.map( (v) => genShortCodeAtt(v) ).join('');
+
 	return (
 		<div { ...useBlockProps.save() }>
-			{/* <RawHTML>{"[fusedesk_mycases "+ shortCodeStr +"]"}</RawHTML> */}
+			<RawHTML>{"[fusedesk_mycases "+ genAllShortCodeAtts() +"]"}</RawHTML>
+			{"["+ genAllShortCodeAtts() +"]"}
 			{/* {shortCodeStr} */}
 		</div>
 	);
