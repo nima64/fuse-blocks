@@ -14,4 +14,5 @@ or
 ```
 npm run buildblock --block=blockname
 ```
-To watch, do the same except with ```startall``` and ```startblock --block=blockname```
+To watch  
+do the same except with ```startall``` and ```startblock --block=blockname```
