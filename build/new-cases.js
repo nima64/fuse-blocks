@@ -272,7 +272,7 @@ var deptOptions = [{
 var casetagOptions = [{
   label: 'please Refresh',
   value: false
-}]; //normalize reps json into {label,value} form for select
+}]; //normalize reps json into {label,value} format for Select Components
 
 var normRepsToOptions = function normRepsToOptions(repsJson) {
   return Object.entries(repsJson).map(function (_ref) {
@@ -692,8 +692,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('fus
       default: [{
         showtitle: false,
         //show title field
-        // titletext: '', //
-        titletext: 'helloworld',
+        titletext: 'Briefly, what is this request about?',
         //
         titleoptions: false
       }]
@@ -701,8 +700,8 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('fus
     formText: {
       type: 'array',
       default: [{
-        nametext: '',
-        emailtext: '',
+        nametext: 'Your name',
+        emailtext: 'Your email',
         buttontext: 'Create Support Case',
         creatingtext: 'Submitting Case...',
         successtext: 'Thanks! Your case has been created. We will get back to you shortly'
@@ -712,7 +711,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('fus
       type: 'array',
       default: [{
         suggestionplacement: 'after',
-        suggestionstext: '',
+        suggestionstext: 'May we suggest one of the following posts?',
         suggestionlimit: 10,
         suggestioncategories: ''
       }]
@@ -794,7 +793,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function save(props) {
   var attributes = props.attributes,
-      setAttributes = props.setAttributes;
+      setAttributes = props.setAttributes; //grab settings related attributes and store them into an array
 
   var blockSettings = function (_ref) {
     var caseCreation = _ref.caseCreation,
@@ -804,13 +803,9 @@ function save(props) {
         suggestedPosts = _ref.suggestedPosts,
         fileUploads = _ref.fileUploads;
     return [caseCreation[0], newCaseForm[0], caseTitle[0], formText[0], suggestedPosts[0], fileUploads[0]];
-  }(attributes); // const genShortCodeStr = ( aryObj ) =>
-  // 	Object.entries( aryObj )
-  // 		.map( ( [ k, v ] ) => ( !! v ? `${ k }="${ v }"` : '' ) )
-  // 		.join( ' ' );
+  }(attributes);
 
-
-  var genShortCodeStr = function genShortCodeStr(aryObj) {
+  var genShortCodeAtt = function genShortCodeAtt(aryObj) {
     return Object.entries(aryObj).map(function (_ref2) {
       var _ref3 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref2, 2),
           k = _ref3[0],
@@ -818,12 +813,15 @@ function save(props) {
 
       return !!v ? "".concat(k, "=\"").concat(v, "\" ") : '';
     }).join(' ');
-  }; // const shortCodeStr = genShortCodeStr( caseTitle[0] );
+  };
 
+  var genAllShortCodeAtts = function genAllShortCodeAtts() {
+    return blockSettings.map(function (v) {
+      return genShortCodeAtt(v);
+    }).join('');
+  };
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), blockSettings.map(function (v) {
-    return genShortCodeStr(v);
-  }));
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["RawHTML"], null, '[fusedesk_newcase ' + genAllShortCodeAtts() + ']'));
 }
 
 /***/ }),

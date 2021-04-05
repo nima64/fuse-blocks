@@ -53,16 +53,15 @@ registerBlockType( 'fusedesk/new-case', {
 			type: 'array',
 			default: [{
 				showtitle: false, //show title field
-				// titletext: '', //
-				titletext: 'helloworld', //
+				titletext: 'Briefly, what is this request about?', //
 				titleoptions: false,
 			}],
 		},
 		formText: {
 			type: 'array',
 			default: [{
-				nametext: '',
-				emailtext: '',
+				nametext: 'Your name',
+				emailtext: 'Your email',
 				buttontext: 'Create Support Case',
 				creatingtext: 'Submitting Case...',
 				successtext: 'Thanks! Your case has been created. We will get back to you shortly',
@@ -72,7 +71,7 @@ registerBlockType( 'fusedesk/new-case', {
 			type: 'array',
 			default: [{
 				suggestionplacement:'after',
-				suggestionstext: '',
+				suggestionstext: 'May we suggest one of the following posts?',
 				suggestionlimit: 10,
 				suggestioncategories:'',
 			}],

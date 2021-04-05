@@ -34,10 +34,12 @@ export default function save( props ) {
 			.map( ( [ k, v ] ) => ( !! v ? `${ k }="${ v }" ` : '' ) )
 			.join( ' ' );
 
+	const genAllShortCodeAtts = () => blockSettings.map( (v) => genShortCodeAtt(v) ).join('');
+
 	return (
 		<div { ...useBlockProps.save() }>
-			<RawHTML>{ '[fusedesk_newcase ' +  blockSettings.map( (v) => genShortCodeAtt(v) )+ ']' }</RawHTML>
-			{/* { blockSettings.map((v) => genShortCodeStr(v) ) } */}
+			<RawHTML>{ '[fusedesk_newcase ' +  genAllShortCodeAtts()  + ']' }</RawHTML>
+			{/* {genAllShortCodeAtts()} */}
 		</div>
 	);
 }
