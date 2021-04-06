@@ -14,7 +14,7 @@ import { __ } from "@wordpress/i18n";
 import { useBlockProps ,InspectorControls, InspectorAdvancedControls} from "@wordpress/block-editor";
 import {Panel,PanelRow,PanelBody,PanelGroup,Placeholder} from "@wordpress/components";
 import { TextControl, RangeControl,SelectControl} from "@wordpress/components";
-import MultiSelect from './MultiSelect';
+import MultiSelect from '../../lib/MultiSelect';
 // import Select from 'react-select';
 // import {useState} from 'react';
 /**
