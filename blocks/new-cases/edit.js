@@ -24,7 +24,7 @@ import {
 	RangeControl,
 } from '@wordpress/components';
 import createControlRenderer from '../../lib/createControlRenderer';
-import {rotateLeft,Icon} from '@wordpress/icons';
+import {rotateLeft,Icon,listView} from '@wordpress/icons';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -32,6 +32,7 @@ import {rotateLeft,Icon} from '@wordpress/icons';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import "./editor.scss";
+import FDIcon from '../../fdico';
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -45,28 +46,36 @@ const WP_BASEURL = 'http://localhost/wordpress/'
 const REPS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_reps&refresh=1';
 const DEPTS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_departments&refresh=1';
 const CASETAGS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_casetags&refresh=1';
+const CATEGORIES_ENDPOINT = '/wp-json/wp/v2/categories/';
 
 let repOptions = [{label:'please Refresh', value:false}];
 let deptOptions = [{label:'please Refresh', value:false}];
 let casetagOptions = [{label:'please Refresh', value:false}];
+let categoryOptions = [{label:'please Refresh', value:false}];
 
 //normalize reps json into {label,value} format for Select Components
-const normRepsToOptions = (repsJson) => Object.entries(repsJson).map(([v,k]) => ({label:k,value:v}) );
+const normJsonToOptions = (repsJson) => Object.entries(repsJson).map(([v,k]) => ({label:k,value:v}) );
 
-const fetchOptions = (options, endpoint) => {
-	fetch(WP_BASEURL + endpoint,{
-	    method:'GET'
-	})
-	.then(req => req.json())
-	.then(json => {
-		normRepsToOptions(json).forEach((v,i) => { options[i] = v }); //takes normalized options and inserts them into options
-		console.log(options, json);
-		console.log('executed fetch from new-case');
-		let refreshbtn = document.body.querySelector('#refreshme');
-		if(refreshbtn)
-			refreshbtn.click();
-	});
+function composeOptionsFetcher(normalizer) {
+	return function(options,endpoint){
+		fetch(WP_BASEURL + endpoint,{
+			method:'GET'
+		})
+		.then(req => req.json())
+		.then(json => {
+			normalizer(json).forEach((v,i) => { options[i] = v }); //inserts into options
+			console.log(options, json);
+			console.log('executed fetch from new-case');
+			let refreshbtn = document.body.querySelector('#refreshme');
+			if(refreshbtn)
+				refreshbtn.click();
+		});
+	}
 }
+
+const fetchOptions = composeOptionsFetcher(normJsonToOptions);
+const normCat = ( jsonData ) => jsonData.map( (obj) => ( { label:obj['name'], value:obj['id'] } ) );
+const fetchCategories = composeOptionsFetcher(normCat);
 
 //Singleton that pulls data on mount and updates options
 class OptionsPuller extends React.Component{
@@ -77,6 +86,7 @@ class OptionsPuller extends React.Component{
 		fetchOptions(repOptions,REPS_ENDPOINT);
 		fetchOptions(deptOptions,DEPTS_ENDPOINT);
 		fetchOptions(casetagOptions,CASETAGS_ENDPOINT);
+		fetchCategories(categoryOptions, CATEGORIES_ENDPOINT);
 	}
 	render(){
 		return '';
@@ -198,8 +208,8 @@ export default function Edit( props ) {
 		const controlsData = [
 			{type:'select',label:'Suggestions Placement',options:options.placement,bind:'suggestionplacement'},
 			{type:'text',label:'Suggestions Label',placeholder:"May we suggest one of the following posts?",bind:'suggestionstext'},
-			{type:'range', min:1,max:100,label:'Suggestions Limit', bind:'suggestionlimit'},
-			{type:'select',label:'Suggestions Category',options:options.category,bind:'suggestioncategories'},
+			{type:'range', min:1,max:100,label:'How many suggestions should we show?', bind:'suggestionlimit'},
+			{type:'multiSelect',label:'Suggestions Category',options:categoryOptions,bind:'suggestioncategories'},
 		]
 		return (
 			<Panel>
@@ -285,10 +295,14 @@ export default function Edit( props ) {
 			{ getInspectorControls() }
 			<OptionsPuller />
 			<Placeholder
+				// icon={<Icon icon={FDIcon} />}
 				label="FuseDesk New Case"
-				instructions="Click on the settings gear icon to get started!"
-			/>
+				instructions="Allow your website visitors to create a new case form in FuseDesk."
+			>
+				<span className="dashicons dashicons-admin-generic"></span>&nbsp; Click on the settings icon to start customizing!
+			</Placeholder>
 			{getRefreshButton()}
+
 			{/* {displayAllShortCodeAtts()} */}
 		</div>
 	);

@@ -73,7 +73,7 @@ registerBlockType( 'fusedesk/new-case', {
 				suggestionplacement:'after',
 				suggestionstext: 'May we suggest one of the following posts?',
 				suggestionlimit: 10,
-				suggestioncategories:'',
+				suggestioncategories:[],
 			}],
 		},
 		fileUploads: {

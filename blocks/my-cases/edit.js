@@ -202,7 +202,6 @@ export default function Edit(props) {
 		)) 
 	);
 
-
 	return (
 		<div { ...useBlockProps() }>
 			{getInspectorControls()}
