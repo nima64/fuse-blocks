@@ -302,7 +302,7 @@ function composeOptionsFetcher(normalizer) {
       return req.json();
     }).then(function (json) {
       normalizer(json).forEach(function (v, i) {
-        options[i + 1] = v;
+        options[i] = v;
       }); //inserts into options
 
       console.log(options, json);
@@ -849,7 +849,7 @@ function save(props) {
       if (k == "suggestioncategories") {
         return "suggestioncategories=\"".concat(v.map(function (_v) {
           return _v.value;
-        }).join(','), "\"");
+        }).join(','), "\" ");
       }
 
       return !!v ? "".concat(k, "=\"").concat(v, "\" ") : '';

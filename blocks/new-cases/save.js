@@ -33,7 +33,7 @@ export default function save( props ) {
 		Object.entries( aryObj )
 			.map( ( [ k, v ] ) => {
 				if (k == "suggestioncategories"){
-					return `suggestioncategories="${v.map((_v) => _v.value ).join(',')}"`;
+					return `suggestioncategories="${v.map((_v) => _v.value ).join(',')}" `;
 				}
 				return !! v ? `${ k }="${ v }" ` : ''
 			}  ) 

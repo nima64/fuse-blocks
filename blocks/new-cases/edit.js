@@ -63,7 +63,7 @@ function composeOptionsFetcher(normalizer) {
 		})
 		.then(req => req.json())
 		.then(json => {
-			normalizer(json).forEach((v,i) => { options[i+1] = v }); //inserts into options
+			normalizer(json).forEach((v,i) => { options[i] = v }); //inserts into options
 			console.log(options, json);
 			console.log('executed fetch from new-case');
 			let refreshbtn = document.body.querySelector('#refreshme');
