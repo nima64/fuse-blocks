@@ -58,8 +58,6 @@ registerBlockType( 'fusedesk/my-cases', {
 		customStyles:{
 			type:'text',
 		}
-
-		
 	},
 
 	/**
