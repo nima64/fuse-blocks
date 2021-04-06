@@ -192,9 +192,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _lib_MultiSelect__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib/MultiSelect */ "./lib/MultiSelect.js");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./editor.scss */ "./blocks/my-cases/editor.scss");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _lib_createControlRenderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib/createControlRenderer */ "./lib/createControlRenderer.js");
+/* harmony import */ var _lib_MultiSelect__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib/MultiSelect */ "./lib/MultiSelect.js");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./editor.scss */ "./blocks/my-cases/editor.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_8__);
 
 
 
@@ -215,6 +216,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
+
 
 
 
@@ -259,59 +261,7 @@ function Edit(props) {
     setAttributes(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()({}, aryName, temp));
   };
 
-  var renderControlObj = function renderControlObj(obj, attAry) {
-    switch (obj.type) {
-      case 'check':
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(CheckboxControl, {
-          label: obj.label,
-          checked: attributes[attAry][0][obj.bind],
-          onChange: function onChange(newval) {
-            return mutAryItem(newval, obj.bind, attAry);
-          }
-        });
-
-      case 'text':
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["TextControl"], {
-          label: obj.label,
-          value: attributes[attAry][0][obj.bind],
-          placeholder: obj.placeholder,
-          onChange: function onChange(newval) {
-            return mutAryItem(newval, obj.bind, attAry);
-          }
-        });
-
-      case 'select':
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["SelectControl"], {
-          label: obj.label,
-          value: attributes[attAry][0][obj.bind],
-          options: obj.options,
-          onChange: function onChange(newval) {
-            mutAryItem(newval, obj.bind, attAry);
-            console.log(newval);
-          }
-        });
-
-      case 'multiSelect':
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_lib_MultiSelect__WEBPACK_IMPORTED_MODULE_6__["default"], {
-          label: obj.label,
-          value: attributes[attAry][0][obj.bind],
-          options: obj.options,
-          onChange: function onChange(newval) {
-            return mutAryItem(newval, obj.bind, attAry);
-          }
-        });
-
-      case 'range':
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["RangeControl"], {
-          min: obj.min,
-          max: obj.max,
-          value: attributes[attAry][0][obj.bind],
-          onChange: function onChange(newval) {
-            return mutAryItem(newval, obj.bind, attAry);
-          }
-        });
-    }
-  };
+  var renderControlObj = Object(_lib_createControlRenderer__WEBPACK_IMPORTED_MODULE_6__["default"])(props);
 
   var getDisplayPanel = function getDisplayPanel() {
     var statusShared = [{
@@ -907,6 +857,106 @@ var GSelect = /*#__PURE__*/function (_Select) {
 }(react_select__WEBPACK_IMPORTED_MODULE_8__["default"]);
 
 
+
+/***/ }),
+
+/***/ "./lib/createControlRenderer.js":
+/*!**************************************!*\
+  !*** ./lib/createControlRenderer.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _MultiSelect__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./MultiSelect */ "./lib/MultiSelect.js");
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+/**
+* Closure takes attributes from props and returns function that renders controls
+* @param  {string} props 
+* @returns {(obj,attAry) => void} function
+*/
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
+  var attributes = _ref.attributes,
+      setAttributes = _ref.setAttributes;
+
+  // let attributes = attributes; 
+  var mutAryItem = function mutAryItem(newval, key, attName) {
+    var temp = [_objectSpread({}, attributes[attName][0])];
+    temp[0][key] = newval;
+    setAttributes(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()({}, attName, temp));
+  };
+
+  return function (obj, attAry) {
+    switch (obj.type) {
+      case 'check':
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["CheckboxControl"], {
+          label: obj.label,
+          checked: attributes[attAry][0][obj.bind],
+          onChange: function onChange(newval) {
+            return mutAryItem(newval, obj.bind, attAry);
+          }
+        });
+
+      case 'text':
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["TextControl"], {
+          label: obj.label,
+          value: attributes[attAry][0][obj.bind],
+          placeholder: obj.placeholder,
+          onChange: function onChange(newval) {
+            return mutAryItem(newval, obj.bind, attAry);
+          }
+        });
+
+      case 'multiSelect':
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_MultiSelect__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          label: obj.label,
+          value: attributes[attAry][0][obj.bind],
+          options: obj.options,
+          onChange: function onChange(newval) {
+            return mutAryItem(newval, obj.bind, attAry);
+          }
+        });
+
+      case 'select':
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["SelectControl"], {
+          label: obj.label,
+          value: attributes[attAry][0][obj.bind],
+          options: obj.options,
+          onChange: function onChange(newval) {
+            return mutAryItem(newval, obj.bind, attAry);
+          }
+        });
+
+      case 'range':
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["RangeControl"], {
+          min: obj.min,
+          max: obj.max,
+          label: obj.label,
+          value: attributes[attAry][0][obj.bind],
+          onChange: function onChange(newval) {
+            return mutAryItem(newval, obj.bind, attAry);
+          }
+        });
+    }
+  };
+});
+;
 
 /***/ }),
 

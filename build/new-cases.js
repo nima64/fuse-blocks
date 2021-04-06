@@ -265,19 +265,19 @@ var DEPTS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_departments&refre
 var CASETAGS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_casetags&refresh=1';
 var CATEGORIES_ENDPOINT = '/wp-json/wp/v2/categories/';
 var repOptions = [{
-  label: 'please Refresh',
+  label: 'Reps',
   value: false
 }];
 var deptOptions = [{
-  label: 'please Refresh',
+  label: 'Departments',
   value: false
 }];
 var casetagOptions = [{
-  label: 'please Refresh',
+  label: 'Casetags',
   value: false
 }];
 var categoryOptions = [{
-  label: 'please Refresh',
+  label: 'Category',
   value: false
 }]; //normalize reps json into {label,value} format for Select Components
 
@@ -302,7 +302,7 @@ function composeOptionsFetcher(normalizer) {
       return req.json();
     }).then(function (json) {
       normalizer(json).forEach(function (v, i) {
-        options[i] = v;
+        options[i + 1] = v;
       }); //inserts into options
 
       console.log(options, json);
@@ -444,7 +444,7 @@ function Edit(props) {
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_10__["TextControl"], {
       label: "Case Title Options (for a drop down selection)",
       placeholder: "Case Title Options, oner per line, optional",
-      value: caseTitle[0].titleoptions,
+      value: caseTitle[0].titleoptions ? caseTitle[0].titleoptions : '',
       onChange: function onChange(v) {
         return mutAryItem(v, 'titleoptions', 'caseTitle');
       }
@@ -717,26 +717,34 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('fus
       default: [{
         showtitle: false,
         //show title field
-        titletext: 'Briefly, what is this request about?',
+        // titletext: 'Briefly, what is this request about?', //
+        titletext: '',
         //
+        // titletext: '', //
         titleoptions: false
       }]
     },
     formText: {
       type: 'array',
       default: [{
-        nametext: 'Your name',
-        emailtext: 'Your email',
-        buttontext: 'Create Support Case',
-        creatingtext: 'Submitting Case...',
-        successtext: 'Thanks! Your case has been created. We will get back to you shortly'
+        // nametext: 'Your name',
+        // emailtext: 'Your email',
+        // buttontext: 'Create Support Case',
+        // creatingtext: 'Submitting Case...',
+        // successtext: 'Thanks! Your case has been created. We will get back to you shortly',
+        nametext: '',
+        emailtext: '',
+        buttontext: '',
+        creatingtext: '',
+        successtext: ''
       }]
     },
     suggestedPosts: {
       type: 'array',
       default: [{
         suggestionplacement: 'after',
-        suggestionstext: 'May we suggest one of the following posts?',
+        // suggestionstext: 'May we suggest one of the following posts?',
+        suggestionstext: '',
         suggestionlimit: 10,
         suggestioncategories: []
       }]
@@ -747,8 +755,10 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('fus
         fileupload: false,
         filerequired: false,
         filesmultiple: true,
-        filetext: 'Attach a File',
-        filetypesallowed: 'image/*,audio/*,application/pdf'
+        // filetext: 'Attach a File',
+        // filetypesallowed: 'image/*,audio/*,application/pdf',
+        filetext: '',
+        filetypesallowed: ''
       }]
     },
     refreshMe: {
@@ -836,6 +846,12 @@ function save(props) {
           k = _ref3[0],
           v = _ref3[1];
 
+      if (k == "suggestioncategories") {
+        return "suggestioncategories=\"".concat(v.map(function (_v) {
+          return _v.value;
+        }).join(','), "\"");
+      }
+
       return !!v ? "".concat(k, "=\"").concat(v, "\" ") : '';
     }).join(' ');
   };
@@ -846,6 +862,13 @@ function save(props) {
     }).join('');
   };
 
+  var _formText = {
+    nametext: 'Your name',
+    emailtext: 'Your email',
+    buttontext: 'Create Support Case',
+    creatingtext: 'Submitting Case...',
+    successtext: 'Thanks! Your case has been created. We will get back to you shortly'
+  };
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["RawHTML"], null, '[fusedesk_newcase ' + genAllShortCodeAtts() + ']'));
 }
 

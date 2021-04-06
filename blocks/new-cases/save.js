@@ -31,11 +31,22 @@ export default function save( props ) {
 
 	const genShortCodeAtt = ( aryObj ) =>
 		Object.entries( aryObj )
-			.map( ( [ k, v ] ) => ( !! v ? `${ k }="${ v }" ` : '' ) )
+			.map( ( [ k, v ] ) => {
+				if (k == "suggestioncategories"){
+					return `suggestioncategories="${v.map((_v) => _v.value ).join(',')}"`;
+				}
+				return !! v ? `${ k }="${ v }" ` : ''
+			}  ) 
 			.join( ' ' );
 
 	const genAllShortCodeAtts = () => blockSettings.map( (v) => genShortCodeAtt(v) ).join('');
-
+	const _formText = {
+		nametext: 'Your name',
+		emailtext: 'Your email',
+		buttontext: 'Create Support Case',
+		creatingtext: 'Submitting Case...',
+		successtext: 'Thanks! Your case has been created. We will get back to you shortly',
+	}
 	return (
 		<div { ...useBlockProps.save() }>
 			<RawHTML>{ '[fusedesk_newcase ' +  genAllShortCodeAtts()  + ']' }</RawHTML>

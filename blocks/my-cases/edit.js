@@ -14,6 +14,8 @@ import { __ } from "@wordpress/i18n";
 import { useBlockProps ,InspectorControls, InspectorAdvancedControls} from "@wordpress/block-editor";
 import {Panel,PanelRow,PanelBody,PanelGroup,Placeholder} from "@wordpress/components";
 import { TextControl, RangeControl,SelectControl} from "@wordpress/components";
+
+import createControlRenderer from '../../lib/createControlRenderer';
 import MultiSelect from '../../lib/MultiSelect';
 // import Select from 'react-select';
 // import {useState} from 'react';
@@ -51,47 +53,8 @@ export default function Edit(props) {
 		setAttributes( { [ aryName ]: temp } );
 	};
 
-	const renderControlObj = (obj,attAry) => {
-		switch (obj.type) {
-			case 'check':
-				return (
-					<CheckboxControl  
-						label={obj.label}
-						checked={attributes[attAry][0][obj.bind]} 
-						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)}  />);	
-			case 'text' :
-				return (					
-					<TextControl 
-						label={obj.label}
-						value={attributes[attAry][0][obj.bind]} 
-						placeholder={obj.placeholder}
-						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)} />);
-			case 'select':
-				return (					
-					<SelectControl 
-						label={obj.label}
-						value={attributes[attAry][0][obj.bind]} 
-						options={obj.options}
-						onChange={(newval) => {mutAryItem(newval,obj.bind,attAry); console.log(newval)}} />);
 
-			case 'multiSelect':
-				return (					
-					<MultiSelect 
-						label={obj.label}
-						value={attributes[attAry][0][obj.bind]} 
-						options={obj.options}
-						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)} />);
-
-			case 'range' :
-				return (
-					<RangeControl 
-						min={obj.min}	
-						max={obj.max}
-						value={attributes[attAry][0][obj.bind]}
-						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)} />
-				);
-		}
-	}
+	const renderControlObj = createControlRenderer(props);
 
 	const getDisplayPanel = () => {
 		const statusShared = [

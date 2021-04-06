@@ -48,10 +48,10 @@ const DEPTS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_departments&ref
 const CASETAGS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_casetags&refresh=1';
 const CATEGORIES_ENDPOINT = '/wp-json/wp/v2/categories/';
 
-let repOptions = [{label:'please Refresh', value:false}];
-let deptOptions = [{label:'please Refresh', value:false}];
-let casetagOptions = [{label:'please Refresh', value:false}];
-let categoryOptions = [{label:'please Refresh', value:false}];
+let repOptions = [{label:'Reps', value:false}];
+let deptOptions = [{label:'Departments', value:false}];
+let casetagOptions = [{label:'Casetags', value:false}];
+let categoryOptions = [{label:'Category', value:false}];
 
 //normalize reps json into {label,value} format for Select Components
 const normJsonToOptions = (repsJson) => Object.entries(repsJson).map(([v,k]) => ({label:k,value:v}) );
@@ -63,7 +63,7 @@ function composeOptionsFetcher(normalizer) {
 		})
 		.then(req => req.json())
 		.then(json => {
-			normalizer(json).forEach((v,i) => { options[i] = v }); //inserts into options
+			normalizer(json).forEach((v,i) => { options[i+1] = v }); //inserts into options
 			console.log(options, json);
 			console.log('executed fetch from new-case');
 			let refreshbtn = document.body.querySelector('#refreshme');
@@ -168,7 +168,7 @@ export default function Edit( props ) {
 						<TextControl
 							label="Case Title Options (for a drop down selection)"
 							placeholder="Case Title Options, oner per line, optional"
-							value = { caseTitle[0].titleoptions }
+							value = { caseTitle[0].titleoptions?caseTitle[0].titleoptions : '' }
 							onChange = {(v) => mutAryItem(v,'titleoptions','caseTitle')}
 						/>
 						</>
