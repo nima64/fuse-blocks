@@ -7,7 +7,7 @@
 	"supports": {
 		"html": false
 	},
-	"textdomain": "new-case",
+	"textdomain": "fusedesk",
 	"editorScript": "file:../../build/new-cases.js",
 	"editorStyle": "file:../../build/new-cases.css",
 	"style": "file:../../build/style-new-cases.css"

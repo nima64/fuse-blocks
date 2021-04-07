@@ -236,8 +236,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
+ * @param props
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- *
  * @return {WPElement} Element to render.
  */
 // const [selectedOption, setSelectedOption] = useState(null);
@@ -249,11 +249,12 @@ function Edit(props) {
       text = attributes.text;
   /**
    * Change an Attribute Array's key value
-   * @param  {string} newval 
-   * @param  {string} key 
+   *
+   * @param  {string} newval
+   * @param  {string} key
    * @param  {string} aryName an attribute of type array
    * @return {void}
-  */
+   */
 
   var mutAryItem = function mutAryItem(newval, key, aryName) {
     var temp = [_objectSpread({}, attributes[aryName][0])];
@@ -265,44 +266,44 @@ function Edit(props) {
 
   var getDisplayPanel = function getDisplayPanel() {
     var statusShared = [{
-      label: "All",
-      value: "all"
+      label: 'All',
+      value: 'all'
     }, {
-      label: "Active",
-      value: "active"
+      label: 'Active',
+      value: 'active'
     }, {
-      label: "New",
+      label: 'New',
       value: 'new'
     }, {
-      label: "Open",
+      label: 'Open',
       value: 'open'
     }, {
-      label: "Closed",
+      label: 'Closed',
       value: 'closed'
     }];
     var options = {
       columns: [// {label: "Case Number, Date Updated, Status, Summary", value:"casenum,date_updated,status,summary"}
       {
-        label: "Case Number",
+        label: 'Case Number',
         value: 'casenum'
       }, {
-        label: "Date Updated",
+        label: 'Date Updated',
         value: 'date_updated'
       }, {
-        label: "Status",
+        label: 'Status',
         value: 'status'
       }, {
-        label: "Summary",
+        label: 'Summary',
         value: 'summary'
       }],
       status: statusShared,
       userstatus: statusShared,
       orderby: [{
-        label: "Oldest to Newest",
-        value: "date_updated"
+        label: 'Oldest to Newest',
+        value: 'date_updated'
       }, {
-        label: "Dated Opened",
-        value: "date_opened"
+        label: 'Dated Opened',
+        value: 'date_opened'
       }],
       dateformat: [{
         label: 'M j, Y g:ia'
@@ -595,8 +596,8 @@ __webpack_require__.r(__webpack_exports__);
  * be combined into the final markup, which is then serialized by the block
  * editor into `post_content`.
  *
+ * @param props
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
  * @return {WPElement} Element to render.
  */
 
@@ -626,7 +627,7 @@ function save(props) {
     }).join('');
   };
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["RawHTML"], null, "[fusedesk_mycases " + genAllShortCodeAtts() + "]"), "[" + genAllShortCodeAtts() + "]");
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["RawHTML"], null, '[fusedesk_mycases ' + genAllShortCodeAtts() + ']'), '[' + genAllShortCodeAtts() + ']');
 }
 
 /***/ }),
@@ -903,24 +904,26 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
   };
 
   return function (obj, attAry) {
+    var fbind = function fbind(newval) {
+      return mutAryItem(newval, obj.bind, attAry);
+    };
+
+    var val = attributes[attAry][0][obj.bind];
+
     switch (obj.type) {
       case 'check':
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["CheckboxControl"], {
           label: obj.label,
           checked: attributes[attAry][0][obj.bind],
-          onChange: function onChange(newval) {
-            return mutAryItem(newval, obj.bind, attAry);
-          }
+          onChange: fbind
         });
 
       case 'text':
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["TextControl"], {
           label: obj.label,
-          value: attributes[attAry][0][obj.bind],
+          value: val ? val : '',
           placeholder: obj.placeholder,
-          onChange: function onChange(newval) {
-            return mutAryItem(newval, obj.bind, attAry);
-          }
+          onChange: fbind
         });
 
       case 'multiSelect':
@@ -938,9 +941,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
           label: obj.label,
           value: attributes[attAry][0][obj.bind],
           options: obj.options,
-          onChange: function onChange(newval) {
-            return mutAryItem(newval, obj.bind, attAry);
-          }
+          onChange: fbind
         });
 
       case 'range':
@@ -949,9 +950,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
           max: obj.max,
           label: obj.label,
           value: attributes[attAry][0][obj.bind],
-          onChange: function onChange(newval) {
-            return mutAryItem(newval, obj.bind, attAry);
-          }
+          onChange: fbind
         });
     }
   };

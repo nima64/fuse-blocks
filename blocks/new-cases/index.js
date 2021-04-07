@@ -3,8 +3,9 @@
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
+import {__} from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import {Icon} from '@wordpress/icons';
+import { Icon } from '@wordpress/icons';
 import fdico from '../../fdico';
 
 /**
@@ -32,74 +33,88 @@ registerBlockType( 'fusedesk/new-case', {
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
 	apiVersion: 2,
-	icon: <Icon icon={fdico} />,
+	icon: <Icon icon={ fdico } />,
+	title: 'new case',
+	description: __('Allow your website visitors to create a new case in FuseDesk','fusedesk'),
 	attributes: {
 		caseCreation: {
 			type: 'array',
-			default: [{
-				department: false,
-				rep: false,
-				casetagids: false,
-			}],
+			default: [
+				{
+					department: false,
+					rep: false,
+					casetagids: false,
+				},
+			],
 		},
 		newCaseForm: {
 			type: 'array',
-			default: [{
-				hideknowndata: false,
-				sucessredirect: '',
-			}],
+			default: [
+				{
+					hideknowndata: false,
+					sucessredirect: '',
+				},
+			],
 		},
 		caseTitle: {
 			type: 'array',
-			default: [{
-				showtitle: false, //show title field
-				// titletext: 'Briefly, what is this request about?', //
-				titletext: '', //
-				// titletext: '', //
-				titleoptions: false,
-			}],
+			default: [
+				{
+					showtitle: false, //show title field
+					// titletext: 'Briefly, what is this request about?', //
+					titletext: '', //
+					// titletext: '', //
+					titleoptions: false,
+				},
+			],
 		},
 		formText: {
 			type: 'array',
-			default: [{
-				// nametext: 'Your name',
-				// emailtext: 'Your email',
-				// buttontext: 'Create Support Case',
-				// creatingtext: 'Submitting Case...',
-				// successtext: 'Thanks! Your case has been created. We will get back to you shortly',
-				nametext: '',
-				emailtext: '',
-				buttontext: '',
-				creatingtext: '',
-				successtext: '',
-			}],
+			default: [
+				{
+					// nametext: 'Your name',
+					// emailtext: 'Your email',
+					// buttontext: 'Create Support Case',
+					// creatingtext: 'Submitting Case...',
+					// successtext: 'Thanks! Your case has been created. We will get back to you shortly',
+					nametext: '',
+					emailtext: '',
+					buttontext: '',
+					creatingtext: '',
+					successtext: '',
+				},
+			],
 		},
 		suggestedPosts: {
 			type: 'array',
-			default: [{
-				suggestionplacement:'after',
-				// suggestionstext: 'May we suggest one of the following posts?',
-				suggestionstext: '',
-				suggestionlimit: 10,
-				suggestioncategories:[],
-			}],
+			default: [
+				{
+					suggestionplacement: 'after',
+					// suggestionstext: 'May we suggest one of the following posts?',
+					suggestionstext: '',
+					suggestionlimit: 10,
+					suggestioncategories: [],
+				},
+			],
 		},
 		fileUploads: {
 			type: 'array',
-			default: [{
-				fileupload: false,
-				filerequired: false,
-				filesmultiple: true,
-				// filetext: 'Attach a File',
-				// filetypesallowed: 'image/*,audio/*,application/pdf',
-				filetext: '',
-				filetypesallowed: '',
-			}],
+			default: [
+				{
+					fileupload: false,
+					filerequired: false,
+					filesmultiple: true,
+					// filetext: 'Attach a File',
+					// filetypesallowed: 'image/*,audio/*,application/pdf',
+					filetext: '',
+					filetypesallowed: '',
+				},
+			],
 		},
-		refreshMe:{
+		refreshMe: {
 			type: 'int',
 			default: 0,
-		}
+		},
 	},
 
 	/**

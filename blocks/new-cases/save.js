@@ -19,38 +19,58 @@ import { RawHTML } from '@wordpress/element';
  * be combined into the final markup, which is then serialized by the block
  * editor into `post_content`.
  *
+ * @param props
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
  * @return {WPElement} Element to render.
  */
 export default function save( props ) {
 	const { attributes, setAttributes } = props;
 
 	//grab settings related attributes and store them into an array
-	const blockSettings = (({caseCreation,newCaseForm,caseTitle,formText,suggestedPosts,fileUploads}) => [caseCreation[0],newCaseForm[0],caseTitle[0],formText[0],suggestedPosts[0],fileUploads[0]])(attributes);
+	const blockSettings = ( ( {
+		caseCreation,
+		newCaseForm,
+		caseTitle,
+		formText,
+		suggestedPosts,
+		fileUploads,
+	} ) => [
+		caseCreation[ 0 ],
+		newCaseForm[ 0 ],
+		caseTitle[ 0 ],
+		formText[ 0 ],
+		suggestedPosts[ 0 ],
+		fileUploads[ 0 ],
+	] )( attributes );
 
 	const genShortCodeAtt = ( aryObj ) =>
 		Object.entries( aryObj )
 			.map( ( [ k, v ] ) => {
-				if (k == "suggestioncategories"){
-					return `suggestioncategories="${v.map((_v) => _v.value ).join(',')}" `;
+				if ( k == 'suggestioncategories' ) {
+					return `suggestioncategories="${ v
+						.map( ( _v ) => _v.value )
+						.join( ',' ) }" `;
 				}
-				return !! v ? `${ k }="${ v }" ` : ''
-			}  ) 
+				return !! v ? `${ k }="${ v }" ` : '';
+			} )
 			.join( ' ' );
 
-	const genAllShortCodeAtts = () => blockSettings.map( (v) => genShortCodeAtt(v) ).join('');
+	const genAllShortCodeAtts = () =>
+		blockSettings.map( ( v ) => genShortCodeAtt( v ) ).join( '' );
 	const _formText = {
 		nametext: 'Your name',
 		emailtext: 'Your email',
 		buttontext: 'Create Support Case',
 		creatingtext: 'Submitting Case...',
-		successtext: 'Thanks! Your case has been created. We will get back to you shortly',
-	}
+		successtext:
+			'Thanks! Your case has been created. We will get back to you shortly',
+	};
 	return (
 		<div { ...useBlockProps.save() }>
-			<RawHTML>{ '[fusedesk_newcase ' +  genAllShortCodeAtts()  + ']' }</RawHTML>
-			{/* {genAllShortCodeAtts()} */}
+			<RawHTML>
+				{ '[fusedesk_newcase ' + genAllShortCodeAtts() + ']' }
+			</RawHTML>
+			{ /* {genAllShortCodeAtts()} */ }
 		</div>
 	);
 }

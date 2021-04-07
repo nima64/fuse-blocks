@@ -24,14 +24,15 @@ import {
 	RangeControl,
 } from '@wordpress/components';
 import createControlRenderer from '../../lib/createControlRenderer';
-import {rotateLeft,Icon,listView} from '@wordpress/icons';
+import NewCaseInspectorControls from './NewCaseInspectorControls';
+import { rotateLeft, Icon, listView } from '@wordpress/icons';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import "./editor.scss";
+import './editor.scss';
 import FDIcon from '../../fdico';
 /**
  * The edit function describes the structure of your block in the context of the
@@ -42,268 +43,79 @@ import FDIcon from '../../fdico';
  * @return {WPElement} Element to render.
  */
 
-const WP_BASEURL = 'http://localhost/wordpress/'
-const REPS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_reps&refresh=1';
-const DEPTS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_departments&refresh=1';
-const CASETAGS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_casetags&refresh=1';
-const CATEGORIES_ENDPOINT = '/wp-json/wp/v2/categories/';
-
-let repOptions = [{label:'Reps', value:false}];
-let deptOptions = [{label:'Departments', value:false}];
-let casetagOptions = [{label:'Casetags', value:false}];
-let categoryOptions = [{label:'Category', value:false}];
-
-//normalize reps json into {label,value} format for Select Components
-const normJsonToOptions = (repsJson) => Object.entries(repsJson).map(([v,k]) => ({label:k,value:v}) );
-
-function composeOptionsFetcher(normalizer) {
-	return function(options,endpoint){
-		fetch(WP_BASEURL + endpoint,{
-			method:'GET'
-		})
-		.then(req => req.json())
-		.then(json => {
-			normalizer(json).forEach((v,i) => { options[i] = v }); //inserts into options
-			console.log(options, json);
-			console.log('executed fetch from new-case');
-			let refreshbtn = document.body.querySelector('#refreshme');
-			if(refreshbtn)
-				refreshbtn.click();
-		});
-	}
-}
-
-const fetchOptions = composeOptionsFetcher(normJsonToOptions);
-const normCat = ( jsonData ) => jsonData.map( (obj) => ( { label:obj['name'], value:obj['id'] } ) );
-const fetchCategories = composeOptionsFetcher(normCat);
-
-//Singleton that pulls data on mount and updates options
-class OptionsPuller extends React.Component{
-	constructor (props){
-		super(props);
-	}
-	componentDidMount(){
-		fetchOptions(repOptions,REPS_ENDPOINT);
-		fetchOptions(deptOptions,DEPTS_ENDPOINT);
-		fetchOptions(casetagOptions,CASETAGS_ENDPOINT);
-		fetchCategories(categoryOptions, CATEGORIES_ENDPOINT);
-	}
-	render(){
-		return '';
-	}
-}
 export default function Edit( props ) {
-	
 	const { attributes, setAttributes } = props;
-	const {caseCreation,newCaseForm,caseTitle,formText,suggestedPosts,fileUploads,test} = attributes;
+	const {
+		caseCreation,
+		newCaseForm,
+		caseTitle,
+		formText,
+		suggestedPosts,
+		fileUploads,
+		test,
+	} = attributes;
 
 	/**
 	 * Change an Attribute Array's key value
-	 * @param  {string} newval 
-	 * @param  {string} key 
+	 *
+	 * @param  {string} newval
+	 * @param  {string} key
 	 * @param  {string} attName name of the attribute of type array
-	 * @returns {void}
-	*/
+	 * @return {void}
+	 */
 	const mutAryItem = ( newval, key, attName ) => {
-		let temp = [{...attributes[ attName ][0]}] ;
-		temp[0][ key ] = newval;
+		const temp = [ { ...attributes[ attName ][ 0 ] } ];
+		temp[ 0 ][ key ] = newval;
 		setAttributes( { [ attName ]: temp } );
 	};
 
-	const renderControlObj = createControlRenderer(props);
-
-	const getCaseCreationPanel = () => {
-		const controlsData = [
-			{type:'select',label:'Department',options:repOptions,bind:'department'},
-			{type:'select',label:'Rep Assignment',options:deptOptions,bind:'rep'},
-			{type:'select',label:'Case Tags to Apply',options:casetagOptions,bind:'casetagids'},
-		]
-		return (
-			<Panel>
-				<PanelBody title="Case Creation">
-					{controlsData.map((v) => renderControlObj(v,'caseCreation'))}
-				</PanelBody>
-			</Panel>
-		);
-	};
-	const getNewCaseFormPanel = () => {
-		return (
-			<Panel>
-				<PanelBody title="New Case Form">
-					<CheckboxControl 
-						label="Hide Known Data?"
-						checked={ newCaseForm[0].hideknowndata }
-						onChange= {()=> {mutAryItem(!newCaseForm[0].hideknowndata,'hideknowndata','newCaseForm')} }
-					/>
-					<TextControl
-						label="Sucess Redirect URL"
-						placeholder="Don't Redirect"
-						value = { newCaseForm[0].sucessredirect}
-						onChange= { (v) => mutAryItem(v,'sucessredirect','newCaseForm') }
-					/>
-				</PanelBody>
-			</Panel>
-		);
-	};
-	const getCaseTitlePanel = () => {
-
-		return (
-			<Panel>
-				<PanelBody title="Case Title">
-					<CheckboxControl 
-						label="Show a title field?"
-						checked = { caseTitle[0].showtitle }
-						onChange = {(v) => mutAryItem(v,'showtitle','caseTitle')}
-					/>
-					{ 
-						///show other options only when showtitle checked
-						caseTitle[0].showtitle &&
-						<>
-						<TextControl
-							label="Case Title Label"
-							placeholder="Briefly, what is the request about?"
-							value = { caseTitle[0].titletext }
-							onChange = {(v) => mutAryItem(v,'titletext','caseTitle')}
-						/>
-						<TextControl
-							label="Case Title Options (for a drop down selection)"
-							placeholder="Case Title Options, oner per line, optional"
-							value = { caseTitle[0].titleoptions?caseTitle[0].titleoptions : '' }
-							onChange = {(v) => mutAryItem(v,'titleoptions','caseTitle')}
-						/>
-						</>
-					}
-				</PanelBody>
-			</Panel>
-		);
-	};
-	const getFormTextPanel = () => {
-		const textControldata = [
-			{type:'text', label:'Name Label',placeholder:'Your Name',bind:'nametext'},
-			{type:'text', label:'Email Label',placeholder:'Your Email Adress',bind:'emailtext'},
-			{type:'text', label:'Button Text',placeholder:'Create Support Case',bind:'buttontext'},
-			{type:'text', label:'Creating Text',placeholder:'Submitting Case...',bind:'creatingtext'},
-			{type:'text', label:'Sucess Text',placeholder:'Thanks! Your case has been created, We will gl...',bind:'successtext'},
-		]
-		return (
-			<Panel>
-				<PanelBody title="Form Text">
-					{ textControldata.map((v) => renderControlObj(v,'formText')) }
-				</PanelBody>
-			</Panel>
-		);
-	};
-	const getSuggestedPostsPanel = () => {
-		const options = {
-			placement:[
-				{label:'before',value:'before'},
-				{label:'after',value: 'after'},
-				{label:'end',value: 'end'},
-				{label:'none',value: 'none'},	
-			],
-			category:[
-				{label:'All Categories',value: 'All Categories'},
-			]
-		}
-		const controlsData = [
-			{type:'select',label:'Suggestions Placement',options:options.placement,bind:'suggestionplacement'},
-			{type:'text',label:'Suggestions Label',placeholder:"May we suggest one of the following posts?",bind:'suggestionstext'},
-			{type:'range', min:1,max:100,label:'How many suggestions should we show?', bind:'suggestionlimit'},
-			{type:'multiSelect',label:'Suggestions Category',options:categoryOptions,bind:'suggestioncategories'},
-		]
-		return (
-			<Panel>
-				<PanelBody title="Suggested Posts">
-					{
-						//only render/show rest when none is not selected
-						suggestedPosts[0].suggestionplacement != 'none' ?
-							controlsData.map((v) => renderControlObj(v,'suggestedPosts'))
-							:
-							renderControlObj(controlsData[0],'suggestedPosts')
-					}
-				</PanelBody>
-			</Panel>
-		);
-	};
-	const getFileUploadsPanel = () => {
-		const controlsData = [
-			{type:'check',label:'Allow file uploads?',bind:'fileupload'},
-			{type:'check',label:'Require a file upload?',bind:'filerequired'},
-			{type:'check',label:'Allow Multiple Files?',bind:'filesmultiple'},
-			{type:'text',label:'File Upload Label',placeholder:'Attach a file',bind:'filetext'},
-			{type:'text',label:'Allowed File MIME types',placeholder:'image/*,audio/*,application/pdf',bind:'filetypesallowed'},
-		]
-		return (
-			<Panel>
-				<PanelBody title="File Uploads">
-				{
-					fileUploads[0].fileupload?
-						controlsData.map((v) => renderControlObj(v,'fileUploads')) //render all
-					:
-						renderControlObj(controlsData[0],'fileUploads')
-				}
-				</PanelBody>
-			</Panel>
-		);
-	};
-
-	// all block settings created in Inspector Controls
-	const getInspectorControls = () => {
-		return (
-			<InspectorControls>
-				{getCaseCreationPanel()}
-				{getNewCaseFormPanel()}
-				{getCaseTitlePanel()}
-				{getFormTextPanel()}
-				{getSuggestedPostsPanel()}
-				{getFileUploadsPanel()}
-			</InspectorControls>
-		)
-	};
+	const renderControlObj = createControlRenderer( props );
 
 	//for debugging purposes only
-	const displayShortCodeAtts = ([ary]) =>(
+	const displayShortCodeAtts = ( [ ary ] ) =>
 		Object.entries( ary ).map( ( [ k, v ] ) => (
 			<p> { `${ k }: ${ v }` }</p>
-		))
-	);
+		) );
 
-	const displayAllShortCodeAtts = () =>(
-		Object.entries( attributes ).map( ([k,v]) => (
-			v.constructor == Array &&
-			<>
-				<h4>{k}</h4>
-				{displayShortCodeAtts(v)}
-			</>
-		)) 
-	);
-	
+	const displayAllShortCodeAtts = () =>
+		Object.entries( attributes ).map(
+			( [ k, v ] ) =>
+				v.constructor == Array && (
+					<>
+						<h4>{ k }</h4>
+						{ displayShortCodeAtts( v ) }
+					</>
+				)
+		);
+
 	const getRefreshButton = () => (
-		<button id={'refreshme'}  
-			style={{opacity:'0',float:'left',margin:'0',padding:'0'}}
-			onClick={()=> {
-				console.log('refresh me was clicked!');
-				let inc = attributes.refreshme + 1;
-				setAttributes({refreshme: inc});
-			}}
+		<button
+			id={ 'refreshme' }
+			style={ { opacity: '0', float: 'left', margin: '0', padding: '0' } }
+			onClick={ () => {
+				console.log( 'refresh me was clicked!' );
+				const inc = attributes.refreshme + 1;
+				setAttributes( { refreshme: inc } );
+			} }
 		></button>
 	);
 
 	// displayShortCodeAtts(newCaseForm)
 	return (
 		<div { ...useBlockProps() }>
-			{ getInspectorControls() }
-			<OptionsPuller />
+			<NewCaseInspectorControls {...props} />
+			{/* {NewCaseInspectorControls(props) } */}
 			<Placeholder
 				// icon={<Icon icon={FDIcon} />}
-				label="FuseDesk New Case"
+				label={__("FuseDesk New Case",'fusedesk')}
 				instructions="Allow your website visitors to create a new case form in FuseDesk."
 			>
-				<span className="dashicons dashicons-admin-generic"></span>&nbsp; Click on the settings icon to start customizing!
+				<span className="dashicons dashicons-admin-generic"></span>
+				&nbsp; Click on the settings icon to start customizing!
 			</Placeholder>
-			{getRefreshButton()}
+			{ getRefreshButton() }
 
-			{/* {displayAllShortCodeAtts()} */}
+			{ /* {displayAllShortCodeAtts()} */ }
 		</div>
 	);
 }

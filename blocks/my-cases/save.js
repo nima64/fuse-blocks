@@ -12,36 +12,43 @@ import { __ } from '@wordpress/i18n';
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
 import { useBlockProps } from '@wordpress/block-editor';
-import {RawHTML} from '@wordpress/element';
-
+import { RawHTML } from '@wordpress/element';
 
 /**
  * The save function defines the way in which the different attributes should
  * be combined into the final markup, which is then serialized by the block
  * editor into `post_content`.
  *
+ * @param props
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
  * @return {WPElement} Element to render.
  */
-export default function save(props) {
-	const {attributes,setAttributes} = props;
+export default function save( props ) {
+	const { attributes, setAttributes } = props;
 
 	//grab settings related attributes and store them into an array
-	const blockSettings = (({display,text}) => [display[0],text[0]])(attributes);
+	const blockSettings = ( ( { display, text } ) => [
+		display[ 0 ],
+		text[ 0 ],
+	] )( attributes );
 
 	const genShortCodeAtt = ( aryObj ) =>
 		Object.entries( aryObj )
-			.map( ( [ k, v ] ) => ( !! v && k != 'columns' ? `${ k }="${ v }" ` : '' ) )
+			.map( ( [ k, v ] ) =>
+				!! v && k != 'columns' ? `${ k }="${ v }" ` : ''
+			)
 			.join( ' ' );
 
-	const genAllShortCodeAtts = () => blockSettings.map( (v) => genShortCodeAtt(v) ).join('');
+	const genAllShortCodeAtts = () =>
+		blockSettings.map( ( v ) => genShortCodeAtt( v ) ).join( '' );
 
 	return (
 		<div { ...useBlockProps.save() }>
-			<RawHTML>{"[fusedesk_mycases "+ genAllShortCodeAtts() +"]"}</RawHTML>
-			{"["+ genAllShortCodeAtts() +"]"}
-			{/* {shortCodeStr} */}
+			<RawHTML>
+				{ '[fusedesk_mycases ' + genAllShortCodeAtts() + ']' }
+			</RawHTML>
+			{ '[' + genAllShortCodeAtts() + ']' }
+			{ /* {shortCodeStr} */ }
 		</div>
 	);
 }

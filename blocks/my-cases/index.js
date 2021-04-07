@@ -4,7 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 import { registerBlockType } from '@wordpress/blocks';
-import {people,Icon} from '@wordpress/icons';
+import { people, Icon } from '@wordpress/icons';
 import fdico from '../../fdico';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -31,33 +31,37 @@ registerBlockType( 'fusedesk/my-cases', {
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
 	apiVersion: 2,
-	icon: <Icon icon={fdico} />,
+	icon: <Icon icon={ fdico } />,
 	attributes: {
-		display:{
+		display: {
 			type: 'array',
-			default: [{
-				columns:[],
-				status:'all',
-				userstatuses:'all',
-				orderby:'date_opened, date_updated',
-				dateformat:'M j, Y g:ia',
-				limit:50,
-			}]
+			default: [
+				{
+					columns: [],
+					status: 'all',
+					userstatuses: 'all',
+					orderby: 'date_opened, date_updated',
+					dateformat: 'M j, Y g:ia',
+					limit: 50,
+				},
+			],
 		},
-		text:{
+		text: {
 			type: 'array',
-			default: [{
-				casenum_name:'',
-				status_name:'',
-				date_updated_name:'',
-				summary_name:'',
-				errornotloggedin:'',
-				errornocases:'',
-			}]
+			default: [
+				{
+					casenum_name: '',
+					status_name: '',
+					date_updated_name: '',
+					summary_name: '',
+					errornotloggedin: '',
+					errornocases: '',
+				},
+			],
 		},
-		customStyles:{
-			type:'text',
-		}
+		customStyles: {
+			type: 'text',
+		},
 	},
 
 	/**
