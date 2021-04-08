@@ -38,7 +38,7 @@ function fusedesk_blocks_init() {
         'apiVersion' => 2,
         'editor_script' => 'new-cases-scripts',
     ) );
-
+    wp_localize_script('new-cases-scripts', 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
     if (!wp_set_script_translations('new-cases-scripts','fusedesk',plugin_dir_path(__FILE__).'languages')){
         echo 'failed to load trnaslations'; 
     }

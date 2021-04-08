@@ -13,10 +13,10 @@ import {
 	RangeControl,
 } from '@wordpress/components';
 
-const WP_BASEURL = 'http://localhost/wordpress/';
-const REPS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_reps&refresh=1';
-const DEPTS_ENDPOINT ='/wp-admin/admin-ajax.php?action=fusedesk_departments&refresh=1';
-const CASETAGS_ENDPOINT ='/wp-admin/admin-ajax.php?action=fusedesk_casetags&refresh=1';
+const WP_BASEURL = WPURLS.siteurl;
+const REPS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_reps';
+const DEPTS_ENDPOINT ='/wp-admin/admin-ajax.php?action=fusedesk_departments';
+const CASETAGS_ENDPOINT ='/wp-admin/admin-ajax.php?action=fusedesk_casetags';
 const CATEGORIES_ENDPOINT = '/wp-json/wp/v2/categories/';
 
 //normalize reps json into {label,value} format for Select Components

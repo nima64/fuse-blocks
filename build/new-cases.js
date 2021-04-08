@@ -223,10 +223,10 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
-var WP_BASEURL = 'http://localhost/wordpress/';
-var REPS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_reps&refresh=1';
-var DEPTS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_departments&refresh=1';
-var CASETAGS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_casetags&refresh=1';
+var WP_BASEURL = WPURLS.siteurl;
+var REPS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_reps';
+var DEPTS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_departments';
+var CASETAGS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_casetags';
 var CATEGORIES_ENDPOINT = '/wp-json/wp/v2/categories/'; //normalize reps json into {label,value} format for Select Components
 
 var normJsonToOptions = function normJsonToOptions(repsJson) {
@@ -404,140 +404,140 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   caseCreation: [{
     type: 'select',
-    label: 'Department',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Department', 'fusedesk'),
     options: [{
-      label: 'Departments',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Departments', 'fusedesk'),
       value: false
     }],
     bind: 'department'
   }, {
     type: 'select',
-    label: 'Rep Assignment',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Rep Assignment', 'fusedesk'),
     options: [{
-      label: 'Reps',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Reps', 'fusedesk'),
       value: false
     }],
     bind: 'rep'
   }, {
     type: 'select',
-    label: 'Case Tags to Apply',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Case Tags to Apply', 'fusedesk'),
     options: [{
-      label: 'Case Tags',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Case Tags', 'fusedesk'),
       value: false
     }],
     bind: 'casetagids'
   }],
   newCaseForm: [{
     type: 'check',
-    label: "Hide Known Data?",
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Hide Known Data?", 'fusedesk'),
     bind: 'hideknowndata'
   }, {
     type: 'text',
-    label: "Sucess Redirect URL",
-    placeholder: "Don't Redirect",
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Sucess Redirect URL", 'fusedesk'),
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Don't Redirect", 'fusedesk'),
     bind: 'sucessredirect'
   }],
   caseTitle: [{
     type: 'check',
-    label: "Show a title field?",
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Show a title field?", 'fusedesk'),
     bind: 'showtitle'
   }, {
     type: 'text',
-    label: "Case Title Label",
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Case Title Label", 'fusedesk'),
     // placeholder: "Don't Redirect",
-    placeholder: "Briefly, what is the request about?",
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Briefly, what is the request about?", 'fusedesk'),
     bind: 'titletext'
   }, {
     type: 'text',
-    label: "Case Title Options (for a drop down selection)",
-    placeholder: "Case Title Options, oner per line, optional",
-    // placeholder: "Don't Redirect",
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Case Title Options (for a drop down selection)", 'fusedesk'),
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Case Title Options, oner per line, optional", 'fusedesk'),
+    // placeholder: __("Don't Redirect",'fusedesk'),
     bind: 'titleoptions'
   }],
   suggestedPosts: [{
     type: 'select',
-    label: 'Suggestions Placement',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Suggestions Placement', 'fusedesk'),
     options: [{
-      label: 'before',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('before', 'fusedesk'),
       value: 'before'
     }, {
-      label: 'after',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('after', 'fusedesk'),
       value: 'after'
     }, {
-      label: 'end',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('end', 'fusedesk'),
       value: 'end'
     }, {
-      label: 'none',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('none', 'fusedesk'),
       value: 'none'
     }],
     bind: 'suggestionplacement'
   }, {
     type: 'text',
-    label: 'Suggestions Label',
-    placeholder: 'May we suggest one of the following posts?',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Suggestions Label', 'fusedesk'),
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('May we suggest one of the following posts?', 'fusedesk'),
     bind: 'suggestionstext'
   }, {
     type: 'range',
     min: 1,
     max: 100,
-    label: 'How many suggestions should we show?',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('How many suggestions should we show?', 'fusedesk'),
     bind: 'suggestionlimit'
   }, {
     type: 'multiSelect',
-    label: 'Suggestions Category',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Suggestions Category', 'fusedesk'),
     options: [{
-      label: 'Category',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Category', 'fusedesk'),
       value: false
     }],
     bind: 'suggestioncategories'
   }],
   formText: [{
     type: 'text',
-    label: 'Name Label',
-    placeholder: 'Your Name',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Name Label', 'fusedesk'),
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Your Name', 'fusedesk'),
     bind: 'nametext'
   }, {
     type: 'text',
-    label: 'Email Label',
-    placeholder: 'Your Email Adress',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Email Label', 'fusedesk'),
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Your Email Adress', 'fusedesk'),
     bind: 'emailtext'
   }, {
     type: 'text',
-    label: 'Button Text',
-    placeholder: 'Create Support Case',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Button Text', 'fusedesk'),
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Create Support Case', 'fusedesk'),
     bind: 'buttontext'
   }, {
     type: 'text',
-    label: 'Creating Text',
-    placeholder: 'Submitting Case...',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Creating Text', 'fusedesk'),
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Submitting Case...', 'fusedesk'),
     bind: 'creatingtext'
   }, {
     type: 'text',
-    label: 'Sucess Text',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Sucess Text', 'fusedesk'),
     placeholder: 'Thanks! Your case has been created, We will gl...',
     bind: 'successtext'
   }],
   fileUploads: [{
     type: 'check',
-    label: 'Allow file uploads?',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Allow file uploads?', 'fusedesk'),
     bind: 'fileupload'
   }, {
     type: 'check',
-    label: 'Require a file upload?',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Require a file upload?', 'fusedesk'),
     bind: 'filerequired'
   }, {
     type: 'check',
-    label: 'Allow Multiple Files?',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Allow Multiple Files?', 'fusedesk'),
     bind: 'filesmultiple'
   }, {
     type: 'text',
-    label: 'File Upload Label',
-    placeholder: 'Attach a file',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('File Upload Label', 'fusedesk'),
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Attach a file', 'fusedesk'),
     bind: 'filetext'
   }, {
     type: 'text',
-    label: 'Allowed File MIME types',
-    placeholder: 'image/*,audio/*,application/pdf',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Allowed File MIME types', 'fusedesk'),
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('image/*,audio/*,application/pdf', 'fusedesk'),
     bind: 'filetypesallowed'
   }]
 });
