@@ -18,9 +18,9 @@ To watch,
 do the same except with ```startall``` and ```startblock --block=blockname```  
 
 ## Building pot and json files for localization ##  
-Scripts need language files in **json**.I use wp cli to compile my pot files to json.
-To build with wp cli
-Start by installing see https://wp-cli.org/  
+To pass localizations to javascript we need to send them as json,  
+I use wp cli's i18n to compile my po files to json.
+see https://wp-cli.org/  
 
 wp i18n requires the extension **mbstring** for jsx  
 I recommend installing through wsl apt if your on windows.  
@@ -31,5 +31,5 @@ Or you can install by enabling mbstring your php.ini file.
 
 Build your pot ``` wp i18n make-pot . languages/fusedesk.pot ```  
 
-Afer making a po file from your pot file run ```wp i18n make-json . languages/fusedesk-yourlang.po --no-purge```
+Afer making a po file from your pot file run ```wp i18n make-json languages --no-purge```
 
