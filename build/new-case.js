@@ -1,9 +1,9 @@
-(window["webpackJsonp_fusedesk_blocks"] = window["webpackJsonp_fusedesk_blocks"] || []).push([["style-new-cases"],{
+(window["webpackJsonp_fusedesk_blocks"] = window["webpackJsonp_fusedesk_blocks"] || []).push([["style-new-case"],{
 
-/***/ "./blocks/new-cases/style.scss":
-/*!*************************************!*\
-  !*** ./blocks/new-cases/style.scss ***!
-  \*************************************/
+/***/ "./blocks/new-case/style.scss":
+/*!************************************!*\
+  !*** ./blocks/new-case/style.scss ***!
+  \************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -72,7 +72,7 @@
 /******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 	// Promise = chunk loading, 0 = chunk loaded
 /******/ 	var installedChunks = {
-/******/ 		"new-cases": 0
+/******/ 		"new-case": 0
 /******/ 	};
 /******/
 /******/ 	var deferredModules = [];
@@ -163,17 +163,17 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push(["./blocks/new-cases/index.js","style-new-cases"]);
+/******/ 	deferredModules.push(["./blocks/new-case/index.js","style-new-case"]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./blocks/new-cases/NewCaseInspectorControls.js":
-/*!******************************************************!*\
-  !*** ./blocks/new-cases/NewCaseInspectorControls.js ***!
-  \******************************************************/
+/***/ "./blocks/new-case/NewCaseInspectorControls.js":
+/*!*****************************************************!*\
+  !*** ./blocks/new-case/NewCaseInspectorControls.js ***!
+  \*****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -196,7 +196,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _controlsData__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./controlsData */ "./blocks/new-cases/controlsData.js");
+/* harmony import */ var _controlsData__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./controlsData */ "./blocks/new-case/controlsData.js");
 /* harmony import */ var _lib_createControlRenderer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../lib/createControlRenderer */ "./lib/createControlRenderer.js");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_10__);
@@ -223,7 +223,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
-var WP_BASEURL = WPURLS.siteurl;
+var WP_BASEURL = WPURLS.siteurl; // const WP_BASEURL = 'http://localhost/wordpress';
+
 var REPS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_reps';
 var DEPTS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_departments';
 var CASETAGS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_casetags';
@@ -389,10 +390,10 @@ function NewCaseInspectorControls(props) {
 
 /***/ }),
 
-/***/ "./blocks/new-cases/controlsData.js":
-/*!******************************************!*\
-  !*** ./blocks/new-cases/controlsData.js ***!
-  \******************************************/
+/***/ "./blocks/new-case/controlsData.js":
+/*!*****************************************!*\
+  !*** ./blocks/new-case/controlsData.js ***!
+  \*****************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -514,7 +515,7 @@ __webpack_require__.r(__webpack_exports__);
   }, {
     type: 'text',
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Sucess Text', 'fusedesk'),
-    placeholder: 'Thanks! Your case has been created, We will gl...',
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Thanks! Your case has been created, We will gl...', 'fusedesk'),
     bind: 'successtext'
   }],
   fileUploads: [{
@@ -544,10 +545,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./blocks/new-cases/edit.js":
-/*!**********************************!*\
-  !*** ./blocks/new-cases/edit.js ***!
-  \**********************************/
+/***/ "./blocks/new-case/edit.js":
+/*!*********************************!*\
+  !*** ./blocks/new-case/edit.js ***!
+  \*********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -567,9 +568,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _lib_createControlRenderer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib/createControlRenderer */ "./lib/createControlRenderer.js");
-/* harmony import */ var _NewCaseInspectorControls__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NewCaseInspectorControls */ "./blocks/new-cases/NewCaseInspectorControls.js");
+/* harmony import */ var _NewCaseInspectorControls__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NewCaseInspectorControls */ "./blocks/new-case/NewCaseInspectorControls.js");
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editor.scss */ "./blocks/new-cases/editor.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editor.scss */ "./blocks/new-case/editor.scss");
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _fdico__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../fdico */ "./fdico.js");
 
@@ -697,10 +698,10 @@ function Edit(props) {
 
 /***/ }),
 
-/***/ "./blocks/new-cases/editor.scss":
-/*!**************************************!*\
-  !*** ./blocks/new-cases/editor.scss ***!
-  \**************************************/
+/***/ "./blocks/new-case/editor.scss":
+/*!*************************************!*\
+  !*** ./blocks/new-case/editor.scss ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -708,10 +709,10 @@ function Edit(props) {
 
 /***/ }),
 
-/***/ "./blocks/new-cases/index.js":
-/*!***********************************!*\
-  !*** ./blocks/new-cases/index.js ***!
-  \***********************************/
+/***/ "./blocks/new-case/index.js":
+/*!**********************************!*\
+  !*** ./blocks/new-case/index.js ***!
+  \**********************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -725,10 +726,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
 /* harmony import */ var _fdico__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../fdico */ "./fdico.js");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.scss */ "./blocks/new-cases/style.scss");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.scss */ "./blocks/new-case/style.scss");
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./edit */ "./blocks/new-cases/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./save */ "./blocks/new-cases/save.js");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./edit */ "./blocks/new-case/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./save */ "./blocks/new-case/save.js");
 
 
 /**
@@ -855,10 +856,10 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('fus
 
 /***/ }),
 
-/***/ "./blocks/new-cases/save.js":
-/*!**********************************!*\
-  !*** ./blocks/new-cases/save.js ***!
-  \**********************************/
+/***/ "./blocks/new-case/save.js":
+/*!*********************************!*\
+  !*** ./blocks/new-case/save.js ***!
+  \*********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -17826,4 +17827,4 @@ module.exports = g;
 /***/ })
 
 /******/ });
-//# sourceMappingURL=new-cases.js.map
+//# sourceMappingURL=new-case.js.map

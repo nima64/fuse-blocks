@@ -20,28 +20,59 @@
  */
 
 
-function registerAllBlocks($BLOCKS_DIR){
+class Block {
+    public $name;
+    public $meta = [];
+    public $editor_script_handle;
+    public $script_handle;
+    public $editor_style_handle;
+    public $style_handle;
+
+    function __construct(string $name){
+        $this->name = $name;
+        $this->editor_script_handle = $name.'-editor-script';
+        $this->script_handle = $name.'-script';
+        $this->editor_style_handle = $name.'-editor-style';
+        $this->style_handle = $name.'-style';
+    }
 }
 
-function fusedesk_blocks_init() {
-    $BLOCKS_DIR = __DIR__.'/blocks';
-    $asset_file = include( plugin_dir_path( __FILE__ ) . 'build/new-cases.asset.php');
-
+function registerBlock(Block $block){
+    $NAMESPACE = 'fusedesk';
+    $name = $block->name;
+    $editorStyleH = $block->editor_style_handle; 
+    $editorScriptH = $block->editor_script_handle; 
+    $asset_file = include( plugin_dir_path(__FILE__).'build/'.$name.'.asset.php');
+    wp_enqueue_style(
+        $editorStyleH,
+        plugins_url('build/'. $name . '.css',__FILE__),
+    );
     wp_register_script(
-        'new-cases-scripts',
-        plugins_url( 'build/new-cases.js', __FILE__ ),
+        $editorScriptH,
+        plugins_url('build/'.$name.'.js',__FILE__),
         $asset_file['dependencies'],
         $asset_file['version']
     );
- 
-    register_block_type( 'fusedesk/new-case', array(
-        'apiVersion' => 2,
-        'editor_script' => 'new-cases-scripts',
-    ) );
-    wp_localize_script('new-cases-scripts', 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
-    if (!wp_set_script_translations('new-cases-scripts','fusedesk',plugin_dir_path(__FILE__).'languages')){
-        echo 'failed to load trnaslations'; 
-    }
 
+    wp_set_script_translations($editorScriptH,'fusedesk',plugin_dir_path(__FILE__) . 'languages');
+    $meta = $block->meta;
+    $meta['api_version'] = 2;
+    $meta['editor_script'] = $editorScriptH;
+    $meta['editor_style'] = $editorStyleH;
+
+    return register_block_type('fusedesk/new-case',[
+        'apiVersion' => 2,
+        'editor_script' => $editorScriptH, 
+    ]);
+    
+}
+
+function fusedesk_blocks_init() {
+    // $BLOCKS_DIR = __DIR__.'/blocks';
+    $nblock = new Block('new-case');
+    if (!registerBlock($nblock)){
+        echo 'failed to register block';
+    }
+    wp_localize_script($nblock->editor_script_handle, 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
 }
 add_action( 'init', 'fusedesk_blocks_init' );
