@@ -17,7 +17,7 @@ npm run buildblock --block=blockname
 To watch,  
 do the same except with ```startall``` and ```startblock --block=blockname```  
 
-## Building POT files for localization ##  
+## Building pot and json files for localization ##  
 Scripts need language files in **json**.I use wp cli to compile my pot files to json.
 To build with wp cli
 Start by installing see https://wp-cli.org/  
@@ -31,5 +31,5 @@ Or you can install by enabling mbstring your php.ini file.
 
 Build your pot ``` wp i18n make-pot . languages/fusedesk.pot ```  
 
-Now JSON just run ```wp i18n make-json . languages/fusedesk-yourlang.po --no-purge```
+Afer making a po file from your pot file run ```wp i18n make-json . languages/fusedesk-yourlang.po --no-purge```
 
