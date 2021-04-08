@@ -31,5 +31,5 @@ Or you can install by enabling mbstring your php.ini file.
 
 Build your pot ``` wp i18n make-pot . languages/fusedesk.pot ```  
 
-Now JSON just run ```wp i18n make-json . languages/fusedesk.pot --no-purge```
+Now JSON just run ```wp i18n make-json . languages/fusedesk-yourlang.po --no-purge```
 
