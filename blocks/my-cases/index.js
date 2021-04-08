@@ -32,6 +32,8 @@ registerBlockType( 'fusedesk/my-cases', {
 	 */
 	apiVersion: 2,
 	icon: <Icon icon={ fdico } />,
+	category: 'fusedesk',
+	title: 'my cases',
 	attributes: {
 		display: {
 			type: 'array',

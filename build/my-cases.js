@@ -514,6 +514,8 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('fus
   icon: Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_icons__WEBPACK_IMPORTED_MODULE_2__["Icon"], {
     icon: _fdico__WEBPACK_IMPORTED_MODULE_3__["default"]
   }),
+  category: 'fusedesk',
+  title: 'my cases',
   attributes: {
     display: {
       type: 'array',

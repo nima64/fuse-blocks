@@ -43,10 +43,12 @@ function registerBlock(Block $block){
     $editorStyleH = $block->editor_style_handle; 
     $editorScriptH = $block->editor_script_handle; 
     $asset_file = include( plugin_dir_path(__FILE__).'build/'.$name.'.asset.php');
+
     wp_enqueue_style(
         $editorStyleH,
         plugins_url('build/'. $name . '.css',__FILE__),
     );
+
     wp_register_script(
         $editorScriptH,
         plugins_url('build/'.$name.'.js',__FILE__),
@@ -60,19 +62,41 @@ function registerBlock(Block $block){
     $meta['editor_script'] = $editorScriptH;
     $meta['editor_style'] = $editorStyleH;
 
-    return register_block_type('fusedesk/new-case',[
+    return register_block_type($NAMESPACE.'/'.$name,[
         'apiVersion' => 2,
         'editor_script' => $editorScriptH, 
     ]);
     
 }
 
+function fusedesk_block_category( $categories, $post ) {
+	return array_merge(
+		$categories,
+		array(
+			array(
+				'slug' => 'fusedesk',
+				'title' => __( 'Fusedesk Blocks', 'fusedesk' ),
+			),
+		)
+	);
+}
+
+
 function fusedesk_blocks_init() {
     // $BLOCKS_DIR = __DIR__.'/blocks';
     $nblock = new Block('new-case');
-    if (!registerBlock($nblock)){
-        echo 'failed to register block';
-    }
+    registerBlock($nblock);
+    $mycaseblock = new Block('my-cases');
+    // if (!registerBlock($nblock)){
+    //     echo 'failed to register block';
+    // }
+    $regb = registerBlock($mycaseblock);
+    // if (!$regb){
+    //     echo 'failed to register block';
+    //     echo var_dump($regb);
+    // }
+    
     wp_localize_script($nblock->editor_script_handle, 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
 }
 add_action( 'init', 'fusedesk_blocks_init' );
+add_filter( 'block_categories', 'fusedesk_block_category', 10, 2);

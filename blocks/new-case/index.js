@@ -35,6 +35,7 @@ registerBlockType( 'fusedesk/new-case', {
 	apiVersion: 2,
 	icon: <Icon icon={ fdico } />,
 	title: 'new case',
+	category: 'fusedesk',
 	description: __('Allow your website visitors to create a new case in FuseDesk','fusedesk'),
 	attributes: {
 		caseCreation: {

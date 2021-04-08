@@ -771,6 +771,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('fus
     icon: _fdico__WEBPACK_IMPORTED_MODULE_4__["default"]
   }),
   title: 'new case',
+  category: 'fusedesk',
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Allow your website visitors to create a new case in FuseDesk', 'fusedesk'),
   attributes: {
     caseCreation: {
