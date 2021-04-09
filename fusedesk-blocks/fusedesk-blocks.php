@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Registers a FuseDesk block using the metadata loaded from the `block.json` file.
+ * Registers a Gutenberg block and generates handle in form blockname-handle
  * Behind the scenes, it also registers all assets so they can be enqueued
  * through the block editor in the corresponding context.
  *
@@ -26,31 +26,31 @@ class fusedesk_Block {
     function register(){
     $NAMESPACE = 'fusedesk';
     $name = $this->name;
-    $editorStyleH = $this->editor_style_handle; 
-    $editorScriptH = $this->editor_script_handle; 
+    $editorStyleHandle = $this->editor_style_handle; 
+    $editorScriptHandle = $this->editor_script_handle; 
     $asset_file = include( plugin_dir_path(__FILE__).'build/'.$name.'.asset.php');
 
     wp_enqueue_style(
-        $editorStyleH,
+        $editorStyleHandle,
         plugins_url('build/'. $name . '.css',__FILE__),
     );
 
     wp_register_script(
-        $editorScriptH,
+        $editorScriptHandle,
         plugins_url('build/'.$name.'.js',__FILE__),
         $asset_file['dependencies'],
         $asset_file['version']
     );
 
-    wp_set_script_translations($editorScriptH,'fusedesk',plugin_dir_path(__FILE__) . 'languages');
+    wp_set_script_translations($editorScriptHandle,'fusedesk',plugin_dir_path(__FILE__) . 'languages');
     $meta = $this->meta;
     $meta['api_version'] = 2;
-    $meta['editor_script'] = $editorScriptH;
-    $meta['editor_style'] = $editorStyleH;
+    $meta['editor_script'] = $editorScriptHandle;
+    $meta['editor_style'] = $editorStyleHandle;
 
     return register_block_type($NAMESPACE.'/'.$name,[
         'apiVersion' => 2,
-        'editor_script' => $editorScriptH, 
+        'editor_script' => $editorScriptHandle, 
     ]);
 
     }
@@ -73,7 +73,6 @@ function fusedesk_blocks_init() {
     $newCaseBlock = new fusedesk_Block('new-case');
     $newCaseBlock->register();
     $myCasesBlock = new fusedesk_Block('my-cases');
-    // $regb = registerBlock($myCasesBlock);
     $myCasesBlock->register();
     wp_localize_script($newCaseBlock->editor_script_handle, 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
     add_filter( 'block_categories', 'fusedesk_blocks_category', 10, 2);
