@@ -45,7 +45,7 @@ export default function NewCase_InspectorControls(props){
 		return (
 			<Panel>
 				<PanelBody title="Case Creation">
-					<ControlsTemplate index="0" refreshCall= {fetchCalls.get_dept_options_refresh} />
+					<ControlsTemplate index="0" refreshCall= {fetchCalls.get_dep_options_refresh} />
 					<ControlsTemplate index="1" refreshCall= {fetchCalls.get_rep_options_refresh} />
 					<ControlsTemplate index="2" refreshCall= {fetchCalls.get_casetag_options_refresh} />
 				</PanelBody>

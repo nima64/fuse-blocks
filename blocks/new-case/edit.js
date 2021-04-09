@@ -53,7 +53,7 @@ class OptionsPuller extends React.Component {
 	}
 	componentDidMount() {
 		this.fetchCalls.get_rep_options();
-		this.fetchCalls.get_dept_options();
+		this.fetchCalls.get_dep_options();
 		this.fetchCalls.get_casetag_options();
 		this.fetchCalls.get_category_options();
 	}

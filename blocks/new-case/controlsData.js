@@ -29,7 +29,7 @@ export default {
         },
         {
             type: 'text',
-            label: __("Sucess Redirect URL",'fusedesk'),
+            label: __("Success Redirect URL",'fusedesk'),
             placeholder: __("Don't Redirect",'fusedesk'),
             bind: 'sucessredirect',
         }
@@ -43,15 +43,13 @@ export default {
         {
             type: 'text',
             label: __("Case Title Label",'fusedesk'),
-            // placeholder: "Don't Redirect",
             placeholder: __("Briefly, what is the request about?",'fusedesk'),
             bind: 'titletext',
         },
         {
             type: 'text',
             label: __("Case Title Options (for a drop down selection)",'fusedesk'),
-            placeholder: __("Case Title Options, oner per line, optional",'fusedesk'),
-            // placeholder: __("Don't Redirect",'fusedesk'),
+            placeholder: __("Case Title Options, one per line, optional",'fusedesk'),
             bind: 'titleoptions',
         }
     ],
@@ -115,7 +113,7 @@ export default {
         },
         {
             type: 'text',
-            label: __('Sucess Text','fusedesk'),
+            label: __('Success Text','fusedesk'),
             placeholder: __('Thanks! Your case has been created, We will gl...','fusedesk'),
             bind: 'successtext',
         },

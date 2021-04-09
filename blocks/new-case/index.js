@@ -61,10 +61,8 @@ registerBlockType( 'fusedesk/new-case', {
 			type: 'array',
 			default: [
 				{
-					showtitle: false, //show title field
-					// titletext: 'Briefly, what is this request about?', //
-					titletext: '', //
-					// titletext: '', //
+					showtitle: false,
+					titletext: '',
 					titleoptions: false,
 				},
 			],
@@ -73,11 +71,6 @@ registerBlockType( 'fusedesk/new-case', {
 			type: 'array',
 			default: [
 				{
-					// nametext: 'Your name',
-					// emailtext: 'Your email',
-					// buttontext: 'Create Support Case',
-					// creatingtext: 'Submitting Case...',
-					// successtext: 'Thanks! Your case has been created. We will get back to you shortly',
 					nametext: '',
 					emailtext: '',
 					buttontext: '',
@@ -91,7 +84,6 @@ registerBlockType( 'fusedesk/new-case', {
 			default: [
 				{
 					suggestionplacement: 'after',
-					// suggestionstext: 'May we suggest one of the following posts?',
 					suggestionstext: '',
 					suggestionlimit: 10,
 					suggestioncategories: [],
@@ -105,8 +97,6 @@ registerBlockType( 'fusedesk/new-case', {
 					fileupload: false,
 					filerequired: false,
 					filesmultiple: true,
-					// filetext: 'Attach a File',
-					// filetypesallowed: 'image/*,audio/*,application/pdf',
 					filetext: '',
 					filetypesallowed: '',
 				},
