@@ -1,25 +1,12 @@
 <?php
-/**
- * Plugin Name:    	FuseDesk Blocks
- * Description:     Gutenberg block to show your cases from fusedesk
- * Version:         0.1.0
- * Author:          The WordPress Contributors
- * License:         GPL-2.0-or-later
- * License URI:     https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:     fusedesk
- *
- * @package         fusedesk
- */
 
 /**
- * Registers the block using the metadata loaded from the `block.json` file.
- * Behind the scenes, it registers also all assets so they can be enqueued
+ * Registers a FuseDesk block using the metadata loaded from the `block.json` file.
+ * Behind the scenes, it also registers all assets so they can be enqueued
  * through the block editor in the corresponding context.
  *
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/writing-your-first-block-type/
  */
-
-
 class fusedesk_Block {
     public $name;
     public $meta = [];
@@ -75,7 +62,7 @@ function fusedesk_blocks_category( $categories, $post ) {
 		array(
 			array(
 				'slug' => 'fusedesk',
-				'title' => __( 'Fusedesk Blocks', 'fusedesk' ),
+				'title' => __( 'FuseDesk Blocks', 'fusedesk' ),
 			),
 		)
 	);
@@ -83,12 +70,12 @@ function fusedesk_blocks_category( $categories, $post ) {
 
 
 function fusedesk_blocks_init() {
-    $nblock = new fusedesk_Block('new-case');
-    $nblock->register();
-    $mycaseblock = new fusedesk_Block('my-cases');
-    // $regb = registerBlock($mycaseblock);
-    $mycaseblock->register();
-    wp_localize_script($nblock->editor_script_handle, 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
+    $newCaseBlock = new fusedesk_Block('new-case');
+    $newCaseBlock->register();
+    $myCasesBlock = new fusedesk_Block('my-cases');
+    // $regb = registerBlock($myCasesBlock);
+    $myCasesBlock->register();
+    wp_localize_script($newCaseBlock->editor_script_handle, 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
     add_filter( 'block_categories', 'fusedesk_blocks_category', 10, 2);
 }
 
