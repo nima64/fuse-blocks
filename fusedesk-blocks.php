@@ -20,7 +20,7 @@
  */
 
 
-class Block {
+class fusedesk_Block {
     public $name;
     public $meta = [];
     public $editor_script_handle;
@@ -35,13 +35,13 @@ class Block {
         $this->editor_style_handle = $name.'-editor-style';
         $this->style_handle = $name.'-style';
     }
-}
 
-function registerBlock(Block $block){
+    function register(){
+        
     $NAMESPACE = 'fusedesk';
-    $name = $block->name;
-    $editorStyleH = $block->editor_style_handle; 
-    $editorScriptH = $block->editor_script_handle; 
+    $name = $this->name;
+    $editorStyleH = $this->editor_style_handle; 
+    $editorScriptH = $this->editor_script_handle; 
     $asset_file = include( plugin_dir_path(__FILE__).'build/'.$name.'.asset.php');
 
     wp_enqueue_style(
@@ -57,7 +57,7 @@ function registerBlock(Block $block){
     );
 
     wp_set_script_translations($editorScriptH,'fusedesk',plugin_dir_path(__FILE__) . 'languages');
-    $meta = $block->meta;
+    $meta = $this->meta;
     $meta['api_version'] = 2;
     $meta['editor_script'] = $editorScriptH;
     $meta['editor_style'] = $editorStyleH;
@@ -66,6 +66,8 @@ function registerBlock(Block $block){
         'apiVersion' => 2,
         'editor_script' => $editorScriptH, 
     ]);
+
+    }
 }
 
 function fusedesk_block_category( $categories, $post ) {
@@ -82,11 +84,13 @@ function fusedesk_block_category( $categories, $post ) {
 
 
 function fusedesk_blocks_init() {
-    $nblock = new Block('new-case');
-    registerBlock($nblock);
-    $mycaseblock = new Block('my-cases');
-    $regb = registerBlock($mycaseblock);
+    $nblock = new fusedesk_Block('new-case');
+    $nblock->register();
+    $mycaseblock = new fusedesk_Block('my-cases');
+    // $regb = registerBlock($mycaseblock);
+    $mycaseblock->register();
     wp_localize_script($nblock->editor_script_handle, 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
     add_filter( 'block_categories', 'fusedesk_block_category', 10, 2);
 }
-add_action( 'init', 'fusedesk_blocks_init' );
+
+add_action( 'admin_init', 'fusedesk_blocks_init' );

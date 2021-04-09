@@ -23,9 +23,9 @@ import {
 	TextControl,
 	RangeControl,
 } from '@wordpress/components';
-import createControlRenderer from '../../lib/createControlRenderer';
 import NewCaseInspectorControls from './NewCaseInspectorControls';
 import { rotateLeft, Icon, listView } from '@wordpress/icons';
+import fetchCalls from './fetchCalls';
 import controls from './controlsData';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -45,54 +45,12 @@ import FDIcon from '../../fdico';
  */
 
 
-const WP_BASEURL = WPURLS.siteurl;
-// const WP_BASEURL = 'http://localhost/wordpress';
-const REPS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_reps';
-const DEPTS_ENDPOINT ='/wp-admin/admin-ajax.php?action=fusedesk_departments';
-const CASETAGS_ENDPOINT ='/wp-admin/admin-ajax.php?action=fusedesk_casetags';
-const CATEGORIES_ENDPOINT = '/wp-json/wp/v2/categories/';
-
-
-//normalize reps json into {label,value} format for Select Components
-const normJsonToOptions = ( repsJson ) =>
-	Object.entries( repsJson ).map( ( [ v, k ] ) => ( {
-		label: k,
-		value: v,
-	} ) );
-
-function composeOptionsFetcher( normalizer, withRefresh=false ) {
-	return function ( options, endpoint ) {
-		let BASEURL = WP_BASEURL + endpoint;
-		let FETCHURL = withRefresh? BASEURL + '&refresh=1' : BASEURL;
-		fetch( FETCHURL, {
-			method: 'GET',
-		} )
-			.then( ( req ) => req.json() )
-			.then( ( json ) => {
-				normalizer( json ).forEach( ( v, i ) => {
-					options[ i ] = v;
-				} ); //inserts into options
-				console.log( options, json );
-				console.log( 'executed fetch from new-case' );
-				const refreshbtn = document.body.querySelector( '#refreshme' );
-				if ( refreshbtn ) refreshbtn.click();
-			} );
-	};
-}
-
-const fetchOptions = composeOptionsFetcher( normJsonToOptions );
-const refreshOptions = composeOptionsFetcher( normJsonToOptions,true );
-const normCat = ( jsonData ) => jsonData.map( ( obj ) => ( { label: obj.name, value: obj.id } ) );
-const fetchCategories = composeOptionsFetcher( normCat );
-// const repOptions = controls.caseCreation[0].options
-// const deptOptions = controls.caseCreation[1].options
-// const casetagOptions = controls.caseCreation[2].options
-// const categoryOptions = controls.suggestedPosts[3].options
 
 //Singleton that pulls data on mount and updates options
 class OptionsPuller extends React.Component {
 	constructor( props ) {
 		super( props );
+		this.fetchCalls = fetchCalls;
 		this.repOptions = controls.caseCreation[0].options
 		this.deptOptions = controls.caseCreation[1].options
 		this.casetagOptions = controls.caseCreation[2].options
@@ -100,10 +58,10 @@ class OptionsPuller extends React.Component {
 	}
 
 	componentDidMount() {
-		fetchOptions( this.repOptions, REPS_ENDPOINT );
-		fetchOptions( this.deptOptions, DEPTS_ENDPOINT );
-		fetchOptions( this.casetagOptions, CASETAGS_ENDPOINT );
-		fetchCategories( this.categoryOptions, CATEGORIES_ENDPOINT );
+		fetchCalls.get_rep_options(this.repOptions);
+		fetchCalls.get_dept_options(this.deptOptions);
+		fetchCalls.get_casetag_options(this.casetagOptions);
+		fetchCalls.get_category_options(this.categoryOptions);
 	}
 
 	render() {
@@ -137,7 +95,6 @@ export default function Edit( props ) {
 		setAttributes( { [ attName ]: temp } );
 	};
 
-	const renderControlObj = createControlRenderer( props );
 
 	//for debugging purposes only
 	const displayShortCodeAtts = ( [ ary ] ) =>
