@@ -16,7 +16,6 @@ import {
 	Panel,
 	PanelRow,
 	PanelBody,
-	PanelGroup,
 	Placeholder,
 	SelectControl,
 	CheckboxControl,
@@ -24,7 +23,6 @@ import {
 	RangeControl,
 } from '@wordpress/components';
 import NewCase_InspectorControls from './NewCase_InspectorControls';
-import { rotateLeft, Icon, listView } from '@wordpress/icons';
 import fetchCalls from './fetchCalls';
 import controls from './controlsData';
 /**
@@ -89,24 +87,6 @@ export default function Edit( props ) {
 		setAttributes( { [ attName ]: temp } );
 	};
 
-
-	//for debugging purposes only
-	const displayShortCodeAtts = ( [ ary ] ) =>
-		Object.entries( ary ).map( ( [ k, v ] ) => (
-			<p> { `${ k }: ${ v }` }</p>
-		) );
-
-	const displayAllShortCodeAtts = () =>
-		Object.entries( attributes ).map(
-			( [ k, v ] ) =>
-				v.constructor == Array && (
-					<>
-						<h4>{ k }</h4>
-						{ displayShortCodeAtts( v ) }
-					</>
-				)
-		);
-
 	const RepaintButton = () => (
 		<button
 			id={ 'fusedesk_repaintMe' }
@@ -119,7 +99,6 @@ export default function Edit( props ) {
 		></button>
 	);
 
-	// displayShortCodeAtts(newCaseForm)
 	return (
 		<div { ...useBlockProps() }>
 			<OptionsPuller />
@@ -133,7 +112,6 @@ export default function Edit( props ) {
 			</Placeholder>
 			< RepaintButton />
 
-			{ /* {displayAllShortCodeAtts()} */ }
 		</div>
 	);
 }

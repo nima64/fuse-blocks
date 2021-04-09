@@ -26,51 +26,11 @@ import { RawHTML } from '@wordpress/element';
 export default function save( props ) {
 	const { attributes, setAttributes } = props;
 
-	//grab settings related attributes and store them into an array
-	const blockSettings = ( ( {
-		caseCreation,
-		newCaseForm,
-		caseTitle,
-		formText,
-		suggestedPosts,
-		fileUploads,
-	} ) => [
-		caseCreation[ 0 ],
-		newCaseForm[ 0 ],
-		caseTitle[ 0 ],
-		formText[ 0 ],
-		suggestedPosts[ 0 ],
-		fileUploads[ 0 ],
-	] )( attributes );
-
-	const genShortCodeAtt = ( aryObj ) =>
-		Object.entries( aryObj )
-			.map( ( [ k, v ] ) => {
-				if ( k == 'suggestioncategories' ) {
-					return `suggestioncategories="${ v
-						.map( ( _v ) => _v.value )
-						.join( ',' ) }" `;
-				}
-				return !! v ? `${ k }="${ v }" ` : '';
-			} )
-			.join( ' ' );
-
-	const genAllShortCodeAtts = () =>
-		blockSettings.map( ( v ) => genShortCodeAtt( v ) ).join( '' );
-	const _formText = {
-		nametext: 'Your name',
-		emailtext: 'Your email',
-		buttontext: 'Create Support Case',
-		creatingtext: 'Submitting Case...',
-		successtext:
-			'Thanks! Your case has been created. We will get back to you shortly',
-	};
 	return (
 		<div { ...useBlockProps.save() }>
 			<RawHTML>
 				{ '[fusedesk_newcase ' + genAllShortCodeAtts() + ']' }
 			</RawHTML>
-			{ /* {genAllShortCodeAtts()} */ }
 		</div>
 	);
 }
