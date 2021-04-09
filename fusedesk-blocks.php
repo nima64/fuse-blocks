@@ -37,7 +37,6 @@ class fusedesk_Block {
     }
 
     function register(){
-        
     $NAMESPACE = 'fusedesk';
     $name = $this->name;
     $editorStyleH = $this->editor_style_handle; 
@@ -70,7 +69,7 @@ class fusedesk_Block {
     }
 }
 
-function fusedesk_block_category( $categories, $post ) {
+function fusedesk_blocks_category( $categories, $post ) {
 	return array_merge(
 		$categories,
 		array(
@@ -90,7 +89,7 @@ function fusedesk_blocks_init() {
     // $regb = registerBlock($mycaseblock);
     $mycaseblock->register();
     wp_localize_script($nblock->editor_script_handle, 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
-    add_filter( 'block_categories', 'fusedesk_block_category', 10, 2);
+    add_filter( 'block_categories', 'fusedesk_blocks_category', 10, 2);
 }
 
 add_action( 'admin_init', 'fusedesk_blocks_init' );

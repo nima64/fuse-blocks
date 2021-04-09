@@ -23,7 +23,7 @@ import {
 	TextControl,
 	RangeControl,
 } from '@wordpress/components';
-import NewCaseInspectorControls from './NewCaseInspectorControls';
+import NewCase_InspectorControls from './NewCase_InspectorControls';
 import { rotateLeft, Icon, listView } from '@wordpress/icons';
 import fetchCalls from './fetchCalls';
 import controls from './controlsData';
@@ -33,8 +33,7 @@ import controls from './controlsData';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
-import FDIcon from '../../fdico';
+import './css/editor.scss';
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -51,17 +50,12 @@ class OptionsPuller extends React.Component {
 	constructor( props ) {
 		super( props );
 		this.fetchCalls = fetchCalls;
-		this.repOptions = controls.caseCreation[0].options
-		this.deptOptions = controls.caseCreation[1].options
-		this.casetagOptions = controls.caseCreation[2].options
-		this.categoryOptions = controls.suggestedPosts[3].options
 	}
-
 	componentDidMount() {
-		fetchCalls.get_rep_options(this.repOptions);
-		fetchCalls.get_dept_options(this.deptOptions);
-		fetchCalls.get_casetag_options(this.casetagOptions);
-		fetchCalls.get_category_options(this.categoryOptions);
+		this.fetchCalls.get_rep_options();
+		this.fetchCalls.get_dept_options();
+		this.fetchCalls.get_casetag_options();
+		this.fetchCalls.get_category_options();
 	}
 
 	render() {
@@ -113,25 +107,14 @@ export default function Edit( props ) {
 				)
 		);
 
-	const getRefreshButton = () => (
+	const RepaintButton = () => (
 		<button
-			id={ 'refreshme' }
+			id={ 'fusedesk_repaintMe' }
 			style={ { opacity: '0', float: 'left', margin: '0', padding: '0' } }
 			onClick={ () => {
-				console.log( 'refresh me was clicked!' );
-				const inc = attributes.refreshme + 1;
-				setAttributes( { refreshme: inc } );
-			} }
-		></button>
-	);
-	const getRefreshOptionsButton = (option) => (
-		<button
-			id={ 'refreshme' }
-			style={ { opacity: '0', float: 'left', margin: '0', padding: '0' } }
-			onClick={ () => {
-				console.log( 'refresh me was clicked!' );
-				const inc = attributes.refreshme + 1;
-				setAttributes( { refreshme: inc } );
+				console.log( 'repaint me was clicked!' );
+				// const inc =  + 1;
+				setAttributes( { repaintMe: !attributes.repaintMe } );
 			} }
 		></button>
 	);
@@ -140,17 +123,15 @@ export default function Edit( props ) {
 	return (
 		<div { ...useBlockProps() }>
 			<OptionsPuller />
-			<NewCaseInspectorControls {...props} />
-			{/* {NewCaseInspectorControls(props) } */}
+			<NewCase_InspectorControls {...props} />
 			<Placeholder
-				// icon={<Icon icon={FDIcon} />}
 				label={__("FuseDesk New Case",'fusedesk')}
 				instructions="Allow your website visitors to create a new case form in FuseDesk."
 			>
 				<span className="dashicons dashicons-admin-generic"></span>
 				&nbsp; Click on the settings icon to start customizing!
 			</Placeholder>
-			{/* { getRefreshButton() } */}
+			< RepaintButton />
 
 			{ /* {displayAllShortCodeAtts()} */ }
 		</div>

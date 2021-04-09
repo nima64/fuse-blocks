@@ -5,7 +5,7 @@
  */
 import { registerBlockType } from '@wordpress/blocks';
 import { people, Icon } from '@wordpress/icons';
-import fdico from '../../fdico';
+import fusedesk_ico from '../../fusedesk_ico';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * All files containing `style` keyword are bundled together. The code used
@@ -31,7 +31,7 @@ registerBlockType( 'fusedesk/my-cases', {
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
 	apiVersion: 2,
-	icon: <Icon icon={ fdico } />,
+	icon: <Icon icon={ fusedesk_ico } />,
 	category: 'fusedesk',
 	title: 'my cases',
 	attributes: {

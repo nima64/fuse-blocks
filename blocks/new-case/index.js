@@ -6,7 +6,7 @@
 import {__} from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { Icon } from '@wordpress/icons';
-import fdico from '../../fdico';
+import fusedesk_ico from '../../fusedesk_ico';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -15,7 +15,7 @@ import fdico from '../../fdico';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './style.scss';
+import './css/style.scss';
 
 /**
  * Internal dependencies
@@ -33,7 +33,7 @@ registerBlockType( 'fusedesk/new-case', {
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
 	apiVersion: 2,
-	icon: <Icon icon={ fdico } />,
+	icon: <Icon icon={ fusedesk_ico } />,
 	title: 'new case',
 	category: 'fusedesk',
 	description: __('Allow your website visitors to create a new case in FuseDesk','fusedesk'),
@@ -112,9 +112,9 @@ registerBlockType( 'fusedesk/new-case', {
 				},
 			],
 		},
-		refreshMe: {
-			type: 'int',
-			default: 0,
+		repaintMe: {
+			type: 'boolean',
+			default: false,
 		},
 	},
 
