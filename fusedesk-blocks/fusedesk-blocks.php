@@ -28,16 +28,16 @@ class fusedesk_Block {
     $name = $this->name;
     $editorStyleHandle = $this->editor_style_handle; 
     $editorScriptHandle = $this->editor_script_handle; 
-    $asset_file = include( plugin_dir_path(__FILE__).'build/'.$name.'.asset.php');
+    $asset_file = include( plugin_dir_path(__FILE__).'src/'.$name.'.asset.php');
 
     wp_enqueue_style(
         $editorStyleHandle,
-        plugins_url('build/'. $name . '.css',__FILE__),
+        plugins_url('src/'. $name . '.css',__FILE__),
     );
 
     wp_register_script(
         $editorScriptHandle,
-        plugins_url('build/'.$name.'.js',__FILE__),
+        plugins_url('src/'.$name.'.js',__FILE__),
         $asset_file['dependencies'],
         $asset_file['version']
     );
