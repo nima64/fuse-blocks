@@ -64,9 +64,9 @@ export default function save( props ) {
 			<RawHTML { ...useBlockProps.save() } >
 				{ '[fusedesk_newcase ' + genAllShortCodeAtts() + ']' }
 			</RawHTML>
-			<div>
+			{/* <div>
 				{genAllShortCodeAtts()}
-			</div>
+			</div> */}
 		</div>
 		
 	);
