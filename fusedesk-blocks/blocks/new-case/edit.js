@@ -22,7 +22,7 @@ import {
 	TextControl,
 	RangeControl,
 } from '@wordpress/components';
-import NewCase_InspectorControls from './NewCase_InspectorControls';
+import {NewCase_InspectorControls,getTitleOptionsAry,loadTitleOptionsAry} from './NewCase_InspectorControls';
 import fetchCalls from './fetchCalls';
 import controls from './controlsData';
 /**
@@ -42,18 +42,20 @@ import './css/editor.scss';
  */
 
 
-
 //Singleton that pulls data on mount and updates options
 class OptionsPuller extends React.Component {
 	constructor( props ) {
 		super( props );
 		this.fetchCalls = fetchCalls;
+		this.caseTitle = props.attributes.caseTitle;
+		loadTitleOptionsAry(this.caseTitle);
 	}
 	componentDidMount() {
 		this.fetchCalls.get_rep_options();
 		this.fetchCalls.get_dep_options();
 		this.fetchCalls.get_casetag_options();
 		this.fetchCalls.get_category_options();
+		loadTitleOptionsAry(this.caseTitle);
 	}
 
 	render() {
@@ -92,26 +94,74 @@ export default function Edit( props ) {
 			id={ 'fusedesk_repaintMe' }
 			style={ { opacity: '0', float: 'left', margin: '0', padding: '0' } }
 			onClick={ () => {
-				console.log( 'repaint me was clicked!' );
-				// const inc =  + 1;
 				setAttributes( { repaintMe: !attributes.repaintMe } );
 			} }
 		></button>
 	);
 
+	const getForm = () => {
+		const gradientClip = {WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'};
+		const linearGradientA = {background:'linear-gradient(#33c6ff, #0669bd)',...gradientClip};
+		const linearGradientB = {background:'linear-gradient(#7a6bff, #382ba2)',...gradientClip};
+
+		return(
+			<div style={{padding:'2em',backgroundColor:'white',border:'1px solid black'}}>
+				<div style={{display:'flex',justifyContent:'space-between'}}>
+					<h2 style={{fontStyle:'italic',fontSize:'2.7rem',margin:0,fontWeight:'bold'}}>
+						<span style={{...linearGradientA}}>New</span>
+						<span style={{...linearGradientB}}>Case</span>
+					</h2>
+					<a  style={{color:'inherit'}}className="dashicons dashicons-admin-generic"></a>
+				</div>
+				<p style={{fontSize:'1.1rem',fontStyle:'italic'}}>Allow your website visitors to create a new case form in FuseDesk.</p>
+
+				<div>
+					<div style={{display:'flex',marginBottom:'20px'}}>
+						<div style={{flex:1}}>
+							<div ><label>{formText[0].nametext || 'Your Name'}</label></div>
+							<input type='text' style={{width:'90%'}}></input>
+						</div>
+						<div style={{flex:1}}>
+							<div ><label>{formText[0].emailtext || 'Your Email'}</label></div>
+							<input type='text' style={{width:'90%'}}></input>
+						</div>
+					</div>
+					{ caseTitle[0].showtitle &&
+						<div style={{display:'flex',marginBottom:'20px'}}>
+							<label style={{marginRight:'20px'}}>{caseTitle[0].titletext || 'Briefly, what is the request about?'}</label> 
+							{ caseTitle[0].titleoptions?
+							<SelectControl  options={getTitleOptionsAry()} style={{height:'34px'}} />
+							:
+							<input type='text' ></input>
+							}
+						</div>
+					}
+
+					<div>
+					{ fileUploads[0].fileupload &&
+						<div style={{display:'flex',alignItems:'flex-end',marginBottom:'20px'}}>
+							<label style={{marginRight:'20px'}}>{fileUploads[0].filetext || 'Attach a file:'}</label> 
+							<input type='file' ></input>
+						</div>
+					}
+					</div>
+					<div style={{marginBottom:'20px'}}>
+						<div><label>How can we help you?</label></div>
+						<textarea rows="6" style={{width:'98%'}}></textarea>
+					</div>
+					{/* <button onClick={(v) => console.log(stringToOptions(caseTitle[0].titleoptions))}>{formText[0].buttontext || 'create support case'}</button> */}
+					<button >{formText[0].buttontext || 'create support case'}</button> 
+				</div>
+			</div>
+		)	
+	}
+
 	return (
 		<div { ...useBlockProps() }>
-			<OptionsPuller />
+			<OptionsPuller {...props} />
 			<NewCase_InspectorControls {...props} />
-			<Placeholder
-				label={__("FuseDesk New Case",'fusedesk')}
-				instructions="Allow your website visitors to create a new case form in FuseDesk."
-			>
-				<span className="dashicons dashicons-admin-generic"></span>
-				&nbsp; Click on the settings icon to start customizing!
-			</Placeholder>
-			< RepaintButton />
-
+			{getForm()}
+			<RepaintButton />
 		</div>
 	);
 }

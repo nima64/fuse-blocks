@@ -11,11 +11,11 @@ export default {
         {
             type: 'select',
             label: __('Rep Assignment','fusedesk'),
-            options: [ { label: __('Reps','fusedesk'), value: false } ],
+            options: [ { label: __('Assign Randomly','fusedesk'), value: false } ],
             bind: 'rep',
         },
         {
-            type: 'select',
+            type: 'multiSelect',
             label: __('Case Tags to Apply','fusedesk'),
             options: [ { label: __('Case Tags','fusedesk'), value: false } ],
             bind: 'casetagids',
@@ -47,7 +47,7 @@ export default {
             bind: 'titletext',
         },
         {
-            type: 'text',
+            type: 'textArea',
             label: __("Case Title Options (for a drop down selection)",'fusedesk'),
             placeholder: __("Case Title Options, one per line, optional",'fusedesk'),
             bind: 'titleoptions',
@@ -143,4 +143,18 @@ export default {
             bind: 'filetypesallowed',
         },
     ],
+    advanced:[
+        {
+            type: 'text',
+            label: 'HTML anchor',
+            bind: 'anchor',         
+            help: `Enter a word or two — without spaces — to make a unique web address just for this block, called an “anchor.”`,
+        },
+        {
+            type: 'text',
+            label: 'Additional CSS styles(s) for the fields',
+            bind: 'style',         
+            help: 'Single inline styles, serpated by semicolons.'
+        }
+    ]
 }

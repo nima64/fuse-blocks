@@ -18,7 +18,7 @@ export default class GSelect extends Select {
 
   render(){
     return(
-      <div style={{marginBottom:'24px'}}>
+      <div >
         <div style={{margin:'10px 0px'}}>{this.props.label}</div>
         <Select 
           {...this.props}

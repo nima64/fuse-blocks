@@ -26,11 +26,48 @@ import { RawHTML } from '@wordpress/element';
 export default function save( props ) {
 	const { attributes, setAttributes } = props;
 
+	//grab settings related attributes and store them into an array
+	const blockSettings = ( ( {
+		caseCreation,
+		newCaseForm,
+		caseTitle,
+		formText,
+		suggestedPosts,
+		fileUploads,
+		advanced,
+	} ) => [
+		caseCreation[ 0 ],
+		newCaseForm[ 0 ],
+		caseTitle[ 0 ],
+		formText[ 0 ],
+		suggestedPosts[ 0 ],
+		fileUploads[ 0 ],
+		advanced[ 0 ],
+	] )( attributes );
+	
+	const genShortCodeAtt = ( aryObj ) =>
+		Object.entries( aryObj )
+			// merge all attributes to one string "k=v, k=v2, k=v..."
+			.map( ( [ k, v ] ) => {
+				//convert multiSelects to strings
+				if (Array.isArray(v))
+					v = v.map( ( _v ) => _v.value ).join();
+				return !! v ? `${ k }="${ v }" ` : '';
+			} )
+			.join( ' ' );
+
+	const genAllShortCodeAtts = () =>
+		blockSettings.map( ( v ) => genShortCodeAtt( v ) ).join( '' );
+
 	return (
-		<div { ...useBlockProps.save() }>
-			<RawHTML>
+		<div>
+			<RawHTML { ...useBlockProps.save() } >
 				{ '[fusedesk_newcase ' + genAllShortCodeAtts() + ']' }
 			</RawHTML>
+			<div>
+				{genAllShortCodeAtts()}
+			</div>
 		</div>
+		
 	);
 }

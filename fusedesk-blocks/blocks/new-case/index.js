@@ -34,7 +34,7 @@ registerBlockType( 'fusedesk/new-case', {
 	 */
 	apiVersion: 2,
 	icon: <Icon icon={ fusedesk_ico } />,
-	title: 'new case',
+	title: 'New Case',
 	category: 'fusedesk',
 	description: __('Allow your website visitors to create a new case in FuseDesk','fusedesk'),
 	attributes: {
@@ -101,6 +101,15 @@ registerBlockType( 'fusedesk/new-case', {
 					filetypesallowed: '',
 				},
 			],
+		},
+		advanced:{
+			type:'array',
+			default:[
+				{
+					anchor:'',
+					style:false,
+				}
+			]
 		},
 		repaintMe: {
 			type: 'boolean',

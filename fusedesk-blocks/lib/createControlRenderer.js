@@ -1,10 +1,9 @@
-import {CheckboxControl, SelectControl,TextControl,RangeControl} from '@wordpress/components';
+import {CheckboxControl, SelectControl,TextControl,TextareaControl,RangeControl} from '@wordpress/components';
 import MultiSelect from './MultiSelect';
 
     /**
 	 * Closure takes attributes from props and returns function that renders controls
-	 * @param  {string} props 
-	 * @returns {(obj,attAry) => void} function
+	 * @param  {Object} props 
 	*/
 
 export default function ({attributes,setAttributes}){
@@ -14,8 +13,16 @@ export default function ({attributes,setAttributes}){
         temp[0][ key ] = newval;
         setAttributes( { [ attName ]: temp } );
     };
-    return function (obj,attAry) {
-        const fbind = (newval) => mutAryItem(newval,obj.bind,attAry)
+
+    /**
+	 * @param  {String} boj
+	 * @param  {Object} attAry
+     * @param {()=>String} customOnChange
+	 * @returns {JSX.Element} function
+	*/
+    return function (obj,attAry,customOnChange=null) {
+        const bindedMut = (v) => mutAryItem(v,obj.bind,attAry);
+        const fbind = (newval) => !!customOnChange? bindedMut(customOnChange(newval)) : bindedMut(newval);
         const val = attributes[attAry][0][obj.bind];
         switch (obj.type) {
             case 'check' :
@@ -27,6 +34,14 @@ export default function ({attributes,setAttributes}){
             case 'text' :
                 return (					
                     <TextControl 
+                        label={obj.label}
+                        value={ val ? val : ''} 
+                        placeholder={obj.placeholder}
+                        onChange={fbind} 
+                        help={obj.help} />);
+            case 'textArea' :
+                return (					
+                    <TextareaControl 
                         label={obj.label}
                         value={ val ? val : ''} 
                         placeholder={obj.placeholder}

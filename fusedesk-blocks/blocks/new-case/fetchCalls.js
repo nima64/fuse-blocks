@@ -1,15 +1,15 @@
 import controlsData from './controlsData';
 const WP_BASEURL = WPURLS.siteurl;
 // const WP_BASEURL = 'http://localhost/wordpress';
-const REPS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_reps';
 const DEPS_ENDPOINT ='/wp-admin/admin-ajax.php?action=fusedesk_departments';
+const REPS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_reps';
 const CASETAGS_ENDPOINT ='/wp-admin/admin-ajax.php?action=fusedesk_casetags';
 const CATEGORIES_ENDPOINT = '/wp-json/wp/v2/categories/';
 
-const repOptions = controlsData.caseCreation[0].options
-const depOptions = controlsData.caseCreation[1].options
-const caseTagOptions = controlsData.caseCreation[2].options
-const categoryOptions = controlsData.suggestedPosts[3].options
+const depOptions = controlsData.caseCreation[0]
+const repOptions = controlsData.caseCreation[1]
+const caseTagOptions = controlsData.caseCreation[2]
+const categoryOptions = controlsData.suggestedPosts[3]
 
 //normalize reps json into {label,value} format for Select Components
 const normJsonToOptions = ( repsJson ) =>
@@ -19,9 +19,11 @@ const normJsonToOptions = ( repsJson ) =>
 	} ) );
 
 const normCatToOptions = ( jsonData ) => jsonData.map( ( obj ) => ( { label: obj.name, value: obj.id } ) );
+
 // withRefresh only applies to FuseDesk api calls
 function composeOptionsFetcher( normalizer, withRefresh=false ) {
-	return function ( options, endpoint ) {
+	return function ( obj, endpoint ) {
+		let options = obj.options;
 		let BASEURL = WP_BASEURL + endpoint;
 		let FETCHURL = withRefresh? BASEURL + '&refresh=1' : BASEURL;
 		fetch( FETCHURL, {
@@ -30,11 +32,19 @@ function composeOptionsFetcher( normalizer, withRefresh=false ) {
 			.then( ( req ) => req.json() )
 			.then( ( json ) => {
 				// Inserts into options
-				normalizer( json ).forEach( ( v, i ) => {
-					options[ i ] = v;
-				} );
+				if (obj.bind =="rep"){
+					normalizer( json ).forEach( ( v, i ) => {
+						options[ i +1 ] = v;
+					} );
+				}else {
+					normalizer( json ).forEach( ( v, i ) => {
+						options[ i ] = v;
+					} );
+				}
+				
 				const repaintButton = document.body.querySelector( '#fusedesk_repaintMe' );
-				if ( repaintButton ){ repaintButton.click(); } else { console.log("couldn't repaint on init")}
+				// if ( repaintButton ){ repaintButton.click();console.log('repainted ' + FETCHURL ) } else { console.log("couldn't repaint on init")}
+				if ( repaintButton ){ repaintButton.click()} else { console.log("couldn't repaint on init")}
 			} );
 	};
 }
