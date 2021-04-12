@@ -16,11 +16,13 @@ const refreshIcon = <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"
 
 let titleOptionsAry = [{label:'emtpy',value:''}]
 // const stringToOptions = (s) => s.split(',').map((v) => ({label:v,value:v}) );
-const stringToOptions = (s) => s.split(',').map((v,i) => { titleOptionsAry[i] = {label:v,value:v} } );
-export function loadTitleOptionsAry(caseTitle){
-	if (caseTitle[0].titleoptions){
+const getStringToOptions = (s) => s.split(',').map((v) => ({label:v,value:v}));
+
+
+export function loadTitleOptionsAry(str){
+	if (str){
 		titleOptionsAry.length = 0;
-		stringToOptions(caseTitle[0].titleoptions);
+		titleOptionsAry = getStringToOptions(str);
 	}
 }
 
@@ -91,9 +93,8 @@ export function NewCase_InspectorControls(props){
 							<>
 							{ renderControlObj( controlsData[1],'caseTitle')}
 							{ renderControlObj( controlsData[2] ,'caseTitle',(v) =>{
-								loadTitleOptionsAry(caseTitle);
+								loadTitleOptionsAry(v);
 								return v} ) }
-							{/* { renderControlObj( controlsData[2] ,'caseTitle',(v) =>{ return v} ) } */}
 							</>
 						)
 					}

@@ -35,7 +35,7 @@ export default function ({attributes,setAttributes}){
                 return (					
                     <TextControl 
                         label={obj.label}
-                        value={ val ? val : ''} 
+                        value={ val ? val : ''} //not allowed to have boolean, if boolean then don't show anything 
                         placeholder={obj.placeholder}
                         onChange={fbind} 
                         help={obj.help} />);
