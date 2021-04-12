@@ -33,7 +33,7 @@ registerBlockType( 'fusedesk/my-cases', {
 	apiVersion: 2,
 	icon: <Icon icon={ fusedesk_ico } />,
 	category: 'fusedesk',
-	title: 'My Cases',
+	title: __('My Cases'),
 	attributes: {
 		display: {
 			type: 'array',

@@ -1,1 +1,11 @@
-.wp-block-fusedesk-new-cases{background-color:#21759b;color:#fff;padding:2px}
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ */
+.wp-block-fusedesk-new-cases {
+  background-color: #21759b;
+  color: #fff;
+  padding: 2px;
+}
+
+/*# sourceMappingURL=style-new-case.css.map*/

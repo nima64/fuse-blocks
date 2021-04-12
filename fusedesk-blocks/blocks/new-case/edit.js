@@ -22,7 +22,7 @@ import {
 	TextControl,
 	RangeControl,
 } from '@wordpress/components';
-import {NewCase_InspectorControls,getTitleOptionsAry,loadTitleOptionsAry} from './NewCase_InspectorControls';
+import {NewCase_InspectorControls,formTitleOptions} from './NewCase_InspectorControls';
 import fetchCalls from './fetchCalls';
 import controls from './controlsData';
 /**
@@ -54,7 +54,7 @@ class OptionsPuller extends React.Component {
 		this.fetchCalls.get_dep_options();
 		this.fetchCalls.get_casetag_options();
 		this.fetchCalls.get_category_options();
-		loadTitleOptionsAry(this.caseTitle[0].titleoptions);
+		formTitleOptions.update(this.caseTitle[0].titleoptions);
 	}
 
 	render() {
@@ -136,7 +136,7 @@ export default function Edit( props ) {
 						<div style={{display:'flex'}}>
 							<label style={{marginRight:'20px'}}>{caseTitle[0].titletext || 'Briefly, what is the request about?'}</label> 
 							{ caseTitle[0].titleoptions?
-							<SelectControl  options={getTitleOptionsAry()} style={{height:'34px'}} />
+							<SelectControl  options={formTitleOptions.get()} style={{height:'34px'}} />
 							:
 							<input type='text' ></input>
 							}

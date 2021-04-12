@@ -1,1 +1,8 @@
-.wp-block-fusedesk-new-cases{border:1px dotted red}
+/**
+ * The following styles get applied inside the editor only.
+ */
+.wp-block-fusedesk-new-cases {
+  border: 1px dotted #f00;
+}
+
+/*# sourceMappingURL=new-case.css.map*/

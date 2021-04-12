@@ -146,15 +146,15 @@ export default {
     advanced:[
         {
             type: 'text',
-            label: 'HTML anchor',
+            label: __('HTML anchor'),
             bind: 'anchor',         
-            help: `Enter a word or two — without spaces — to make a unique web address just for this block, called an “anchor.”`,
+            help: __(`Enter a word or two — without spaces — to make a unique web address just for this block, called an “anchor.”`),
         },
         {
             type: 'text',
-            label: 'Additional CSS styles(s) for the fields',
+            label: __('Additional CSS styles(s) for the fields'),
             bind: 'style',         
-            help: 'Single inline styles, serpated by semicolons.'
+            help: __('Single inline styles, serpated by semicolons.'),
         }
     ]
 }

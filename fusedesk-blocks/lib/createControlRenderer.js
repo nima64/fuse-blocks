@@ -20,6 +20,7 @@ export default function ({attributes,setAttributes}){
      * @param {()=>String} customOnChange
 	 * @returns {JSX.Element} function
 	*/
+
     return function (obj,attAry,customOnChange=null) {
         const bindedMut = (v) => mutAryItem(v,obj.bind,attAry);
         const fbind = (newval) => !!customOnChange? bindedMut(customOnChange(newval)) : bindedMut(newval);
