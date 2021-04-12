@@ -49,7 +49,7 @@ export default {
         {
             type: 'textArea',
             label: __("Case Title Options (for a drop down selection)",'fusedesk'),
-            placeholder: __("Case Title Options, one per line, optional",'fusedesk'),
+            placeholder: __("Case Title Options, comma seperated, optional",'fusedesk'),
             bind: 'titleoptions',
         }
     ],
