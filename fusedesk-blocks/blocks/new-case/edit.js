@@ -32,6 +32,7 @@ import controls from './controlsData';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './css/editor.scss';
+import controlsData from './controlsData';
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -124,17 +125,17 @@ export default function Edit( props ) {
 					{/* <div style={{display:'flex',marginBottom:'20px'}}> */}
 					<div style={{display:'flex'}}>
 						<div style={{flex:1}}>
-							<div ><label>{formText[0].nametext || 'Your Name'}</label></div>
+							<div ><label>{formText[0].nametext || __('Your Name','fusedesk')}</label></div>
 							<input type='text' style={{width:'90%'}}></input>
 						</div>
 						<div style={{flex:1}}>
-							<div ><label>{formText[0].emailtext || 'Your Email'}</label></div>
+							<div ><label>{formText[0].emailtext || __('Your Email','fusedesk')}</label></div>
 							<input type='text' style={{width:'90%'}}></input>
 						</div>
 					</div>
 					{ caseTitle[0].showtitle &&
 						<div style={{display:'flex'}}>
-							<label style={{marginRight:'20px'}}>{caseTitle[0].titletext || 'Briefly, what is the request about?'}</label> 
+							<label style={{marginRight:'20px'}}>{caseTitle[0].titletext || __('Briefly, what is the request about?','fusedesk')}</label> 
 							{ caseTitle[0].titleoptions?
 							<SelectControl  options={formTitleOptions.get()} style={{height:'34px'}} />
 							:
@@ -144,7 +145,7 @@ export default function Edit( props ) {
 					}
 					{ fileUploads[0].fileupload &&
 						<div style={{display:'flex',alignItems:'flex-end',marginBottom:'20px'}}>
-							<label style={{marginRight:'20px'}}>{fileUploads[0].filetext || 'Attach a file:'}</label> 
+							<label style={{marginRight:'20px'}}>{fileUploads[0].filetext || __('Attach a file:','fusedesk')}</label> 
 							<input type='file' ></input>
 						</div>
 					}
@@ -154,7 +155,7 @@ export default function Edit( props ) {
 					</div>
 					{/* <button onClick={(v) => console.log(stringToOptions(caseTitle[0].titleoptions))}>{formText[0].buttontext || 'create support case'}</button> */}
 					<div>
-						<button >{formText[0].buttontext || 'create support case'}</button> 
+						<button >{formText[0].buttontext || __('create support case','fusedesk')}</button> 
 					</div>
 				</div>
 			</div>
