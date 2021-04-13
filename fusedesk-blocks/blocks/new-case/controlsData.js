@@ -146,15 +146,15 @@ export default {
     advanced:[
         {
             type: 'text',
-            label: __('HTML anchor'),
+            label: __('HTML anchor','fusedesk'),
             bind: 'anchor',         
-            help: __(`Enter a word or two — without spaces — to make a unique web address just for this block, called an “anchor.”`),
+            help: __(`Enter a word or two — without spaces — to make a unique web address just for this block, called an “anchor.”`,'fusedesk'),
         },
         {
             type: 'text',
-            label: __('Additional CSS styles(s) for the fields'),
+            label: __('Additional CSS styles(s) for the fields','fusedesk'),
             bind: 'style',         
-            help: __('Single inline styles, serpated by semicolons.'),
+            help: __('Single inline styles, serpated by semicolons.','fusedesk'),
         }
     ]
 }
