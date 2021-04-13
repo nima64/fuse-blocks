@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///editor.scss"],"names":[],"mappings":"AAAA;;EAEE;AACF;EACE,uBAAuB;AACzB,C","file":"new-case.css","sourcesContent":["/**\n * The following styles get applied inside the editor only.\n */\n.wp-block-fusedesk-new-cases {\n  border: 1px dotted #f00;\n}"],"sourceRoot":""}
