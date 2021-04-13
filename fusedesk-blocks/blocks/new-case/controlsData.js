@@ -154,7 +154,7 @@ export default {
             type: 'text',
             label: __('Additional CSS styles(s) for the fields','fusedesk'),
             bind: 'style',         
-            help: __('Single inline styles, serpated by semicolons.','fusedesk'),
+            help: __('style: What CSS style to apply to our inputs','fusedesk'),
         }
     ]
 }
