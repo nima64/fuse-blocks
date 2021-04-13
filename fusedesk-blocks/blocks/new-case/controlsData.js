@@ -58,10 +58,10 @@ export default {
             type: 'select',
             label: __('Suggestions Placement','fusedesk'),
             options: [
-                { label: __('before','fusedesk'), value: 'before' },
-                { label: __('after','fusedesk'), value: 'after' },
-                { label: __('end','fusedesk'), value: 'end' },
-                { label: __('none','fusedesk'), value: 'none' },
+                { label: __('Before','fusedesk'), value: 'before' },
+                { label: __('After','fusedesk'), value: 'after' },
+                { label: __('End','fusedesk'), value: 'end' },
+                { label: __('None','fusedesk'), value: 'none' },
             ]
            ,
             bind: 'suggestionplacement',

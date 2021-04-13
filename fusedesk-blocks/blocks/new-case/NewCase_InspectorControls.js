@@ -56,21 +56,30 @@ function NewCase_InspectorControls(props){
 	const getCaseCreationPanel = () => {
 		const controlsData = controls.caseCreation;
 		const inpFlex = 10;
-		const RefreshButton = (props) => <button onClick={props.onClick} style={{flex:1,height:'30px',marginBottom: '8px',marginLeft: '10px'}}><Icon icon={refreshIcon}></Icon></button>
+		const buttonStyle = {flex:1,height:'30px',marginBottom: '8px',marginLeft: '10px'};
+		const RefreshButton = (props) => <button onClick={props.onClick} style={{...buttonStyle}}><Icon icon={refreshIcon}></Icon></button>
+		const XRefreshButton = (props) => <button onClick={props.onClick} style={{...buttonStyle,marginBottom:'0'}}><Icon icon={refreshIcon}></Icon></button>
 		const ControlsTemplate = (props) => (
 			<div style={{display:'flex',alignItems:'flex-end'}}>
 				<span style={{margin:0,flex:inpFlex}}>
 				{renderControlObj(controlsData[props.index] , 'caseCreation' )}
 				</span >
-				<RefreshButton onClick={props.refreshCall} />
+				{props.children}
 			</div>
 		);
+
 		return (
 			<Panel>
 				<PanelBody title="Case Creation">
-					<ControlsTemplate index="0" refreshCall= {fetchCalls.get_dep_options_refresh} />
-					<ControlsTemplate index="1" refreshCall= {fetchCalls.get_rep_options_refresh} />
-					<ControlsTemplate index="2" refreshCall= {fetchCalls.get_casetag_options_refresh} />
+					<ControlsTemplate index="0" >
+						<RefreshButton onClick= {fetchCalls.get_dep_options_refresh} />
+					</ ControlsTemplate>
+					<ControlsTemplate index="1" >
+						<RefreshButton onClick= {fetchCalls.get_rep_options_refresh} />
+					</ControlsTemplate>
+					<ControlsTemplate index="2" >
+						<XRefreshButton onClick ={fetchCalls.get_casetag_options_refresh } />
+					</ControlsTemplate>
 				</PanelBody>
 			</Panel>
 		);

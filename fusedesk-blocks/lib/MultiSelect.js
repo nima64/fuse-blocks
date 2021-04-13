@@ -1,16 +1,41 @@
 import Select from 'react-select';
 
-
 const customStyles = {
-  option: (styles, state) => ({
-    ...styles,
-    cursor: 'pointer',
-  }),
   control: (styles) => ({
     ...styles,
     cursor: 'pointer',
-  })
+    minHeight: '30px',
+    padding: '0 ',
+    borderRadius: '2px',
+  }),
+  valueContainer: (provided, state) => ({
+    ...provided,
+    minHeight: '30px',
+    paddingTop: '0',
+    paddingBottom: '0',
+  }),
+  input: (provided, state) => ({
+    ...provided,
+    margin: '0px',
+    padding: '0px',
+    "& input[type=text]:focus": {
+      borderColor:'none',
+      boxShadow: 'none',
+    }
+  }),
+  dropdownIndicator: (provided,state) => ({
+    ...provided,
+    minHeight: '30px',
+    margin : '0',
+    padding: '0 6px',
+    display:'flex',
+    alignItems:'center',
+    "& svg":{
+      height: '15px',
+    }
+  }),
 }
+
 export default class GSelect extends Select {
   constructor(props){
     super(props);
@@ -37,7 +62,8 @@ export default class GSelect extends Select {
               dangerLight:'inherit',
               danger:'black',
               // --wp-admin-theme-color
-              primary25:'#e6e6e6'
+              primary25:'#e6e6e6',
+              neutral30:'rgb(117, 117, 117)',
             }
           })}
         />

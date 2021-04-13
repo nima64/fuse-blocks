@@ -3,6 +3,8 @@
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
+
+import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { people, Icon } from '@wordpress/icons';
 import fusedesk_ico from '../../fusedesk_ico';
@@ -33,7 +35,7 @@ registerBlockType( 'fusedesk/my-cases', {
 	apiVersion: 2,
 	icon: <Icon icon={ fusedesk_ico } />,
 	category: 'fusedesk',
-	title: __('My Cases'),
+	title: __('My Cases','fusedesk'),
 	attributes: {
 		display: {
 			type: 'array',
