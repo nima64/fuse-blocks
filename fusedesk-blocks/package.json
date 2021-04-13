@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:js": "npx wp-scripts lint-js",
-    "buildall": "npx wp-scripts build $(for d in $(dir ./blocks);do echo './blocks/'$d ; done) --output-path=./src",
-    "startall": "npx wp-scripts start $(for d in $(dir ./blocks);do echo './blocks/'$d ; done) --output-path=./src",
+    "buildall": "npx wp-scripts build $(for d in $(ls ./blocks/);do echo './blocks/'$d ; done) --output-path=./src",
+    "startall": "npx wp-scripts start $(for d in $(ls ./blocks);do echo './blocks/'$d ; done) --output-path=./src",
     "buildblock": "npx wp-scripts build ./blocks/$npm_config_block --output-path=./src",
     "startblock": "npx wp-scripts start ./blocks/$npm_config_block --output-path=./src"
   },
