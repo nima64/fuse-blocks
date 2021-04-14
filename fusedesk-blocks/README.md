@@ -5,7 +5,7 @@ The source for all blocks are located in the `blocks` folder and local dependenc
 
 
 ## Building Blocks ##
-To build the blocks
+To build a block
 ```
 npm run buildblock --block=blockname
 ```
