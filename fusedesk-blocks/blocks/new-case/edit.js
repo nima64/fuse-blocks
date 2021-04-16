@@ -53,9 +53,9 @@ class OptionsPuller extends React.Component {
 	componentDidMount() {
 		this.fetchCalls.get_rep_options();
 		this.fetchCalls.get_dep_options();
-		this.fetchCalls.get_casetag_options();
-		this.fetchCalls.get_category_options();
-		formTitleOptions.update(this.caseTitle[0].titleoptions);
+		this.fetchCalls.get_casetagids();
+		this.fetchCalls.get_categories();
+		// formTitleOptions.update(this.caseTitle[0].titleoptions);
 	}
 
 	render() {
@@ -100,14 +100,14 @@ export default function Edit( props ) {
 	);
 
 	const getForm = () => {
-		const gradientClip = {WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'};
+		const gradientClip = {WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'};
 		const linearGradientA = {background:'linear-gradient(#33c6ff, #0669bd)',...gradientClip};
 		const linearGradientB = {background:'linear-gradient(#7a6bff, #382ba2)',...gradientClip};
 		const openSettings = () => { 
 			document.querySelector('.wp-block-fusedesk-new-case').click();
 			document.querySelector('.interface-pinned-items button[aria-label="Settings"]').click() 
 		}
-		const formClass="fusedesk-contactform";
+
 		return(
 			<div style={{padding:'2em',backgroundColor:'white',border:'1px solid black'}}>
 
@@ -167,7 +167,7 @@ export default function Edit( props ) {
 				</form>
 			</div>
 			
-		)	
+		);	
 	}
 
 	return (

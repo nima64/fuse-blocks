@@ -51,18 +51,18 @@ function NewCase_InspectorControls(props){
 		setAttributes( { [ attName ]: temp } );
 	};
 
-	const renderControlObj = createControlRenderer( props );
+	const renderControlObj = createControlRenderer( props ); //renders control data
 
 	const getCaseCreationPanel = () => {
 		const controlsData = controls.caseCreation;
 		const inpFlex = 10;
-		const buttonStyle = {flex:1,height:'30px',marginBottom: '8px',marginLeft: '10px'};
+		const buttonStyle = {flex:1,height:'30px',marginBottom: '35px',marginLeft: '10px'};
 		const RefreshButton = (props) => <button onClick={props.onClick} style={{...buttonStyle}}><Icon icon={refreshIcon}></Icon></button>
 		const XRefreshButton = (props) => <button onClick={props.onClick} style={{...buttonStyle,marginBottom:'0'}}><Icon icon={refreshIcon}></Icon></button>
 		const ControlsTemplate = (props) => (
-			<div style={{display:'flex',alignItems:'flex-end'}}>
+			<div style={{display:'flex',alignItems:'center'}}>
 				<span style={{margin:0,flex:inpFlex}}>
-				{renderControlObj(controlsData[props.index] , 'caseCreation' )}
+				{renderControlObj(controlsData[props.id] , 'caseCreation' )}
 				</span >
 				{props.children}
 			</div>
@@ -71,14 +71,14 @@ function NewCase_InspectorControls(props){
 		return (
 			<Panel>
 				<PanelBody title="Case Creation">
-					<ControlsTemplate index="0" >
+					<ControlsTemplate id="rep" >
 						<RefreshButton onClick= {fetchCalls.get_dep_options_refresh} />
 					</ ControlsTemplate>
-					<ControlsTemplate index="1" >
-						<RefreshButton onClick= {fetchCalls.get_rep_options_refresh} />
-					</ControlsTemplate>
-					<ControlsTemplate index="2" >
-						<XRefreshButton onClick ={fetchCalls.get_casetag_options_refresh } />
+					<ControlsTemplate id="department" >
+						<RefreshButton onClick= {fetchCalls.get_dep_options_refresh} />
+					</ ControlsTemplate>
+					<ControlsTemplate id="casetagids" >
+						{/* <XRefreshButton /> */}
 					</ControlsTemplate>
 				</PanelBody>
 			</Panel>
@@ -89,7 +89,7 @@ function NewCase_InspectorControls(props){
 		return (
 			<Panel>
 				<PanelBody title="New Case Form">
-					{ controlsData.map( (v) => renderControlObj( v, 'newCaseForm' ) ) }
+					{ Object.entries(controlsData).map( ( [k,v] ) => renderControlObj( v, 'newCaseForm' ) ) }
 				</PanelBody>
 			</Panel>
 		);
@@ -99,16 +99,17 @@ function NewCase_InspectorControls(props){
 		return (
 			<Panel>
 				<PanelBody title="Case Title">
-						{ renderControlObj( controlsData[0],'caseTitle') }
+						{ renderControlObj( controlsData.showtitle,'caseTitle') }
 					{
 						///show other options only when showtitle checked
 						caseTitle[ 0 ].showtitle && (
 							<>
-							{ renderControlObj( controlsData[1],'caseTitle')}
-							{ renderControlObj( controlsData[2] ,'caseTitle',(v) =>{
-								// loadTitleOptionsAry(v);
+							{ renderControlObj( controlsData.titletext,'caseTitle')}
+							{ renderControlObj( controlsData.titleoptions ,'caseTitle',(v) =>{
 								formTitleOptions.update(v);
-								return v} ) }
+								return v;
+							})} 
+							
 							</>
 						)
 					}
@@ -121,7 +122,7 @@ function NewCase_InspectorControls(props){
 		return (
 			<Panel>
 				<PanelBody title="Form Text">
-					{ controlsData.map( ( v ) =>
+					{ Object.entries(controlsData).map( ( [k,v] ) =>
 						renderControlObj( v, 'formText' )
 					) }
 				</PanelBody>
@@ -136,11 +137,11 @@ function NewCase_InspectorControls(props){
 					{
 						//only render/show rest when none is not selected
 						suggestedPosts[ 0 ].suggestionplacement != 'none'
-							? controlsData.map( ( v ) =>
+							?  Object.entries(controlsData).map( ( [ k,v ]  ) =>
 									renderControlObj( v, 'suggestedPosts' )
 							  )
 							: renderControlObj(
-									controlsData[ 0 ],
+									controlsData.suggestionplacement,
 									'suggestedPosts'
 							  )
 					}
@@ -155,9 +156,9 @@ function NewCase_InspectorControls(props){
 				<PanelBody title="File Uploads">
 					{ fileUploads[ 0 ].fileupload? 
 						//render all
-						controlsData.map( ( v ) => renderControlObj( v, 'fileUploads' ) ) 
+						Object.entries(controlsData).map( ( [k,v] ) => renderControlObj( v, 'fileUploads' ) ) 
 						: 
-						renderControlObj( controlsData[ 0 ], 'fileUploads' ) }
+						renderControlObj( controlsData.fileupload , 'fileUploads' ) }
 				</PanelBody>
 			</Panel>
 		);
@@ -166,8 +167,8 @@ function NewCase_InspectorControls(props){
 		const controlsData = controls.advanced;
 		return (
 			<>
-				{ renderControlObj(controlsData[0] ,'advanced',(v) => v.slice(-1) == ' '? v.slice(0,-1) + '-' : v ) }
-				{ renderControlObj(controlsData[1] ,'advanced') }
+				{ renderControlObj(controlsData.anchor ,'advanced',(v) => v.slice(-1) == ' '? v.slice(0,-1) + '-' : v ) }
+				{ renderControlObj(controlsData.style ,'advanced') }
 			</>
 		);
 	}
@@ -175,7 +176,7 @@ function NewCase_InspectorControls(props){
 	return (
 		<>
 		<InspectorControls>
-			{ getCaseCreationPanel() }
+			{getCaseCreationPanel()}
 			{ getNewCaseFormPanel() }
 			{ getCaseTitlePanel() }
 			{ getFormTextPanel() }

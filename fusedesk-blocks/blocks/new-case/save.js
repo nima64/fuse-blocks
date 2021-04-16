@@ -13,6 +13,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useBlockProps } from '@wordpress/block-editor';
 import { RawHTML } from '@wordpress/element';
+import controlsData from './controlsData';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -27,46 +28,35 @@ export default function save( props ) {
 	const { attributes, setAttributes } = props;
 
 	//grab settings related attributes and store them into an array
-	const blockSettings = ( ( {
-		caseCreation,
-		newCaseForm,
-		caseTitle,
-		formText,
-		suggestedPosts,
-		fileUploads,
-		advanced,
-	} ) => [
-		caseCreation[ 0 ],
-		newCaseForm[ 0 ],
-		caseTitle[ 0 ],
-		formText[ 0 ],
-		suggestedPosts[ 0 ],
-		fileUploads[ 0 ],
-		advanced[ 0 ],
-	] )( attributes );
+	let settings = ['caseCreation','newCaseForm','caseTitle','formText','suggestedPosts','fileUploads','advanced'];
 	
-	const genShortCodeAtt = ( aryObj ) =>
-		Object.entries( aryObj )
-			// merge all attributes to one string "k=v, k=v2, k=v..."
-			.map( ( [ k, v ] ) => {
-				//convert multiSelects to strings
-				if (Array.isArray(v))
-					v = v.map( ( _v ) => _v.value ).join();
-				return !! v ? `${ k }="${ v }" ` : '';
-			} )
-			.join( ' ' );
+	const genShortcodeAtt = (attGroup) => {
+		let atts = attributes[attGroup][0];
 
-	const genAllShortCodeAtts = () =>
-		blockSettings.map( ( v ) => genShortCodeAtt( v ) ).join( '' );
+		return Object.entries(atts).map( ([ attName,att ] ) => {
+			let attval = att;
+			let controlObj = controlsData[attGroup][attName];
+
+			if( controlObj.type == 'formTokenField' ){
+				const ids = controlObj.idmap;
+				//turn names into ids
+				attval = attval.map(( v ) => ids[v]).join();
+			}
+			return !! attval ? `${ attName }="${ attval }" ` : '';
+		} ).join(' ');	
+	}
+
+	const genAllShortcodeAtts = () => settings.map( (v) => genShortcodeAtt(v) ).join(' ');
+
 
 	return (
 		<div>
 			<RawHTML { ...useBlockProps.save() } >
-				{ '[fusedesk_newcase ' + genAllShortCodeAtts() + ']' }
+				{ '[fusedesk_newcase ' + genAllShortcodeAtts() + ']' }
 			</RawHTML>
-			{/* <div>
-				{genAllShortCodeAtts()}
-			</div> */}
+			<div>
+				{genAllShortcodeAtts()}
+			</div>
 		</div>
 		
 	);

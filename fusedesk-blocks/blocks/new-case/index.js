@@ -44,7 +44,8 @@ registerBlockType( 'fusedesk/new-case', {
 				{
 					department: false,
 					rep: false,
-					casetagids: false,
+					//will be saved as ids
+					casetagids: [],
 				},
 			],
 		},
@@ -63,7 +64,7 @@ registerBlockType( 'fusedesk/new-case', {
 				{
 					showtitle: false,
 					titletext: '',
-					titleoptions: false,
+					titleoptions: '',
 				},
 			],
 		},
