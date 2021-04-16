@@ -40,6 +40,7 @@ export default function ({attributes,setAttributes}){
                         label={obj.label}
                         checked={attributes[attAry][0][obj.bind]} 
                         onChange={ fbind }  
+                        help={obj.help}
                         />);	
             case 'text' :
                 return (					
@@ -99,7 +100,9 @@ export default function ({attributes,setAttributes}){
                         max={obj.max}
                         label={obj.label}
                         value={attributes[attAry][0][obj.bind]}
-                        onChange={fbind} />
+                        onChange={fbind} 
+                        help={obj.help}
+                        />
                 );
         }
     }

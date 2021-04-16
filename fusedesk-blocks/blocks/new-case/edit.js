@@ -109,64 +109,51 @@ export default function Edit( props ) {
 		}
 
 		return(
-			<div style={{padding:'2em',backgroundColor:'white',border:'1px solid black'}}>
+			<form id="fusedesk-contact" action="#" data-successredirect="">
+				<input type="hidden" name="action" value="fusedesk_newcase" />
+				<input type="hidden" name="repid" />
+				<input type="hidden" name="depid" />
+				<input type="hidden" name="casetags" />
+				<input type="hidden" name="opened_from" />
 
-				{/* HEADER */}
-				<h2 style={{fontStyle:'italic',fontSize:'2.7rem',margin:0,fontWeight:'bold'}}>
-					<span style={{...linearGradientB}} >New</span>
-					<span style={{...linearGradientA}} >Case</span>
-				</h2>
-				<p style={{fontStyle:'italic'}}>Allow your website visitors to create a new case form in FuseDesk.</p>
+				{formText[0].nametext || __('Your Name','fusedesk')}
+				<input type="text" name="openedby" id="fusedesk-contact-name"  class="fusedesk-contactform"/>
 
-				{/* FORM BODY/INPUTS HERE */}
-
-				<form id="fusedesk-contact" action="#" data-successredirect="">
-					<input type="hidden" name="action" value="fusedesk_newcase" />
-					<input type="hidden" name="repid" />
-					<input type="hidden" name="depid" />
-					<input type="hidden" name="casetags" />
-					<input type="hidden" name="opened_from" />
-
-					{formText[0].nametext || __('Your Name','fusedesk')}
-					<input type="text" name="openedby" id="fusedesk-contact-name"  class="fusedesk-contactform"/>
-
-					{formText[0].emailtext || __('Your Email','fusedesk')}
-					<input type="text" name="email" id="fusedesk-contact-email"  class="fusedesk-contactform"/>
-					<input type="hidden" name="summary" value="Support Request"/>
+				{formText[0].emailtext || __('Your Email','fusedesk')}
+				<input type="text" name="email" id="fusedesk-contact-email"  class="fusedesk-contactform"/>
+				<input type="hidden" name="summary" value="Support Request"/>
 
 
-					{ caseTitle[0].showtitle &&
-						<>
-						{caseTitle[0].titletext || __('Briefly, what is the request about?','fusedesk')}
-						{ caseTitle[0].titleoptions?
-							<SelectControl options={formTitleOptions.get()}  name="summary" id="fusedesk-title" class="fusedesk-contactform" />
-							:
-							<input type="text" name="summary" id="fusedesk-title"  class="fusedesk-contactform"></input>
-						}
-						</>
-					}
-
-					{ fileUploads[0].fileupload &&
-						<>
-						{fileUploads[0].filetext || __('Attach a file:','fusedesk')}
-						<input type="file" name="file_upload[]" accept="image/*,audio/*,application/pdf" id="fusedesk-fileupload" class="fusedesk-contactform" multiple="" /><br/>
-						</>
-					}
-
+				{ caseTitle[0].showtitle &&
 					<>
-					{__("How can we help you?",'fusedesk')}
-					<textarea name="details" id="fusedesk-message" class="fusedesk-contactform"></textarea>
+					{caseTitle[0].titletext || __('Briefly, what is the request about?','fusedesk')}
+					{ caseTitle[0].titleoptions?
+						<SelectControl options={formTitleOptions.get()}  name="summary" id="fusedesk-title" class="fusedesk-contactform" />
+						:
+						<input type="text" name="summary" id="fusedesk-title"  class="fusedesk-contactform"></input>
+					}
 					</>
+				}
 
-					<div id="fusedesk-suggestions" style={{display:'none'}} data-limit="10" data-categories="">
-						<span> May we suggest one of the following posts?</span>
-						<ul style={{listStyle:'none'}}></ul>
-					</div>
+				{ fileUploads[0].fileupload &&
+					<>
+					{fileUploads[0].filetext || __('Attach a file:','fusedesk')}
+					<input type="file" name="file_upload[]" accept="image/*,audio/*,application/pdf" id="fusedesk-fileupload" class="fusedesk-contactform" multiple="" /><br/>
+					</>
+				}
 
-					<input type="button" id="fusedesk-contactform-submit" value={formText[0].buttontext || __('create support case','fusedesk')}/>
-				</form>
-			</div>
-			
+				<>
+				{__("How can we help you?",'fusedesk')}
+				<textarea name="details" id="fusedesk-message" class="fusedesk-contactform"></textarea>
+				</>
+
+				<div id="fusedesk-suggestions" style={{display:'none'}} data-limit="10" data-categories="">
+					<span> May we suggest one of the following posts?</span>
+					<ul style={{listStyle:'none'}}></ul>
+				</div>
+
+				<input type="button" id="fusedesk-contactform-submit" value={formText[0].buttontext || __('create support case','fusedesk')}/>
+			</form>
 		);	
 	}
 

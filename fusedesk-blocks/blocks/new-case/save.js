@@ -48,15 +48,14 @@ export default function save( props ) {
 
 	const genAllShortcodeAtts = () => settings.map( (v) => genShortcodeAtt(v) ).join(' ');
 
-
 	return (
 		<div>
 			<RawHTML { ...useBlockProps.save() } >
 				{ '[fusedesk_newcase ' + genAllShortcodeAtts() + ']' }
 			</RawHTML>
-			<div>
+			{/* <div>
 				{genAllShortcodeAtts()}
-			</div>
+			</div> */}
 		</div>
 		
 	);
