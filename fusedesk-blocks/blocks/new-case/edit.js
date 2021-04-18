@@ -42,20 +42,25 @@ import controlsData from './controlsData';
  * @return {WPElement} Element to render.
  */
 
-
 //Singleton that pulls data on mount and updates options
 class OptionsPuller extends React.Component {
 	constructor( props ) {
 		super( props );
 		this.fetchCalls = fetchCalls;
 		this.caseTitle = props.attributes.caseTitle;
+		this.attributes = props.attributes;
+		this.setAttributes = props.setAttributes;
+		this.mutAryItem = (a,b,c) => { mutAryItem(this.attributes,this.setAttributes,a,b,c) };
 	}
+
 	componentDidMount() {
+		let dep_options = controlsData.caseCreation.department.options;
+		//load api data into static controlsData object
 		this.fetchCalls.get_rep_options();
-		this.fetchCalls.get_dep_options();
+		this.fetchCalls.get_dep_options( () => { this.setAttributes( { ['department']:dep_options[0].value }) });
 		this.fetchCalls.get_casetagids();
 		this.fetchCalls.get_categories();
-		// formTitleOptions.update(this.caseTitle[0].titleoptions);
+		// formTitleOptions.update(this.attributes.titleoptions);
 	}
 
 	render() {
@@ -65,16 +70,6 @@ class OptionsPuller extends React.Component {
 
 export default function Edit( props ) {
 	const { attributes, setAttributes } = props;
-	const {
-		caseCreation,
-		newCaseForm,
-		caseTitle,
-		formText,
-		suggestedPosts,
-		fileUploads,
-		test,
-	} = attributes;
-
 	/**
 	 * Change an Attribute Array's key value
 	 *
@@ -83,11 +78,6 @@ export default function Edit( props ) {
 	 * @param  {string} attName name of the attribute of type array
 	 * @return {void}
 	 */
-	const mutAryItem = ( newval, key, attName ) => {
-		const temp = [ { ...attributes[ attName ][ 0 ] } ];
-		temp[ 0 ][ key ] = newval;
-		setAttributes( { [ attName ]: temp } );
-	};
 
 	const RepaintButton = () => (
 		<button
@@ -100,14 +90,6 @@ export default function Edit( props ) {
 	);
 
 	const getForm = () => {
-		const gradientClip = {WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'};
-		const linearGradientA = {background:'linear-gradient(#33c6ff, #0669bd)',...gradientClip};
-		const linearGradientB = {background:'linear-gradient(#7a6bff, #382ba2)',...gradientClip};
-		const openSettings = () => { 
-			document.querySelector('.wp-block-fusedesk-new-case').click();
-			document.querySelector('.interface-pinned-items button[aria-label="Settings"]').click() 
-		}
-
 		return(
 			<form id="fusedesk-contact" action="#" data-successredirect="">
 				<input type="hidden" name="action" value="fusedesk_newcase" />
@@ -116,18 +98,18 @@ export default function Edit( props ) {
 				<input type="hidden" name="casetags" />
 				<input type="hidden" name="opened_from" />
 
-				{formText[0].nametext || __('Your Name','fusedesk')}
+				{attributes.nametext || __('Your Name','fusedesk')}
 				<input type="text" name="openedby" id="fusedesk-contact-name"  class="fusedesk-contactform"/>
 
-				{formText[0].emailtext || __('Your Email','fusedesk')}
+				{attributes.emailtext || __('Your Email','fusedesk')}
 				<input type="text" name="email" id="fusedesk-contact-email"  class="fusedesk-contactform"/>
 				<input type="hidden" name="summary" value="Support Request"/>
 
 
-				{ caseTitle[0].showtitle &&
+				{ attributes.showtitle &&
 					<>
-					{caseTitle[0].titletext || __('Briefly, what is the request about?','fusedesk')}
-					{ caseTitle[0].titleoptions?
+					{attributes.titletext || __('Briefly, what is the request about?','fusedesk')}
+					{ attributes.titleoptions?
 						<SelectControl options={formTitleOptions.get()}  name="summary" id="fusedesk-title" class="fusedesk-contactform" />
 						:
 						<input type="text" name="summary" id="fusedesk-title"  class="fusedesk-contactform"></input>
@@ -135,9 +117,9 @@ export default function Edit( props ) {
 					</>
 				}
 
-				{ fileUploads[0].fileupload &&
+				{ attributes.fileupload &&
 					<>
-					{fileUploads[0].filetext || __('Attach a file:','fusedesk')}
+					{attributes.filetext || __('Attach a file:','fusedesk')}
 					<input type="file" name="file_upload[]" accept="image/*,audio/*,application/pdf" id="fusedesk-fileupload" class="fusedesk-contactform" multiple="" /><br/>
 					</>
 				}
@@ -152,7 +134,7 @@ export default function Edit( props ) {
 					<ul style={{listStyle:'none'}}></ul>
 				</div>
 
-				<input type="button" id="fusedesk-contactform-submit" value={formText[0].buttontext || __('create support case','fusedesk')}/>
+				<input type="button" id="fusedesk-contactform-submit" value={attributes.buttontext || __('create support case','fusedesk')}/>
 			</form>
 		);	
 	}

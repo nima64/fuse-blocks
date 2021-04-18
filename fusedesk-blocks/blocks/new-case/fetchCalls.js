@@ -59,7 +59,7 @@ function get_categories(controlObj, endpoint){
 
 // withRefresh only applies to FuseDesk api calls
 function composeOptionsFetcher( normalizer, withRefresh=false ) {
-	return function ( obj, endpoint ) {
+	return function ( obj, endpoint, callback) {
 		let BASEURL = WP_BASEURL + endpoint;
 		let FETCHURL = withRefresh? BASEURL + '&refresh=1' : BASEURL;
 		apiFetch({ url:FETCHURL })
@@ -76,6 +76,9 @@ function composeOptionsFetcher( normalizer, withRefresh=false ) {
 				}
 				const repaintButton = document.body.querySelector( '#fusedesk_repaintMe' );
 				if ( repaintButton ){ repaintButton.click();console.log('repainted ' + FETCHURL ) } else { console.log("couldn't repaint on init")}
+				if(callback){
+					callback();
+				}
 			}
 		);
 	};
@@ -84,7 +87,7 @@ function composeOptionsFetcher( normalizer, withRefresh=false ) {
 //store the fetched options into obj
 export default {
 	get_rep_options: () => composeOptionsFetcher( normFuseDeskDataToOptions )(repOptions,REPS_ENDPOINT),
-	get_dep_options: () => composeOptionsFetcher( normFuseDeskDataToOptions )(depOptions,DEPS_ENDPOINT),
+	get_dep_options: (cb) => composeOptionsFetcher( normFuseDeskDataToOptions )(depOptions,DEPS_ENDPOINT, cb),
 	get_casetagids: () => updateCasetagIds(casetagids,CASETAGS_ENDPOINT),
 	get_categories: () => get_categories(categoryOptions, CATEGORIES_ENDPOINT),
 	get_rep_options_refresh: () => composeOptionsFetcher( normFuseDeskDataToOptions, true )(repOptions,REPS_ENDPOINT),

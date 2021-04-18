@@ -93,7 +93,7 @@ export default {
             label: __('Suggestions Category','fusedesk'),
             bind: 'suggestioncategories',
             help: __('You can optionally limit suggested posts to certain post categories. By default all post categories will be searched.','fusedesk'),
-            suggestions: ['mero cat'],
+            suggestions: [],
             idmap: {},//idmap label to value
         },
     },

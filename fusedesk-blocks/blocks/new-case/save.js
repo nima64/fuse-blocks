@@ -29,21 +29,23 @@ export default function save( props ) {
 
 	//grab settings related attributes and store them into an array
 	let settings = ['caseCreation','newCaseForm','caseTitle','formText','suggestedPosts','fileUploads','advanced'];
+	// let settings = ['caseCreation'];
 	
 	const genShortcodeAtt = (attGroup) => {
-		let atts = attributes[attGroup][0];
+		// let atts = attributes[attGroup][0];
+		let attNames =  Object.entries(controlsData[attGroup]).map( ([k, v]) => k);
 
-		return Object.entries(atts).map( ([ attName,att ] ) => {
-			let attval = att;
+		return attNames.map( attName => {
 			let controlObj = controlsData[attGroup][attName];
-
+			let attval = attributes[attName];
 			if( controlObj.type == 'formTokenField' ){
-				const ids = controlObj.idmap;
-				//turn names into ids
-				attval = attval.map(( v ) => ids[v]).join();
+				attval = attval.map(obj => {
+					console.log(obj);
+					return obj.id;
+				}).join();
 			}
 			return !! attval ? `${ attName }="${ attval }" ` : '';
-		} ).join(' ');	
+		}).join(' ');	;
 	}
 
 	const genAllShortcodeAtts = () => settings.map( (v) => genShortcodeAtt(v) ).join(' ');

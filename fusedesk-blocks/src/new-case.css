@@ -1,12 +1,1 @@
-/**
- * The following styles get applied inside the editor only.
- */
-.wp-block-fusedesk-new-cases {
-  border: 1px dotted #f00;
-}
-
-.components-form-token-field__help {
-  display: none;
-}
-
-/*# sourceMappingURL=new-case.css.map*/
+.wp-block-fusedesk-new-cases{border:1px dotted red}.components-form-token-field__help{display:none}

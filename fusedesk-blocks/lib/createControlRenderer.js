@@ -16,11 +16,20 @@ import MultiSelect from './MultiSelect';
 
 export default function ({attributes,setAttributes}){
     // let attributes = attributes; 
-    const mutAryItem = ( newval, key, attName ) => {
-        let temp = [{...attributes[ attName ][0]}] ;
-        temp[0][ key ] = newval;
-        setAttributes( { [ attName ]: temp } );
+    // const mutAtt = ( newval, key, attName ) => {
+    //     let temp = [{...attributes[ attName ][0]}] ;
+    //     temp[0][ key ] = newval;
+    //     setAttributes( { [ attName ]: temp } );
+    // };
+
+    const mutAtt = ( newval, attName ) => {
+        // let temp = [{...attributes[ attName ][0]}] ;
+        // temp[0][ key ] = newval;
+        setAttributes( { [ attName ]: newval } );
     };
+    const getAttVal = (attName) => {
+        return attributes[attName];
+    }
 
     /**
 	 * @param  {String} boj
@@ -30,15 +39,15 @@ export default function ({attributes,setAttributes}){
 	*/
 
     return function (obj,attAry,customOnChange=null) {
-        const bindedMut = (v) => mutAryItem(v,obj.bind,attAry);
+        const bindedMut = (v) => mutAtt(v,obj.bind);
         const fbind = (newval) => !!customOnChange? bindedMut(customOnChange(newval)) : bindedMut(newval);
-        const val = attributes[attAry][0][obj.bind];
+        const val = getAttVal(obj.bind);
         switch (obj.type) {
             case 'check' :
                 return (
                     <CheckboxControl  
                         label={obj.label}
-                        checked={attributes[attAry][0][obj.bind]} 
+                        checked={val} 
                         onChange={ fbind }  
                         help={obj.help}
                         />);	
@@ -69,7 +78,15 @@ export default function ({attributes,setAttributes}){
                             label={obj.label}
                             value={ val ? val : ''} 
                             placeholder={obj.placeholder}
-                            onChange={fbind} 
+                            onChange = {(tokens) => {
+                                let temp = tokens.map( (t) => {
+                                    let val = t.value? t.value : t;// if its already a object {value:t}
+                                    let id = obj.idmap[val];
+                                    return id? {value:val,id:id}: undefined; 
+                                }).filter(v => v != undefined);
+                                console.log(getAttVal('casetagids'));
+                                mutAtt(temp,obj.bind,attAry);
+                            }}
                             suggestions={obj.suggestions}
                             __experimentalShowHowTo={false} //Doesn't work see https://developer.wordpress.org/block-editor/reference-guides/components/form-token-field/
                             // help={obj.help}
@@ -81,14 +98,14 @@ export default function ({attributes,setAttributes}){
 				return (					
 					<MultiSelect 
 						label={obj.label}
-						value={attributes[attAry][0][obj.bind]} 
+						value={val} 
 						options={obj.options}
-						onChange={(newval) => mutAryItem(newval,obj.bind,attAry)} />);
+						onChange={(newval) => mutAtt(newval,obj.bind,attAry)} />);
             case 'select':
                 return (					
                     <SelectControl 
                         label={obj.label}
-                        value={attributes[attAry][0][obj.bind]} 
+                        value={val} 
                         options={obj.options}
                         onChange={fbind} 
                         help={obj.help} 
@@ -99,7 +116,7 @@ export default function ({attributes,setAttributes}){
                         min={obj.min}	
                         max={obj.max}
                         label={obj.label}
-                        value={attributes[attAry][0][obj.bind]}
+                        value={val}
                         onChange={fbind} 
                         help={obj.help}
                         />

@@ -16,6 +16,7 @@ const refreshIcon = <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48"
 const getStringToOptions = (s) => s.split(',').map((v) => ({label:v,value:v}));
 
 //singleton that holds the options data for form's case title dropdown
+//only affects form title options view
 class FormTitleOptions{
 	constructor(){
 		this.options = [{label:'emtpy',value:''}];
@@ -35,21 +36,6 @@ let formTitleOptions = new FormTitleOptions();
 
 function NewCase_InspectorControls(props){
 	const { attributes, setAttributes } = props
-	const {
-		caseCreation,
-		newCaseForm,
-		caseTitle,
-		formText,
-		suggestedPosts,
-		fileUploads,
-		test,
-	} = attributes;
-
-	const mutAryItem = ( newval, key, attName ) => {
-		const temp = [ { ...attributes[ attName ][ 0 ] } ];
-		temp[ 0 ][ key ] = newval;
-		setAttributes( { [ attName ]: temp } );
-	};
 
 	const renderControlObj = createControlRenderer( props ); //renders control data
 
@@ -72,14 +58,11 @@ function NewCase_InspectorControls(props){
 			<Panel>
 				<PanelBody title="Case Creation">
 					<ControlsTemplate id="rep" >
-						<RefreshButton onClick= {fetchCalls.get_dep_options_refresh} />
 					</ ControlsTemplate>
 					<ControlsTemplate id="department" >
-						<RefreshButton onClick= {fetchCalls.get_dep_options_refresh} />
 					</ ControlsTemplate>
-					<ControlsTemplate id="casetagids" >
-						{/* <XRefreshButton /> */}
-					</ControlsTemplate>
+					{ControlsTemplate({id:'casetagids'})}
+					{/* <ControlsTemplate id="casetagids" > </ControlsTemplate> */}
 				</PanelBody>
 			</Panel>
 		);
@@ -89,7 +72,7 @@ function NewCase_InspectorControls(props){
 		return (
 			<Panel>
 				<PanelBody title="New Case Form">
-					{ Object.entries(controlsData).map( ( [k,v] ) => renderControlObj( v, 'newCaseForm' ) ) }
+					{ Object.entries(controlsData).map( ( [ k,v ] ) => renderControlObj( v, 'newCaseForm' ) ) }
 				</PanelBody>
 			</Panel>
 		);
@@ -99,10 +82,10 @@ function NewCase_InspectorControls(props){
 		return (
 			<Panel>
 				<PanelBody title="Case Title">
-						{ renderControlObj( controlsData.showtitle,'caseTitle') }
+					{ renderControlObj( controlsData.showtitle,'caseTitle') }
 					{
 						///show other options only when showtitle checked
-						caseTitle[ 0 ].showtitle && (
+						attributes.showtitle && (
 							<>
 							{ renderControlObj( controlsData.titletext,'caseTitle')}
 							{ renderControlObj( controlsData.titleoptions ,'caseTitle',(v) =>{
@@ -122,7 +105,7 @@ function NewCase_InspectorControls(props){
 		return (
 			<Panel>
 				<PanelBody title="Form Text">
-					{ Object.entries(controlsData).map( ( [k,v] ) =>
+					{ Object.entries(controlsData).map( ( [ k,v ] ) =>
 						renderControlObj( v, 'formText' )
 					) }
 				</PanelBody>
@@ -136,7 +119,7 @@ function NewCase_InspectorControls(props){
 				<PanelBody title="Suggested Posts">
 					{
 						//only render/show rest when none is not selected
-						suggestedPosts[ 0 ].suggestionplacement != 'none'
+						attributes.suggestionplacement != 'none'
 							?  Object.entries(controlsData).map( ( [ k,v ]  ) =>
 									renderControlObj( v, 'suggestedPosts' )
 							  )
@@ -154,7 +137,7 @@ function NewCase_InspectorControls(props){
 		return (
 			<Panel>
 				<PanelBody title="File Uploads">
-					{ fileUploads[ 0 ].fileupload? 
+					{ attributes.fileupload? 
 						//render all
 						Object.entries(controlsData).map( ( [k,v] ) => renderControlObj( v, 'fileUploads' ) ) 
 						: 

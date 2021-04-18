@@ -38,80 +38,115 @@ registerBlockType( 'fusedesk/new-case', {
 	category: 'fusedesk',
 	description: __('Allow your website visitors to create a new case in FuseDesk','fusedesk'),
 	attributes: {
-		caseCreation: {
-			type: 'array',
-			default: [
-				{
-					department: false,
-					rep: false,
-					//will be saved as ids
-					casetagids: [],
-				},
-			],
+
+		//caseCreation
+		department:{
+			type: 'string',
+			default: false,
 		},
-		newCaseForm: {
-			type: 'array',
-			default: [
-				{
-					hideknowndata: false,
-					sucessredirect: '',
-				},
-			],
+		rep:{
+			type: 'string',
+			default: false,
 		},
-		caseTitle: {
-			type: 'array',
-			default: [
-				{
-					showtitle: false,
-					titletext: '',
-					titleoptions: '',
-				},
-			],
-		},
-		formText: {
-			type: 'array',
-			default: [
-				{
-					nametext: '',
-					emailtext: '',
-					buttontext: '',
-					creatingtext: '',
-					successtext: '',
-				},
-			],
-		},
-		suggestedPosts: {
-			type: 'array',
-			default: [
-				{
-					suggestionplacement: 'after',
-					suggestionstext: '',
-					suggestionlimit: 10,
-					suggestioncategories: [],
-				},
-			],
-		},
-		fileUploads: {
-			type: 'array',
-			default: [
-				{
-					fileupload: false,
-					filerequired: false,
-					filesmultiple: true,
-					filetext: '',
-					filetypesallowed: '',
-				},
-			],
-		},
-		advanced:{
+		casetagids:{
 			type:'array',
-			default:[
-				{
-					anchor:'',
-					style:false,
-				}
-			]
+			default:[],
 		},
+
+		//newCaseForm
+		hideknowndata:{
+			type: 'boolean',
+			default: false,
+		},
+		sucessredirect:{
+			type: 'string',
+			default: '',
+		},
+
+		//caseTitle
+		showtitle:{
+			type: 'boolean',
+			default: false,
+		},
+		titletext:{
+			type: 'string',
+			default: '',
+		},
+		titleoptions:{
+			type: 'string',
+			default: '',
+		},
+
+		//formText
+		nametext:{
+			type: 'string',
+			default: '',
+		},
+		emailtext:{
+			type: 'string',
+			default: '',
+		},
+		buttontext:{
+			type: 'string',
+			default: '',
+		},
+		creatingtext:{
+			type: 'string',
+			default: '',
+		},
+		successtext:{
+			type: 'string',
+			default: '',
+		},
+
+		//suggestedPosts
+		suggestionplacement:{
+			type: 'string',
+			default: 'after',
+		},
+		suggestionstext:{
+			type: 'string',
+			default: '',
+		},
+		suggestionlimit:{
+			type: 'int',
+			default: 10,
+		},
+		suggestioncategories:{
+			type: 'array',
+			default: [],
+		},
+
+		//fileUploads
+		fileupload:{
+			type: 'boolean',
+			default: false,
+		},
+		filerequired:{
+			type: 'boolean',
+			default: false,
+		},
+		filesmultiple:{
+			type: 'boolean',
+			default: false,
+		},
+		filetext:{
+			type: 'string',
+			default: '',
+		},
+		filetypesallowed:{
+			type: 'string',
+			default: '',
+		},
+		// advanced:{
+		// 	type:'array',
+		// 	default:[
+		// 		{
+		// 			anchor:'',
+		// 			style:false,
+		// 		}
+		// 	]
+		// },
 		repaintMe: {
 			type: 'boolean',
 			default: false,
