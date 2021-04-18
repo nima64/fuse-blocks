@@ -138,15 +138,17 @@ registerBlockType( 'fusedesk/new-case', {
 			type: 'string',
 			default: '',
 		},
-		// advanced:{
-		// 	type:'array',
-		// 	default:[
-		// 		{
-		// 			anchor:'',
-		// 			style:false,
-		// 		}
-		// 	]
-		// },
+
+		//advanced
+		anchor:{
+			type:'string',
+			default: '',
+		},
+		style:{
+			type:'string',
+			default: false,
+		},
+
 		repaintMe: {
 			type: 'boolean',
 			default: false,
