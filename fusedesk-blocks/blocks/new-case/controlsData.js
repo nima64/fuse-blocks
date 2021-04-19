@@ -22,7 +22,8 @@ export default {
             bind: 'casetagids',
             suggestions: [],
             help: __('Optionally apply some FuseDesk case tags to your new case.','fusedesk'),
-            idmap: {},//map label to value
+            //suggestions can't be objects, so when turned into objects for saving they must be mapped to their value/ids
+            idmap: {},
         },
     },
     newCaseForm: {
@@ -94,7 +95,7 @@ export default {
             bind: 'suggestioncategories',
             help: __('You can optionally limit suggested posts to certain post categories. By default all post categories will be searched.','fusedesk'),
             suggestions: [],
-            idmap: {},//idmap label to value
+            idmap: {},
         },
     },
     formText: {

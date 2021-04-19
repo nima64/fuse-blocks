@@ -27,24 +27,24 @@ import controlsData from './controlsData';
 export default function save( props ) {
 	const { attributes, setAttributes } = props;
 
-	//grab settings related attributes and store them into an array
 	let settings = ['caseCreation','newCaseForm','caseTitle','formText','suggestedPosts','fileUploads','advanced'];
-	// let settings = ['caseCreation'];
-	
+
+	//look in controlsData, then look in attributes
 	const genShortcodeAtt = (attGroup) => {
-		// let atts = attributes[attGroup][0];
 		let attNames =  Object.entries(controlsData[attGroup]).map( ([k, v]) => k);
 
 		return attNames.map( attName => {
 			let controlObj = controlsData[attGroup][attName];
 			let attval = attributes[attName];
+
 			if( controlObj.type == 'formTokenField' ){
 				attval = attval.map(obj => {
-					console.log(obj);
 					return obj.id;
 				}).join();
 			}
+
 			return !! attval ? `${ attName }="${ attval }" ` : '';
+
 		}).join(' ');	;
 	}
 
