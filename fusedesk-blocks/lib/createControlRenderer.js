@@ -83,13 +83,13 @@ export default function ({attributes,setAttributes}){
 
                                 }).filter(v => v != undefined);
 
-                                console.log(getAttVal('casetagids'));
+                                // console.log(getAttVal('casetagids'));
                                 mutAtt(temp,obj.bind,attAry);
 
                             }}
                             suggestions={obj.suggestions}
+                            __experimentalExpandOnFocus={true}
                             __experimentalShowHowTo={false} //Doesn't work see https://developer.wordpress.org/block-editor/reference-guides/components/form-token-field/
-                            // help={obj.help}
                             />
                     </BaseControl>
                     );
@@ -114,6 +114,9 @@ export default function ({attributes,setAttributes}){
                         help={obj.help}
                         />
                 );
+        default:
+            throw new Error("Control type doesn't exist in ControlRenderer");
+
         }
     }
 };

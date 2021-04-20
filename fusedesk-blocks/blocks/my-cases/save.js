@@ -26,29 +26,8 @@ import { RawHTML } from '@wordpress/element';
 export default function save( props ) {
 	const { attributes, setAttributes } = props;
 
-	//grab settings related attributes and store them into an array
-	const blockSettings = ( ( { display, text } ) => [
-		display[ 0 ],
-		text[ 0 ],
-	] )( attributes );
-
-	const genShortCodeAtt = ( aryObj ) =>
-		Object.entries( aryObj )
-			.map( ( [ k, v ] ) =>
-				!! v && k != 'columns' ? `${ k }="${ v }" ` : ''
-			)
-			.join( ' ' );
-
-	const genAllShortCodeAtts = () =>
-		blockSettings.map( ( v ) => genShortCodeAtt( v ) ).join( '' );
-
 	return (
 		<div { ...useBlockProps.save() }>
-			<RawHTML>
-				{ '[fusedesk_mycases ' + genAllShortCodeAtts() + ']' }
-			</RawHTML>
-			{ '[' + genAllShortCodeAtts() + ']' }
-			{ /* {shortCodeStr} */ }
 		</div>
 	);
 }

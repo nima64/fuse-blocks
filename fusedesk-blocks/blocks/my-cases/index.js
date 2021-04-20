@@ -6,7 +6,7 @@
 
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { people, Icon } from '@wordpress/icons';
+import {  Icon } from '@wordpress/icons';
 import fusedesk_ico from '../../fusedesk_ico';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -36,35 +36,57 @@ registerBlockType( 'fusedesk/my-cases', {
 	icon: <Icon icon={ fusedesk_ico } />,
 	category: 'fusedesk',
 	title: __('My Cases','fusedesk'),
+	description: __('Show your logged in users a list of their FuseDesk cases.','fusedesk'),
 	attributes: {
-		display: {
+
+		//display
+		columns: {
 			type: 'array',
-			default: [
-				{
-					columns: [],
-					status: 'all',
-					userstatuses: 'all',
-					orderby: 'date_opened, date_updated',
-					dateformat: 'M j, Y g:ia',
-					limit: 50,
-				},
-			],
+			default: [],
 		},
-		text: {
-			type: 'array',
-			default: [
-				{
-					casenum_name: '',
-					status_name: '',
-					date_updated_name: '',
-					summary_name: '',
-					errornotloggedin: '',
-					errornocases: '',
-				},
-			],
+		status:{
+			type: 'string',
+			default: 'all',
 		},
-		customStyles: {
-			type: 'text',
+		userstatuses:{
+			type: 'string',
+			default: 'all',
+		},
+		orderby:{
+			type: 'string',
+			default: 'date_opened, date_updated',
+		},
+		dateformat:{
+			type: 'string',
+			default: 'M j, Y g:ia',
+		},
+		limit:{
+			type: 'string',
+			default: 50,
+		},
+		casenum_name:{
+			type: 'string',
+			default:  '',
+		},
+		status_name:{
+			type: 'string',
+			default:  '',
+		},
+		date_updated_name:{
+			type: 'string',
+			default:  '',
+		},
+		summary_name:{
+			type: 'string',
+			default:  '',
+		},
+		errornotloggedin:{
+			type: 'string',
+			default:  '',
+		},
+		errornocases:{
+			type: 'string',
+			default:  '',
 		},
 	},
 

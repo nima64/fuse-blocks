@@ -233,8 +233,7 @@ var getStringToOptions = function getStringToOptions(s) {
       value: v
     };
   });
-}; //singleton that holds the options data for form's case title dropdown
-//only affects form title options view in edit mode
+}; //hold state for editor form select
 
 
 var FormTitleOptions = /*#__PURE__*/function () {
@@ -446,8 +445,8 @@ __webpack_require__.r(__webpack_exports__);
       bind: 'casetagids',
       suggestions: [],
       help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Optionally apply some FuseDesk case tags to your new case.', 'fusedesk'),
-      idmap: {} //map label to value
-
+      //suggestions can't be objects, so when turned into objects for saving they must be mapped to their value/ids
+      idmap: {}
     }
   },
   newCaseForm: {
@@ -525,8 +524,7 @@ __webpack_require__.r(__webpack_exports__);
       bind: 'suggestioncategories',
       help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('You can optionally limit suggested posts to certain post categories. By default all post categories will be searched.', 'fusedesk'),
       suggestions: [],
-      idmap: {} //idmap label to value
-
+      idmap: {}
     }
   },
   formText: {
@@ -721,11 +719,6 @@ var OptionsPuller = /*#__PURE__*/function (_React$Component) {
     _this.caseTitle = props.attributes.caseTitle;
     _this.attributes = props.attributes;
     _this.setAttributes = props.setAttributes;
-
-    _this.mutAryItem = function (a, b, c) {
-      mutAryItem(_this.attributes, _this.setAttributes, a, b, c);
-    };
-
     return _this;
   }
 
@@ -734,14 +727,14 @@ var OptionsPuller = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var dep_options = _controlsData__WEBPACK_IMPORTED_MODULE_12__["default"].caseCreation.department.options; //load api data into static controlsData object
+      var dep_options = _controlsData__WEBPACK_IMPORTED_MODULE_12__["default"].caseCreation.department.options;
+      this.fetchCalls.get_rep_options(); //callback to set attribute to the first option fetched
 
-      this.fetchCalls.get_rep_options();
       this.fetchCalls.get_dep_options(function () {
         _this2.setAttributes(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()({}, 'department', dep_options[0].value));
       });
       this.fetchCalls.get_casetagids();
-      this.fetchCalls.get_categories(); // formTitleOptions.update(this.attributes.titleoptions);
+      this.fetchCalls.get_categories();
     }
   }, {
     key: "render",
@@ -878,8 +871,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var WP_BASEURL = WPURLS.siteurl; // const WP_BASEURL = 'http://localhost/wordpress';
-
+var WP_BASEURL = WPURLS.siteurl;
 var DEPS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_departments';
 var REPS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_reps';
 var CASETAGS_ENDPOINT = '/wp-admin/admin-ajax.php?action=fusedesk_casetags';
@@ -887,8 +879,7 @@ var CATEGORIES_ENDPOINT = '/wp-json/wp/v2/categories/';
 var depOptions = _controlsData__WEBPACK_IMPORTED_MODULE_1__["default"].caseCreation.department;
 var repOptions = _controlsData__WEBPACK_IMPORTED_MODULE_1__["default"].caseCreation.rep;
 var casetagids = _controlsData__WEBPACK_IMPORTED_MODULE_1__["default"].caseCreation.casetagids;
-var categoryOptions = _controlsData__WEBPACK_IMPORTED_MODULE_1__["default"].suggestedPosts.suggestioncategories; //formats data to {label:v,value:v}
-//fusedesk data is returned as an object not an array, so a seperate formatter/normalizer is required
+var categoryOptions = _controlsData__WEBPACK_IMPORTED_MODULE_1__["default"].suggestedPosts.suggestioncategories; //Fusedesk api returns object not an array, so a different function is needed to normalize into {label,value}
 
 var normFuseDeskDataToOptions = function normFuseDeskDataToOptions(json) {
   return Object.entries(json).map(function (_ref) {
@@ -899,15 +890,6 @@ var normFuseDeskDataToOptions = function normFuseDeskDataToOptions(json) {
     return {
       label: k,
       value: v
-    };
-  });
-};
-
-var normCatToOptions = function normCatToOptions(json) {
-  return json.map(function (obj) {
-    return {
-      label: obj.name,
-      value: obj.id
     };
   });
 };
@@ -923,10 +905,10 @@ function updateCasetagIds(controlObj, endpoint) {
   _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2___default()({
     url: URL
   }).then(function (data) {
-    //reverse key value pairs 
+    //flip key value pairs and load them into idmap
     controlObj.idmap = Object.keys(data).reduce(function (obj, key) {
       return obj[data[key]] = key, obj;
-    }, {}); // console.log(controlObj.idmap);
+    }, {}); //load suggestions 
 
     Object.entries(data).map(function (_ref3, i) {
       var _ref4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref3, 2),
@@ -934,7 +916,7 @@ function updateCasetagIds(controlObj, endpoint) {
           v = _ref4[1];
 
       return controlObj.suggestions[i] = v;
-    }); // console.log(controlObj.suggestions);
+    });
   });
 }
 
@@ -949,6 +931,7 @@ function _get_categories(controlObj, endpoint) {
   _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_2___default()({
     url: URL
   }).then(function (data) {
+    //load suggestions and idmap
     data.map(function (obj, i) {
       controlObj.idmap[obj.name] = obj.id;
       controlObj.suggestions[i] = obj.name;
@@ -968,7 +951,7 @@ function composeOptionsFetcher(normalizer) {
         var options = obj.options;
         normalizer(json).forEach(function (v, i) {
           if (obj.bind == "rep") {
-            options[i + 1] = v; //don't override default option
+            options[i + 1] = v; //don't override first default option
           } else {
             options[i] = v;
           }
@@ -978,10 +961,7 @@ function composeOptionsFetcher(normalizer) {
       var repaintButton = document.body.querySelector('#fusedesk_repaintMe');
 
       if (repaintButton) {
-        repaintButton.click();
-        console.log('repainted ' + FETCHURL);
-      } else {
-        console.log("couldn't repaint on init");
+        repaintButton.click(); // console.log('repainted ' + FETCHURL );
       }
 
       if (callback) {
@@ -989,8 +969,7 @@ function composeOptionsFetcher(normalizer) {
       }
     });
   };
-} //store the fetched options into obj
-
+}
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   get_rep_options: function get_rep_options() {
@@ -1252,12 +1231,10 @@ __webpack_require__.r(__webpack_exports__);
 
 function save(props) {
   var attributes = props.attributes,
-      setAttributes = props.setAttributes; //grab settings related attributes and store them into an array
-
-  var settings = ['caseCreation', 'newCaseForm', 'caseTitle', 'formText', 'suggestedPosts', 'fileUploads', 'advanced'];
+      setAttributes = props.setAttributes;
+  var settings = ['caseCreation', 'newCaseForm', 'caseTitle', 'formText', 'suggestedPosts', 'fileUploads', 'advanced']; //look in controlsData, then look in attributes
 
   var genShortcodeAtt = function genShortcodeAtt(attGroup) {
-    // let atts = attributes[attGroup][0];
     var attNames = Object.entries(_controlsData__WEBPACK_IMPORTED_MODULE_4__["default"][attGroup]).map(function (_ref) {
       var _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref, 2),
           k = _ref2[0],
@@ -1271,7 +1248,6 @@ function save(props) {
 
       if (controlObj.type == 'formTokenField') {
         attval = attval.map(function (obj) {
-          console.log(obj);
           return obj.id;
         }).join();
       }
@@ -1574,15 +1550,7 @@ __webpack_require__.r(__webpack_exports__);
   var attributes = _ref.attributes,
       setAttributes = _ref.setAttributes;
 
-  // let attributes = attributes; 
-  // const mutAtt = ( newval, key, attName ) => {
-  //     let temp = [{...attributes[ attName ][0]}] ;
-  //     temp[0][ key ] = newval;
-  //     setAttributes( { [ attName ]: temp } );
-  // };
   var mutAtt = function mutAtt(newval, attName) {
-    // let temp = [{...attributes[ attName ][0]}] ;
-    // temp[0][ key ] = newval;
     setAttributes(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()({}, attName, newval));
   };
 
@@ -1646,9 +1614,9 @@ __webpack_require__.r(__webpack_exports__);
           value: val ? val : '',
           placeholder: obj.placeholder,
           onChange: function onChange(tokens) {
+            //transform new tokens into objects {value:v,id:i}
             var temp = tokens.map(function (t) {
-              var val = t.value ? t.value : t; // if its already a object {value:t}
-
+              var val = t.value ? t.value : t;
               var id = obj.idmap[val];
               return id ? {
                 value: val,
@@ -1656,25 +1624,15 @@ __webpack_require__.r(__webpack_exports__);
               } : undefined;
             }).filter(function (v) {
               return v != undefined;
-            });
-            console.log(getAttVal('casetagids'));
+            }); // console.log(getAttVal('casetagids'));
+
             mutAtt(temp, obj.bind, attAry);
           },
           suggestions: obj.suggestions,
+          __experimentalExpandOnFocus: true,
           __experimentalShowHowTo: false //Doesn't work see https://developer.wordpress.org/block-editor/reference-guides/components/form-token-field/
-          // help={obj.help}
 
         }));
-
-      case 'multiSelect':
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_MultiSelect__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          label: obj.label,
-          value: val,
-          options: obj.options,
-          onChange: function onChange(newval) {
-            return mutAtt(newval, obj.bind, attAry);
-          }
-        });
 
       case 'select':
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["SelectControl"], {
@@ -1694,6 +1652,9 @@ __webpack_require__.r(__webpack_exports__);
           onChange: fbind,
           help: obj.help
         });
+
+      default:
+        throw new Error("Control type doesn't exist in ControlRenderer");
     }
   };
 });
