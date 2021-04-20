@@ -179,131 +179,134 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+
 var statusOptionsShared = [{
-  label: 'All',
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('All', 'fusedesk'),
   value: 'all'
 }, {
-  label: 'Active',
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Active', 'fusedesk'),
   value: 'active'
 }, {
-  label: 'New',
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('New', 'fusedesk'),
   value: 'new'
 }, {
-  label: 'Open',
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Open', 'fusedesk'),
   value: 'open'
 }, {
-  label: 'Closed',
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Closed', 'fusedesk'),
   value: 'closed'
 }];
 /* harmony default export */ __webpack_exports__["default"] = ({
   display: {
     columns: {
       type: 'select',
-      label: 'Columns',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Columns', 'fusedesk'),
       options: [{
-        label: 'Case Number',
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Case Number', 'fusedesk'),
         value: 'casenum'
       }, {
-        label: 'Date Updated',
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Date Updated', 'fusedesk'),
         value: 'date_updated'
       }, {
-        label: 'Status',
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Status', 'fusedesk'),
         value: 'status'
       }, {
-        label: 'Summary',
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Summary', 'fusedesk'),
         value: 'summary'
       }],
       bind: 'columns',
-      help: ''
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('', 'fusedesk')
     },
     status: {
       type: 'select',
-      label: 'Case Statuses',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Case Statuses', 'fusedesk'),
       options: statusOptionsShared,
       bind: 'status',
-      help: ''
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('', 'fusedesk')
     },
     userstatuses: {
       type: 'select',
-      label: 'User Filterable Statuses',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('User Filterable Statuses', 'fusedesk'),
       options: statusOptionsShared,
       bind: 'userstatuses',
-      help: ''
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('', 'fusedesk')
     },
     orderby: {
       type: 'select',
-      label: 'Case Order',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Case Order', 'fusedesk'),
       options: [{
-        label: 'Oldest to Newest',
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Oldest to Newest', 'fusedesk'),
         value: 'date_updated'
       }, {
-        label: 'Dated Opened',
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Dated Opened', 'fusedesk'),
         value: 'date_opened'
       }],
       bind: 'orderby',
-      help: ''
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('', 'fusedesk')
     },
     dateformat: {
       type: 'text',
-      label: 'Date Format',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Date Format', 'fusedesk'),
       options: [{
-        label: 'M j, Y g:ia',
+        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('M j, Y g:ia', 'fusedesk'),
         value: 'M j, Y g:ia'
       }],
       bind: 'dateformat',
-      help: ''
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('', 'fusedesk')
     },
     limit: {
       type: 'range',
-      label: 'How many cases should we display?',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('How many cases should we display?', 'fusedesk'),
       min: 1,
       max: 80,
       bind: 'limit',
-      help: ''
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('', 'fusedesk')
     }
   },
   text: {
     casenum_name: {
       type: 'text',
-      label: 'Case Number Column',
-      placeholder: 'Case #',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Case Number Column', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Case #', 'fusedesk'),
       bind: 'casenum_name',
-      help: ''
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('', 'fusedesk')
     },
     status_name: {
       type: 'text',
-      label: 'Status Column',
-      placeholder: 'rename status col',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Status Column', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('rename status col', 'fusedesk'),
       bind: 'status_name',
-      help: ''
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('', 'fusedesk')
     },
     date_updated_name: {
       type: 'text',
-      label: 'Date Updated Column',
-      placeholder: 'rename dateupdated col',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Date Updated Column', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('rename dateupdated col', 'fusedesk'),
       bind: 'date_updated_name',
-      help: ''
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('', 'fusedesk')
     },
     summary_name: {
       type: 'text',
-      label: 'Summary Column',
-      placeholder: 'rename summary updated',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Summary Column', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('rename summary updated', 'fusedesk'),
       bind: 'summary_name',
-      help: ''
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('', 'fusedesk')
     },
     errornotloggedin: {
       type: 'text',
-      label: 'Error, Not Logged In',
-      placeholder: 'Please login to view your cases',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Error, Not Logged In', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Please login to view your cases', 'fusedesk'),
       bind: 'errornotloggedin',
-      help: ''
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('', 'fusedesk')
     },
     errornocases: {
       type: 'text',
-      label: 'Error, No Cases',
-      placeholder: "Looks like you don't have any support cases!",
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Error, No Cases', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])("Looks like you don't have any support cases!", 'fusedesk'),
       bind: 'errornocases',
-      help: ''
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('', 'fusedesk')
     }
   }
 });
