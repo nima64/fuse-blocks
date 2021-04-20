@@ -42,7 +42,9 @@ class fusedesk_Block {
             $asset_file['version']
         );
 
+        //localization / Internationization
         wp_set_script_translations($editorScriptHandle,'fusedesk',plugin_dir_path(__FILE__) . 'languages');
+
         $meta = $this->meta;
         $meta['api_version'] = 2;
         $meta['editor_script'] = $editorScriptHandle;

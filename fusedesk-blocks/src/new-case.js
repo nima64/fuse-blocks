@@ -1568,12 +1568,13 @@ __webpack_require__.r(__webpack_exports__);
   return function (obj, attAry) {
     var customOnChange = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
-    var bindedMut = function bindedMut(v) {
+    // mutate / change binded attribute
+    var mutBinded = function mutBinded(v) {
       return mutAtt(v, obj.bind);
     };
 
-    var fbind = function fbind(newval) {
-      return !!customOnChange ? bindedMut(customOnChange(newval)) : bindedMut(newval);
+    var onChangeHandle = function onChangeHandle(newval) {
+      return !!customOnChange ? mutBinded(customOnChange(newval)) : mutBinded(newval);
     };
 
     var val = getAttVal(obj.bind);
@@ -1583,7 +1584,7 @@ __webpack_require__.r(__webpack_exports__);
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["CheckboxControl"], {
           label: obj.label,
           checked: val,
-          onChange: fbind,
+          onChange: onChangeHandle,
           help: obj.help
         });
 
@@ -1593,7 +1594,7 @@ __webpack_require__.r(__webpack_exports__);
           value: val ? val : '' //not allowed to display boolean, false will display ''
           ,
           placeholder: obj.placeholder,
-          onChange: fbind,
+          onChange: onChangeHandle,
           help: obj.help
         });
 
@@ -1602,7 +1603,7 @@ __webpack_require__.r(__webpack_exports__);
           label: obj.label,
           value: val ? val : '',
           placeholder: obj.placeholder,
-          onChange: fbind,
+          onChange: onChangeHandle,
           help: obj.help
         });
 
@@ -1639,7 +1640,7 @@ __webpack_require__.r(__webpack_exports__);
           label: obj.label,
           value: val,
           options: obj.options,
-          onChange: fbind,
+          onChange: onChangeHandle,
           help: obj.help
         });
 
@@ -1649,7 +1650,7 @@ __webpack_require__.r(__webpack_exports__);
           max: obj.max,
           label: obj.label,
           value: val,
-          onChange: fbind,
+          onChange: onChangeHandle,
           help: obj.help
         });
 

@@ -33,8 +33,9 @@ export default function ({attributes,setAttributes}){
 	*/
 
     return function (obj,attAry,customOnChange=null) {
-        const bindedMut = (v) => mutAtt(v,obj.bind);
-        const fbind = (newval) => !!customOnChange? bindedMut(customOnChange(newval)) : bindedMut(newval);
+        // mutate / change binded attribute
+        const mutBinded = (v) => mutAtt(v,obj.bind);
+        const onChangeHandle = (newval) => !!customOnChange? mutBinded(customOnChange(newval)) : mutBinded(newval);
         const val = getAttVal(obj.bind);
         switch (obj.type) {
             case 'check' :
@@ -42,7 +43,7 @@ export default function ({attributes,setAttributes}){
                     <CheckboxControl  
                         label={obj.label}
                         checked={val} 
-                        onChange={ fbind }  
+                        onChange={ onChangeHandle }  
                         help={obj.help}
                         />);	
             case 'text' :
@@ -51,7 +52,7 @@ export default function ({attributes,setAttributes}){
                         label={obj.label}
                         value={ val ? val : ''} //not allowed to display boolean, false will display ''
                         placeholder={obj.placeholder}
-                        onChange={fbind} 
+                        onChange={onChangeHandle} 
                         help={obj.help} 
                         />);
             case 'textArea' :
@@ -60,7 +61,7 @@ export default function ({attributes,setAttributes}){
                         label={obj.label}
                         value={ val ? val : ''} 
                         placeholder={obj.placeholder}
-                        onChange={fbind} 
+                        onChange={onChangeHandle} 
                         help={obj.help} 
                         />);
             case 'formTokenField':
@@ -100,7 +101,7 @@ export default function ({attributes,setAttributes}){
                         label={obj.label}
                         value={val} 
                         options={obj.options}
-                        onChange={fbind} 
+                        onChange={onChangeHandle} 
                         help={obj.help} 
                         />);
             case 'range' :
@@ -110,7 +111,7 @@ export default function ({attributes,setAttributes}){
                         max={obj.max}
                         label={obj.label}
                         value={val}
-                        onChange={fbind} 
+                        onChange={onChangeHandle} 
                         help={obj.help}
                         />
                 );
