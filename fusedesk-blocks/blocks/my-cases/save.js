@@ -13,7 +13,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useBlockProps } from '@wordpress/block-editor';
 import { RawHTML } from '@wordpress/element';
-
+import controlsData from './ControlsData';
 /**
  * The save function defines the way in which the different attributes should
  * be combined into the final markup, which is then serialized by the block
@@ -25,9 +25,45 @@ import { RawHTML } from '@wordpress/element';
  */
 export default function save( props ) {
 	const { attributes, setAttributes } = props;
+	const settings = ['display','text'];
+
+	//look in controlsData, then look in attributes
+	const genShortcodeAtt = (attGroup) => {
+		let attNames =  Object.entries(controlsData[attGroup]).map( ([k, v]) => k);
+
+		return attNames.map( attName => {
+			let controlObj = controlsData[attGroup][attName];
+			let attval = attributes[attName];
+
+			if (controlObj.type == 'multiSelect'){
+				attval = attval.map( obj => {
+					return obj.value
+				}).join();
+			}
+
+			if( controlObj.type == 'formTokenField' ){
+				attval = attval.map(obj => {
+					return obj.id;
+				}).join();
+			}
+			//dont make a attribute if empty string or false
+			// return attval || attval !== '' ? `${ attName }="${ attval }" ` : '';
+			return attval !== '' ? `${ attName }="${ attval }" ` : '';
+
+		}).join(' ');	;
+	}
+
+	const genAllShortcodeAtts = () => settings.map( (v) => genShortcodeAtt(v) ).join(' ');
 
 	return (
 		<div { ...useBlockProps.save() }>
+			<RawHTML { ...useBlockProps.save() } >
+				{ '[fusedesk_mycases ' + genAllShortcodeAtts() + ']' }
+			</RawHTML>
+			<div>
+				{genAllShortcodeAtts()}
+			</div>
 		</div>
+
 	);
 }

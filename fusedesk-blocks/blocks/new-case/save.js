@@ -37,6 +37,7 @@ export default function save( props ) {
 			let controlObj = controlsData[attGroup][attName];
 			let attval = attributes[attName];
 
+
 			if( controlObj.type == 'formTokenField' ){
 				attval = attval.map(obj => {
 					return obj.id;

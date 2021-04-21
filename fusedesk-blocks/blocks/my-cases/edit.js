@@ -50,7 +50,6 @@ export default function Edit( props ) {
 				label="FuseDesk My Cases"
 				instructions="Placeholder that will display your cases"
 			/>
-			{ /* {displayAllShortCodeAtts()} */ }
 		</div>
 	);
 }

@@ -64,6 +64,8 @@ registerBlockType( 'fusedesk/my-cases', {
 			type: 'string',
 			default: 50,
 		},
+
+		//text
 		casenum_name:{
 			type: 'string',
 			default:  '',
@@ -87,6 +89,16 @@ registerBlockType( 'fusedesk/my-cases', {
 		errornocases:{
 			type: 'string',
 			default:  '',
+		},
+
+		//advanced
+		anchor:{
+			type:'string',
+			default: '',
+		},
+		style:{
+			type:'string',
+			default: false,
 		},
 	},
 

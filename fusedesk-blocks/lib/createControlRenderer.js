@@ -4,9 +4,10 @@ import {
     TextControl,
     TextareaControl,
     RangeControl,
-    FormTokenField,
+    // FormTokenField, 
     BaseControl,
 } from '@wordpress/components';
+import FormTokenField from './form-token-field/index';
 
 import MultiSelect from './MultiSelect';
 
@@ -64,6 +65,7 @@ export default function ({attributes,setAttributes}){
                         onChange={onChangeHandle} 
                         help={obj.help} 
                         />);
+            //see https://developer.wordpress.org/block-editor/reference-guides/components/form-token-field/
             case 'formTokenField':
                 return (					
                     <BaseControl
@@ -88,9 +90,11 @@ export default function ({attributes,setAttributes}){
                                 mutAtt(temp,obj.bind,attAry);
 
                             }}
+                            maxSuggestions={obj.maxSuggestions}
                             suggestions={obj.suggestions}
-                            __experimentalExpandOnFocus={true}
-                            __experimentalShowHowTo={false} //Doesn't work see https://developer.wordpress.org/block-editor/reference-guides/components/form-token-field/
+                            // __experimentalExpandOnFocus={true}
+                            minimumChars={0}
+                            __experimentalShowHowTo={false}
                             />
                     </BaseControl>
                     );
@@ -98,6 +102,15 @@ export default function ({attributes,setAttributes}){
             case 'select':
                 return (					
                     <SelectControl 
+                        label={obj.label}
+                        value={val} 
+                        options={obj.options}
+                        onChange={onChangeHandle} 
+                        help={obj.help} 
+                        />);
+            case 'multiSelect':
+                return (					
+                    <MultiSelect 
                         label={obj.label}
                         value={val} 
                         options={obj.options}

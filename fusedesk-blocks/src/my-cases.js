@@ -201,7 +201,7 @@ var statusOptionsShared = [{
 /* harmony default export */ __webpack_exports__["default"] = ({
   display: {
     columns: {
-      type: 'select',
+      type: 'multiSelect',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Columns', 'fusedesk'),
       options: [{
         label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Case Number', 'fusedesk'),
@@ -308,6 +308,20 @@ var statusOptionsShared = [{
       bind: 'errornocases',
       help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('', 'fusedesk')
     }
+  },
+  advanced: {
+    anchor: {
+      type: 'text',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('HTML anchor', 'fusedesk'),
+      bind: 'anchor',
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Enter a word or two — without spaces — to make a unique web address just for this block, called an "anchor."', 'fusedesk')
+    },
+    style: {
+      type: 'text',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Additional CSS styles(s) for the fields', 'fusedesk'),
+      bind: 'style',
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('style: What CSS style to apply to our inputs', 'fusedesk')
+    }
   }
 });
 
@@ -340,7 +354,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function InspectorControls_MyCases(props) {
-  var renderControlObj = Object(_lib_createControlRenderer__WEBPACK_IMPORTED_MODULE_5__["default"])(props);
+  var renderControlObj = Object(_lib_createControlRenderer__WEBPACK_IMPORTED_MODULE_5__["default"])(props); //create all display panel controls
 
   var getDisplayPlanel = function getDisplayPlanel() {
     var DisplayGroup = _ControlsData__WEBPACK_IMPORTED_MODULE_4__["default"].display;
@@ -353,7 +367,8 @@ function InspectorControls_MyCases(props) {
 
       return renderControlObj(obj);
     })));
-  };
+  }; //create all text panel controls
+
 
   var getTextPanel = function getTextPanel() {
     var TextGroup = _ControlsData__WEBPACK_IMPORTED_MODULE_4__["default"].text;
@@ -366,7 +381,14 @@ function InspectorControls_MyCases(props) {
     })));
   };
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["InspectorControls"], null, getDisplayPlanel(), getTextPanel());
+  var getAdvancedPanel = function getAdvancedPanel() {
+    var AdvancedGroup = _ControlsData__WEBPACK_IMPORTED_MODULE_4__["default"].advanced;
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null, renderControlObj(AdvancedGroup.anchor, 'advanced', function (v) {
+      return v.slice(-1) == ' ' ? v.slice(0, -1) + '-' : v;
+    }), renderControlObj(AdvancedGroup.style, 'advanced'));
+  };
+
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["InspectorControls"], null, getDisplayPlanel(), getTextPanel()), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["InspectorAdvancedControls"], null, getAdvancedPanel()));
 }
 
 /***/ }),
@@ -540,6 +562,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('fus
       type: 'string',
       default: 50
     },
+    //text
     casenum_name: {
       type: 'string',
       default: ''
@@ -563,6 +586,15 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('fus
     errornocases: {
       type: 'string',
       default: ''
+    },
+    //advanced
+    anchor: {
+      type: 'string',
+      default: ''
+    },
+    style: {
+      type: 'string',
+      default: false
     }
   },
 
@@ -589,12 +621,16 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('fus
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return save; });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _ControlsData__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ControlsData */ "./blocks/my-cases/ControlsData.js");
+
 
 
 /**
@@ -612,6 +648,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /**
  * The save function defines the way in which the different attributes should
  * be combined into the final markup, which is then serialized by the block
@@ -625,7 +662,46 @@ __webpack_require__.r(__webpack_exports__);
 function save(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"].save());
+  var settings = ['display', 'text']; //look in controlsData, then look in attributes
+
+  var genShortcodeAtt = function genShortcodeAtt(attGroup) {
+    var attNames = Object.entries(_ControlsData__WEBPACK_IMPORTED_MODULE_4__["default"][attGroup]).map(function (_ref) {
+      var _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref, 2),
+          k = _ref2[0],
+          v = _ref2[1];
+
+      return k;
+    });
+    return attNames.map(function (attName) {
+      var controlObj = _ControlsData__WEBPACK_IMPORTED_MODULE_4__["default"][attGroup][attName];
+      var attval = attributes[attName];
+
+      if (controlObj.type == 'multiSelect') {
+        attval = attval.map(function (obj) {
+          return obj.value;
+        }).join();
+      }
+
+      if (controlObj.type == 'formTokenField') {
+        attval = attval.map(function (obj) {
+          return obj.id;
+        }).join();
+      } //dont make a attribute if empty string or false
+      // return attval || attval !== '' ? `${ attName }="${ attval }" ` : '';
+
+
+      return attval !== '' ? "".concat(attName, "=\"").concat(attval, "\" ") : '';
+    }).join(' ');
+    ;
+  };
+
+  var genAllShortcodeAtts = function genAllShortcodeAtts() {
+    return settings.map(function (v) {
+      return genShortcodeAtt(v);
+    }).join(' ');
+  };
+
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["RawHTML"], _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), '[fusedesk_mycases ' + genAllShortcodeAtts() + ']'), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", null, genAllShortcodeAtts()));
 }
 
 /***/ }),
@@ -898,7 +974,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _MultiSelect__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./MultiSelect */ "./lib/MultiSelect.js");
+/* harmony import */ var _form_token_field_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form-token-field/index */ "./lib/form-token-field/index.js");
+/* harmony import */ var _MultiSelect__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MultiSelect */ "./lib/MultiSelect.js");
+
 
 
 
@@ -968,11 +1046,12 @@ __webpack_require__.r(__webpack_exports__);
           onChange: onChangeHandle,
           help: obj.help
         });
+      //see https://developer.wordpress.org/block-editor/reference-guides/components/form-token-field/
 
       case 'formTokenField':
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["BaseControl"], {
           help: obj.help
-        }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["FormTokenField"], {
+        }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_form_token_field_index__WEBPACK_IMPORTED_MODULE_3__["default"], {
           label: obj.label,
           value: val ? val : '',
           placeholder: obj.placeholder,
@@ -991,14 +1070,24 @@ __webpack_require__.r(__webpack_exports__);
 
             mutAtt(temp, obj.bind, attAry);
           },
-          suggestions: obj.suggestions,
-          __experimentalExpandOnFocus: true,
-          __experimentalShowHowTo: false //Doesn't work see https://developer.wordpress.org/block-editor/reference-guides/components/form-token-field/
-
+          maxSuggestions: obj.maxSuggestions,
+          suggestions: obj.suggestions // __experimentalExpandOnFocus={true}
+          ,
+          minimumChars: 0,
+          __experimentalShowHowTo: false
         }));
 
       case 'select':
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["SelectControl"], {
+          label: obj.label,
+          value: val,
+          options: obj.options,
+          onChange: onChangeHandle,
+          help: obj.help
+        });
+
+      case 'multiSelect':
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_MultiSelect__WEBPACK_IMPORTED_MODULE_4__["default"], {
           label: obj.label,
           value: val,
           options: obj.options,
@@ -1022,6 +1111,1201 @@ __webpack_require__.r(__webpack_exports__);
   };
 });
 ;
+
+/***/ }),
+
+/***/ "./lib/form-token-field/index.js":
+/*!***************************************!*\
+  !*** ./lib/form-token-field/index.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/typeof.js");
+/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @wordpress/keycodes */ "@wordpress/keycodes");
+/* harmony import */ var _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_wordpress_keycodes__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _wordpress_is_shallow_equal__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @wordpress/is-shallow-equal */ "@wordpress/is-shallow-equal");
+/* harmony import */ var _wordpress_is_shallow_equal__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_wordpress_is_shallow_equal__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _token__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./token */ "./lib/form-token-field/token.js");
+/* harmony import */ var _token_input__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./token-input */ "./lib/form-token-field/token-input.js");
+/* harmony import */ var _suggestions_list__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./suggestions-list */ "./lib/form-token-field/suggestions-list.js");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_18__);
+
+
+
+
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6___default()(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+var initialState = {
+  incompleteTokenValue: '',
+  inputOffsetFromEnd: 0,
+  isActive: false,
+  isExpanded: false,
+  selectedSuggestionIndex: -1,
+  selectedSuggestionScroll: false
+};
+
+var FormTokenField = /*#__PURE__*/function (_Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default()(FormTokenField, _Component);
+
+  var _super = _createSuper(FormTokenField);
+
+  function FormTokenField() {
+    var _this;
+
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default()(this, FormTokenField);
+
+    _this = _super.apply(this, arguments);
+    _this.state = initialState;
+    _this.onKeyDown = _this.onKeyDown.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.onKeyPress = _this.onKeyPress.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.onFocus = _this.onFocus.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.onBlur = _this.onBlur.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.deleteTokenBeforeInput = _this.deleteTokenBeforeInput.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.deleteTokenAfterInput = _this.deleteTokenAfterInput.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.addCurrentToken = _this.addCurrentToken.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.onContainerTouched = _this.onContainerTouched.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.renderToken = _this.renderToken.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.onTokenClickRemove = _this.onTokenClickRemove.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.onSuggestionHovered = _this.onSuggestionHovered.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.onSuggestionSelected = _this.onSuggestionSelected.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.onInputChange = _this.onInputChange.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.bindInput = _this.bindInput.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.bindTokensAndInput = _this.bindTokensAndInput.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.updateSuggestions = _this.updateSuggestions.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    return _this;
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(FormTokenField, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      // Make sure to focus the input when the isActive state is true.
+      if (this.state.isActive && !this.input.hasFocus()) {
+        this.input.focus();
+      }
+
+      var _this$props = this.props,
+          suggestions = _this$props.suggestions,
+          value = _this$props.value;
+      var suggestionsDidUpdate = !_wordpress_is_shallow_equal__WEBPACK_IMPORTED_MODULE_14___default()(suggestions, prevProps.suggestions);
+
+      if (suggestionsDidUpdate || value !== prevProps.value) {
+        this.updateSuggestions(suggestionsDidUpdate);
+      }
+    }
+  }, {
+    key: "bindInput",
+    value: function bindInput(ref) {
+      this.input = ref;
+    }
+  }, {
+    key: "bindTokensAndInput",
+    value: function bindTokensAndInput(ref) {
+      this.tokensAndInput = ref;
+    }
+  }, {
+    key: "onFocus",
+    value: function onFocus(event) {
+      var __experimentalExpandOnFocus = this.props.__experimentalExpandOnFocus; // If focus is on the input or on the container, set the isActive state to true.
+
+      if (this.input.hasFocus() || event.target === this.tokensAndInput) {
+        this.setState({
+          isActive: true,
+          isExpanded: !!__experimentalExpandOnFocus || this.state.isExpanded
+        });
+      } else {
+        /*
+         * Otherwise, focus is on one of the token "remove" buttons and we
+         * set the isActive state to false to prevent the input to be
+         * re-focused, see componentDidUpdate().
+         */
+        this.setState({
+          isActive: false
+        });
+      }
+
+      if ('function' === typeof this.props.onFocus) {
+        this.props.onFocus(event);
+      }
+    }
+  }, {
+    key: "onBlur",
+    value: function onBlur() {
+      if (this.inputHasValidValue()) {
+        this.setState({
+          isActive: false
+        });
+      } else {
+        this.setState(initialState);
+      }
+    }
+  }, {
+    key: "onKeyDown",
+    value: function onKeyDown(event) {
+      var preventDefault = false;
+
+      switch (event.keyCode) {
+        case _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_13__["BACKSPACE"]:
+          preventDefault = this.handleDeleteKey(this.deleteTokenBeforeInput);
+          break;
+
+        case _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_13__["ENTER"]:
+          preventDefault = this.addCurrentToken();
+          break;
+
+        case _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_13__["LEFT"]:
+          preventDefault = this.handleLeftArrowKey();
+          break;
+
+        case _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_13__["UP"]:
+          preventDefault = this.handleUpArrowKey();
+          break;
+
+        case _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_13__["RIGHT"]:
+          preventDefault = this.handleRightArrowKey();
+          break;
+
+        case _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_13__["DOWN"]:
+          preventDefault = this.handleDownArrowKey();
+          break;
+
+        case _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_13__["DELETE"]:
+          preventDefault = this.handleDeleteKey(this.deleteTokenAfterInput);
+          break;
+
+        case _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_13__["SPACE"]:
+          if (this.props.tokenizeOnSpace) {
+            preventDefault = this.addCurrentToken();
+          }
+
+          break;
+
+        case _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_13__["ESCAPE"]:
+          preventDefault = this.handleEscapeKey(event);
+          event.stopPropagation();
+          break;
+
+        default:
+          break;
+      }
+
+      if (preventDefault) {
+        event.preventDefault();
+      }
+    }
+  }, {
+    key: "onKeyPress",
+    value: function onKeyPress(event) {
+      var preventDefault = false;
+
+      switch (event.charCode) {
+        case 44:
+          // comma
+          preventDefault = this.handleCommaKey();
+          break;
+
+        default:
+          break;
+      }
+
+      if (preventDefault) {
+        event.preventDefault();
+      }
+    }
+  }, {
+    key: "onContainerTouched",
+    value: function onContainerTouched(event) {
+      // Prevent clicking/touching the tokensAndInput container from blurring
+      // the input and adding the current token.
+      if (event.target === this.tokensAndInput && this.state.isActive) {
+        event.preventDefault();
+      }
+    }
+  }, {
+    key: "onTokenClickRemove",
+    value: function onTokenClickRemove(event) {
+      this.deleteToken(event.value);
+      this.input.focus();
+    }
+  }, {
+    key: "onSuggestionHovered",
+    value: function onSuggestionHovered(suggestion) {
+      var index = this.getMatchingSuggestions().indexOf(suggestion);
+
+      if (index >= 0) {
+        this.setState({
+          selectedSuggestionIndex: index,
+          selectedSuggestionScroll: false
+        });
+      }
+    }
+  }, {
+    key: "onSuggestionSelected",
+    value: function onSuggestionSelected(suggestion) {
+      this.addNewToken(suggestion);
+    }
+  }, {
+    key: "onInputChange",
+    value: function onInputChange(event) {
+      var text = event.value;
+      var separator = this.props.tokenizeOnSpace ? /[ ,\t]+/ : /[,\t]+/;
+      var items = text.split(separator);
+      var tokenValue = Object(lodash__WEBPACK_IMPORTED_MODULE_9__["last"])(items) || '';
+
+      if (items.length > 1) {
+        this.addNewTokens(items.slice(0, -1));
+      }
+
+      this.setState({
+        incompleteTokenValue: tokenValue
+      }, this.updateSuggestions);
+      this.props.onInputChange(tokenValue);
+    }
+  }, {
+    key: "handleDeleteKey",
+    value: function handleDeleteKey(deleteToken) {
+      var preventDefault = false;
+
+      if (this.input.hasFocus() && this.isInputEmpty()) {
+        deleteToken();
+        preventDefault = true;
+      }
+
+      return preventDefault;
+    }
+  }, {
+    key: "handleLeftArrowKey",
+    value: function handleLeftArrowKey() {
+      var preventDefault = false;
+
+      if (this.isInputEmpty()) {
+        this.moveInputBeforePreviousToken();
+        preventDefault = true;
+      }
+
+      return preventDefault;
+    }
+  }, {
+    key: "handleRightArrowKey",
+    value: function handleRightArrowKey() {
+      var preventDefault = false;
+
+      if (this.isInputEmpty()) {
+        this.moveInputAfterNextToken();
+        preventDefault = true;
+      }
+
+      return preventDefault;
+    }
+  }, {
+    key: "handleUpArrowKey",
+    value: function handleUpArrowKey() {
+      var _this2 = this;
+
+      this.setState(function (state, props) {
+        return {
+          selectedSuggestionIndex: (state.selectedSuggestionIndex === 0 ? _this2.getMatchingSuggestions(state.incompleteTokenValue, props.suggestions, props.value, props.maxSuggestions, props.saveTransform).length : state.selectedSuggestionIndex) - 1,
+          selectedSuggestionScroll: true
+        };
+      });
+      return true; // preventDefault
+    }
+  }, {
+    key: "handleDownArrowKey",
+    value: function handleDownArrowKey() {
+      var _this3 = this;
+
+      this.setState(function (state, props) {
+        return {
+          selectedSuggestionIndex: (state.selectedSuggestionIndex + 1) % _this3.getMatchingSuggestions(state.incompleteTokenValue, props.suggestions, props.value, props.maxSuggestions, props.saveTransform).length,
+          selectedSuggestionScroll: true
+        };
+      });
+      return true; // preventDefault
+    }
+  }, {
+    key: "handleEscapeKey",
+    value: function handleEscapeKey(event) {
+      this.setState({
+        incompleteTokenValue: event.target.value,
+        isExpanded: false,
+        selectedSuggestionIndex: -1,
+        selectedSuggestionScroll: false
+      });
+      return true; // preventDefault
+    }
+  }, {
+    key: "handleCommaKey",
+    value: function handleCommaKey() {
+      if (this.inputHasValidValue()) {
+        this.addNewToken(this.state.incompleteTokenValue);
+      }
+
+      return true; // preventDefault
+    }
+  }, {
+    key: "moveInputToIndex",
+    value: function moveInputToIndex(index) {
+      this.setState(function (state, props) {
+        return {
+          inputOffsetFromEnd: props.value.length - Math.max(index, -1) - 1
+        };
+      });
+    }
+  }, {
+    key: "moveInputBeforePreviousToken",
+    value: function moveInputBeforePreviousToken() {
+      this.setState(function (state, props) {
+        return {
+          inputOffsetFromEnd: Math.min(state.inputOffsetFromEnd + 1, props.value.length)
+        };
+      });
+    }
+  }, {
+    key: "moveInputAfterNextToken",
+    value: function moveInputAfterNextToken() {
+      this.setState(function (state) {
+        return {
+          inputOffsetFromEnd: Math.max(state.inputOffsetFromEnd - 1, 0)
+        };
+      });
+    }
+  }, {
+    key: "deleteTokenBeforeInput",
+    value: function deleteTokenBeforeInput() {
+      var index = this.getIndexOfInput() - 1;
+
+      if (index > -1) {
+        this.deleteToken(this.props.value[index]);
+      }
+    }
+  }, {
+    key: "deleteTokenAfterInput",
+    value: function deleteTokenAfterInput() {
+      var index = this.getIndexOfInput();
+
+      if (index < this.props.value.length) {
+        this.deleteToken(this.props.value[index]); // update input offset since it's the offset from the last token
+
+        this.moveInputToIndex(index);
+      }
+    }
+  }, {
+    key: "addCurrentToken",
+    value: function addCurrentToken() {
+      var preventDefault = false;
+      var selectedSuggestion = this.getSelectedSuggestion();
+
+      if (selectedSuggestion) {
+        this.addNewToken(selectedSuggestion);
+        preventDefault = true;
+      } else if (this.inputHasValidValue()) {
+        this.addNewToken(this.state.incompleteTokenValue);
+        preventDefault = true;
+      }
+
+      return preventDefault;
+    }
+  }, {
+    key: "addNewTokens",
+    value: function addNewTokens(tokens) {
+      var _this4 = this;
+
+      var tokensToAdd = Object(lodash__WEBPACK_IMPORTED_MODULE_9__["uniq"])(tokens.map(this.props.saveTransform).filter(Boolean).filter(function (token) {
+        return !_this4.valueContainsToken(token);
+      }));
+
+      if (tokensToAdd.length > 0) {
+        var newValue = Object(lodash__WEBPACK_IMPORTED_MODULE_9__["clone"])(this.props.value);
+        newValue.splice.apply(newValue, [this.getIndexOfInput(), 0].concat(tokensToAdd));
+        this.props.onChange(newValue);
+      }
+    }
+  }, {
+    key: "addNewToken",
+    value: function addNewToken(token) {
+      var _this$props2 = this.props,
+          __experimentalExpandOnFocus = _this$props2.__experimentalExpandOnFocus,
+          __experimentalValidateInput = _this$props2.__experimentalValidateInput;
+
+      if (!__experimentalValidateInput(token)) {
+        this.props.speak(this.props.messages.__experimentalInvalid, 'assertive');
+        return;
+      }
+
+      this.addNewTokens([token]);
+      this.props.speak(this.props.messages.added, 'assertive');
+      this.setState({
+        incompleteTokenValue: '',
+        selectedSuggestionIndex: -1,
+        selectedSuggestionScroll: false,
+        isExpanded: !__experimentalExpandOnFocus
+      });
+
+      if (this.state.isActive) {
+        this.input.focus();
+      }
+    }
+  }, {
+    key: "deleteToken",
+    value: function deleteToken(token) {
+      var _this5 = this;
+
+      var newTokens = this.props.value.filter(function (item) {
+        return _this5.getTokenValue(item) !== _this5.getTokenValue(token);
+      });
+      this.props.onChange(newTokens);
+      this.props.speak(this.props.messages.removed, 'assertive');
+    }
+  }, {
+    key: "getTokenValue",
+    value: function getTokenValue(token) {
+      if ('object' === _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_1___default()(token)) {
+        return token.value;
+      }
+
+      return token;
+    }
+  }, {
+    key: "getMatchingSuggestions",
+    value: function getMatchingSuggestions() {
+      var searchValue = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.state.incompleteTokenValue;
+      var suggestions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.props.suggestions;
+      var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.props.value;
+      var maxSuggestions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.props.maxSuggestions;
+      var saveTransform = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : this.props.saveTransform;
+      var match = saveTransform(searchValue);
+      var startsWithMatch = [];
+      var containsMatch = [];
+
+      if (match.length === 0) {
+        suggestions = Object(lodash__WEBPACK_IMPORTED_MODULE_9__["difference"])(suggestions, value);
+      } else {
+        match = match.toLocaleLowerCase();
+        Object(lodash__WEBPACK_IMPORTED_MODULE_9__["each"])(suggestions, function (suggestion) {
+          var index = suggestion.toLocaleLowerCase().indexOf(match);
+
+          if (value.indexOf(suggestion) === -1) {
+            if (index === 0) {
+              startsWithMatch.push(suggestion);
+            } else if (index > 0) {
+              containsMatch.push(suggestion);
+            }
+          }
+        });
+        suggestions = startsWithMatch.concat(containsMatch);
+      }
+
+      return Object(lodash__WEBPACK_IMPORTED_MODULE_9__["take"])(suggestions, maxSuggestions);
+    }
+  }, {
+    key: "getSelectedSuggestion",
+    value: function getSelectedSuggestion() {
+      if (this.state.selectedSuggestionIndex !== -1) {
+        return this.getMatchingSuggestions()[this.state.selectedSuggestionIndex];
+      }
+    }
+  }, {
+    key: "valueContainsToken",
+    value: function valueContainsToken(token) {
+      var _this6 = this;
+
+      return Object(lodash__WEBPACK_IMPORTED_MODULE_9__["some"])(this.props.value, function (item) {
+        return _this6.getTokenValue(token) === _this6.getTokenValue(item);
+      });
+    }
+  }, {
+    key: "getIndexOfInput",
+    value: function getIndexOfInput() {
+      return this.props.value.length - this.state.inputOffsetFromEnd;
+    }
+  }, {
+    key: "isInputEmpty",
+    value: function isInputEmpty() {
+      return this.state.incompleteTokenValue.length === 0;
+    }
+  }, {
+    key: "inputHasValidValue",
+    value: function inputHasValidValue() {
+      return this.props.saveTransform(this.state.incompleteTokenValue).length > 0;
+    }
+  }, {
+    key: "updateSuggestions",
+    value: function updateSuggestions() {
+      var resetSelectedSuggestion = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      var __experimentalExpandOnFocus = this.props.__experimentalExpandOnFocus;
+      var incompleteTokenValue = this.state.incompleteTokenValue;
+      var inputHasMinimumChars = incompleteTokenValue.trim().length > this.props.minimumChars;
+      var matchingSuggestions = this.getMatchingSuggestions(incompleteTokenValue);
+      var hasMatchingSuggestions = matchingSuggestions.length > 0;
+      var newState = {
+        isExpanded: __experimentalExpandOnFocus || inputHasMinimumChars && hasMatchingSuggestions
+      };
+
+      if (resetSelectedSuggestion) {
+        newState.selectedSuggestionIndex = -1;
+        newState.selectedSuggestionScroll = false;
+      }
+
+      this.setState(newState);
+
+      if (inputHasMinimumChars) {
+        var debouncedSpeak = this.props.debouncedSpeak;
+        var message = hasMatchingSuggestions ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["sprintf"])(
+        /* translators: %d: number of results. */
+        Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["_n"])('%d result found, use up and down arrow keys to navigate.', '%d results found, use up and down arrow keys to navigate.', matchingSuggestions.length), matchingSuggestions.length) : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('No results.');
+        debouncedSpeak(message, 'assertive');
+      }
+    }
+  }, {
+    key: "renderTokensAndInput",
+    value: function renderTokensAndInput() {
+      var components = Object(lodash__WEBPACK_IMPORTED_MODULE_9__["map"])(this.props.value, this.renderToken);
+      components.splice(this.getIndexOfInput(), 0, this.renderInput());
+      return components;
+    }
+  }, {
+    key: "renderToken",
+    value: function renderToken(token, index, tokens) {
+      var value = this.getTokenValue(token);
+      var status = token.status ? token.status : undefined;
+      var termPosition = index + 1;
+      var termsCount = tokens.length;
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_8__["createElement"])(_token__WEBPACK_IMPORTED_MODULE_15__["default"], {
+        key: 'token-' + value,
+        value: value,
+        status: status,
+        title: token.title,
+        displayTransform: this.props.displayTransform,
+        onClickRemove: this.onTokenClickRemove,
+        isBorderless: token.isBorderless || this.props.isBorderless,
+        onMouseEnter: token.onMouseEnter,
+        onMouseLeave: token.onMouseLeave,
+        disabled: 'error' !== status && this.props.disabled,
+        messages: this.props.messages,
+        termsCount: termsCount,
+        termPosition: termPosition
+      });
+    }
+  }, {
+    key: "renderInput",
+    value: function renderInput() {
+      var _this$props3 = this.props,
+          autoCapitalize = _this$props3.autoCapitalize,
+          autoComplete = _this$props3.autoComplete,
+          maxLength = _this$props3.maxLength,
+          placeholder = _this$props3.placeholder,
+          value = _this$props3.value,
+          instanceId = _this$props3.instanceId;
+      var props = {
+        instanceId: instanceId,
+        autoCapitalize: autoCapitalize,
+        autoComplete: autoComplete,
+        placeholder: value.length === 0 ? placeholder : '',
+        ref: this.bindInput,
+        key: 'input',
+        disabled: this.props.disabled,
+        value: this.state.incompleteTokenValue,
+        onBlur: this.onBlur,
+        isExpanded: this.state.isExpanded,
+        selectedSuggestionIndex: this.state.selectedSuggestionIndex
+      };
+
+      if (!(maxLength && value.length >= maxLength)) {
+        props = _objectSpread(_objectSpread({}, props), {}, {
+          onChange: this.onInputChange
+        });
+      }
+
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_8__["createElement"])(_token_input__WEBPACK_IMPORTED_MODULE_16__["default"], props);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props4 = this.props,
+          disabled = _this$props4.disabled,
+          _this$props4$label = _this$props4.label,
+          label = _this$props4$label === void 0 ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Add item') : _this$props4$label,
+          instanceId = _this$props4.instanceId,
+          className = _this$props4.className,
+          __experimentalShowHowTo = _this$props4.__experimentalShowHowTo;
+      var isExpanded = this.state.isExpanded;
+      var classes = classnames__WEBPACK_IMPORTED_MODULE_10___default()(className, 'components-form-token-field__input-container', {
+        'is-active': this.state.isActive,
+        'is-disabled': disabled
+      });
+      var tokenFieldProps = {
+        className: 'components-form-token-field',
+        tabIndex: '-1'
+      };
+      var matchingSuggestions = this.getMatchingSuggestions();
+
+      if (!disabled) {
+        tokenFieldProps = Object.assign({}, tokenFieldProps, {
+          onKeyDown: this.onKeyDown,
+          onKeyPress: this.onKeyPress,
+          onFocus: this.onFocus
+        });
+      } // Disable reason: There is no appropriate role which describes the
+      // input container intended accessible usability.
+      // TODO: Refactor click detection to use blur to stop propagation.
+
+      /* eslint-disable jsx-a11y/no-static-element-interactions */
+
+
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_8__["createElement"])("div", tokenFieldProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_8__["createElement"])("label", {
+        htmlFor: "components-form-token-input-".concat(instanceId),
+        className: "components-form-token-field__label"
+      }, label), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_8__["createElement"])("div", {
+        ref: this.bindTokensAndInput,
+        className: classes,
+        tabIndex: "-1",
+        onMouseDown: this.onContainerTouched,
+        onTouchStart: this.onContainerTouched
+      }, this.renderTokensAndInput(), isExpanded && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_8__["createElement"])(_suggestions_list__WEBPACK_IMPORTED_MODULE_17__["default"], {
+        instanceId: instanceId,
+        match: this.props.saveTransform(this.state.incompleteTokenValue),
+        displayTransform: this.props.displayTransform,
+        suggestions: matchingSuggestions,
+        selectedIndex: this.state.selectedSuggestionIndex,
+        scrollIntoView: this.state.selectedSuggestionScroll,
+        onHover: this.onSuggestionHovered,
+        onSelect: this.onSuggestionSelected
+      })), __experimentalShowHowTo && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_8__["createElement"])("p", {
+        id: "components-form-token-suggestions-howto-".concat(instanceId),
+        className: "components-form-token-field__help"
+      }, this.props.tokenizeOnSpace ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Separate with commas, spaces, or the Enter key.') : Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Separate with commas or the Enter key.')));
+      /* eslint-enable jsx-a11y/no-static-element-interactions */
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      if (!props.disabled || !state.isActive) {
+        return null;
+      }
+
+      return {
+        isActive: false,
+        incompleteTokenValue: ''
+      };
+    }
+  }]);
+
+  return FormTokenField;
+}(_wordpress_element__WEBPACK_IMPORTED_MODULE_8__["Component"]);
+
+FormTokenField.defaultProps = {
+  suggestions: Object.freeze([]),
+  maxSuggestions: 100,
+  minimumChars: 1,
+  value: Object.freeze([]),
+  displayTransform: lodash__WEBPACK_IMPORTED_MODULE_9__["identity"],
+  saveTransform: function saveTransform(token) {
+    return token.trim();
+  },
+  onChange: function onChange() {},
+  onInputChange: function onInputChange() {},
+  isBorderless: false,
+  disabled: false,
+  tokenizeOnSpace: false,
+  messages: {
+    added: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Item added.'),
+    removed: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Item removed.'),
+    remove: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Remove item'),
+    __experimentalInvalid: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Invalid item')
+  },
+  __experimentalExpandOnFocus: false,
+  __experimentalValidateInput: function __experimentalValidateInput() {
+    return true;
+  },
+  __experimentalShowHowTo: true
+};
+/* harmony default export */ __webpack_exports__["default"] = (Object(_wordpress_components__WEBPACK_IMPORTED_MODULE_18__["withSpokenMessages"])(Object(_wordpress_compose__WEBPACK_IMPORTED_MODULE_12__["withInstanceId"])(FormTokenField)));
+
+/***/ }),
+
+/***/ "./lib/form-token-field/suggestions-list.js":
+/*!**************************************************!*\
+  !*** ./lib/form-token-field/suggestions-list.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var dom_scroll_into_view__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! dom-scroll-into-view */ "./node_modules/dom-scroll-into-view/lib/index.js");
+/* harmony import */ var dom_scroll_into_view__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(dom_scroll_into_view__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_10__);
+
+
+
+
+
+
+
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default()(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+/**
+ * External dependencies
+ */
+
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+var SuggestionsList = /*#__PURE__*/function (_Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3___default()(SuggestionsList, _Component);
+
+  var _super = _createSuper(SuggestionsList);
+
+  function SuggestionsList() {
+    var _this;
+
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, SuggestionsList);
+
+    _this = _super.apply(this, arguments);
+    _this.handleMouseDown = _this.handleMouseDown.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this));
+    _this.bindList = _this.bindList.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this));
+    return _this;
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(SuggestionsList, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      var _this2 = this;
+
+      // only have to worry about scrolling selected suggestion into view
+      // when already expanded
+      if (this.props.selectedIndex > -1 && this.props.scrollIntoView) {
+        this.scrollingIntoView = true;
+        dom_scroll_into_view__WEBPACK_IMPORTED_MODULE_8___default()(this.list.children[this.props.selectedIndex], this.list, {
+          onlyScrollIfNeeded: true
+        });
+        this.props.setTimeout(function () {
+          _this2.scrollingIntoView = false;
+        }, 100);
+      }
+    }
+  }, {
+    key: "bindList",
+    value: function bindList(ref) {
+      this.list = ref;
+    }
+  }, {
+    key: "handleHover",
+    value: function handleHover(suggestion) {
+      var _this3 = this;
+
+      return function () {
+        if (!_this3.scrollingIntoView) {
+          _this3.props.onHover(suggestion);
+        }
+      };
+    }
+  }, {
+    key: "handleClick",
+    value: function handleClick(suggestion) {
+      var _this4 = this;
+
+      return function () {
+        _this4.props.onSelect(suggestion);
+      };
+    }
+  }, {
+    key: "handleMouseDown",
+    value: function handleMouseDown(e) {
+      // By preventing default here, we will not lose focus of <input> when clicking a suggestion
+      e.preventDefault();
+    }
+  }, {
+    key: "computeSuggestionMatch",
+    value: function computeSuggestionMatch(suggestion) {
+      var match = this.props.displayTransform(this.props.match || '').toLocaleLowerCase();
+
+      if (match.length === 0) {
+        return null;
+      }
+
+      suggestion = this.props.displayTransform(suggestion);
+      var indexOfMatch = suggestion.toLocaleLowerCase().indexOf(match);
+      return {
+        suggestionBeforeMatch: suggestion.substring(0, indexOfMatch),
+        suggestionMatch: suggestion.substring(indexOfMatch, indexOfMatch + match.length),
+        suggestionAfterMatch: suggestion.substring(indexOfMatch + match.length)
+      };
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this5 = this;
+
+      // We set `tabIndex` here because otherwise Firefox sets focus on this
+      // div when tabbing off of the input in `TokenField` -- not really sure
+      // why, since usually a div isn't focusable by default
+      // TODO does this still apply now that it's a <ul> and not a <div>?
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("ul", {
+        ref: this.bindList,
+        className: "components-form-token-field__suggestions-list",
+        id: "components-form-token-suggestions-".concat(this.props.instanceId),
+        role: "listbox"
+      }, Object(lodash__WEBPACK_IMPORTED_MODULE_7__["map"])(this.props.suggestions, function (suggestion, index) {
+        var match = _this5.computeSuggestionMatch(suggestion);
+
+        var classeName = classnames__WEBPACK_IMPORTED_MODULE_9___default()('components-form-token-field__suggestion', {
+          'is-selected': index === _this5.props.selectedIndex
+        });
+        /* eslint-disable jsx-a11y/click-events-have-key-events */
+
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("li", {
+          id: "components-form-token-suggestions-".concat(_this5.props.instanceId, "-").concat(index),
+          role: "option",
+          className: classeName,
+          key: _this5.props.displayTransform(suggestion),
+          onMouseDown: _this5.handleMouseDown,
+          onClick: _this5.handleClick(suggestion),
+          onMouseEnter: _this5.handleHover(suggestion),
+          "aria-selected": index === _this5.props.selectedIndex
+        }, match ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("span", {
+          "aria-label": _this5.props.displayTransform(suggestion)
+        }, match.suggestionBeforeMatch, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("strong", {
+          className: "components-form-token-field__suggestion-match"
+        }, match.suggestionMatch), match.suggestionAfterMatch) : _this5.props.displayTransform(suggestion));
+        /* eslint-enable jsx-a11y/click-events-have-key-events */
+      }));
+    }
+  }]);
+
+  return SuggestionsList;
+}(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["Component"]);
+
+SuggestionsList.defaultProps = {
+  match: '',
+  onHover: function onHover() {},
+  onSelect: function onSelect() {},
+  suggestions: Object.freeze([])
+};
+/* harmony default export */ __webpack_exports__["default"] = (Object(_wordpress_compose__WEBPACK_IMPORTED_MODULE_10__["withSafeTimeout"])(SuggestionsList));
+
+/***/ }),
+
+/***/ "./lib/form-token-field/token-input.js":
+/*!*********************************************!*\
+  !*** ./lib/form-token-field/token-input.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js");
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/objectWithoutProperties.js");
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_9__);
+
+
+
+
+
+
+
+
+
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6___default()(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+/**
+ * External dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+var TokenInput = /*#__PURE__*/function (_Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default()(TokenInput, _Component);
+
+  var _super = _createSuper(TokenInput);
+
+  function TokenInput() {
+    var _this;
+
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default()(this, TokenInput);
+
+    _this = _super.apply(this, arguments);
+    _this.onChange = _this.onChange.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.bindInput = _this.bindInput.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    return _this;
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(TokenInput, [{
+    key: "focus",
+    value: function focus() {
+      this.input.focus();
+    }
+  }, {
+    key: "hasFocus",
+    value: function hasFocus() {
+      return this.input === this.input.ownerDocument.activeElement;
+    }
+  }, {
+    key: "bindInput",
+    value: function bindInput(ref) {
+      this.input = ref;
+    }
+  }, {
+    key: "onChange",
+    value: function onChange(event) {
+      this.props.onChange({
+        value: event.target.value
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          value = _this$props.value,
+          isExpanded = _this$props.isExpanded,
+          instanceId = _this$props.instanceId,
+          selectedSuggestionIndex = _this$props.selectedSuggestionIndex,
+          className = _this$props.className,
+          props = _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1___default()(_this$props, ["value", "isExpanded", "instanceId", "selectedSuggestionIndex", "className"]);
+
+      var size = value ? value.length + 1 : 0;
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_8__["createElement"])("input", _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default()({
+        ref: this.bindInput,
+        id: "components-form-token-input-".concat(instanceId),
+        type: "text"
+      }, props, {
+        value: value || '',
+        onChange: this.onChange,
+        size: size,
+        className: classnames__WEBPACK_IMPORTED_MODULE_9___default()(className, 'components-form-token-field__input'),
+        autoComplete: "off",
+        role: "combobox",
+        "aria-expanded": isExpanded,
+        "aria-autocomplete": "list",
+        "aria-owns": isExpanded ? "components-form-token-suggestions-".concat(instanceId) : undefined,
+        "aria-activedescendant": selectedSuggestionIndex !== -1 ? "components-form-token-suggestions-".concat(instanceId, "-").concat(selectedSuggestionIndex) : undefined,
+        "aria-describedby": "components-form-token-suggestions-howto-".concat(instanceId)
+      }));
+    }
+  }]);
+
+  return TokenInput;
+}(_wordpress_element__WEBPACK_IMPORTED_MODULE_8__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (TokenInput);
+
+/***/ }),
+
+/***/ "./lib/form-token-field/token.js":
+/*!***************************************!*\
+  !*** ./lib/form-token-field/token.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Token; });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__);
+
+
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+var VisuallyHidden = wp.components.VisuallyHidden; // import VisuallyHidden from '../visually-hidden';
+
+function Token(_ref) {
+  var value = _ref.value,
+      status = _ref.status,
+      title = _ref.title,
+      displayTransform = _ref.displayTransform,
+      _ref$isBorderless = _ref.isBorderless,
+      isBorderless = _ref$isBorderless === void 0 ? false : _ref$isBorderless,
+      _ref$disabled = _ref.disabled,
+      disabled = _ref$disabled === void 0 ? false : _ref$disabled,
+      _ref$onClickRemove = _ref.onClickRemove,
+      onClickRemove = _ref$onClickRemove === void 0 ? lodash__WEBPACK_IMPORTED_MODULE_2__["noop"] : _ref$onClickRemove,
+      onMouseEnter = _ref.onMouseEnter,
+      onMouseLeave = _ref.onMouseLeave,
+      messages = _ref.messages,
+      termPosition = _ref.termPosition,
+      termsCount = _ref.termsCount;
+  var instanceId = Object(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__["useInstanceId"])(Token);
+  var tokenClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()('components-form-token-field__token', {
+    'is-error': 'error' === status,
+    'is-success': 'success' === status,
+    'is-validating': 'validating' === status,
+    'is-borderless': isBorderless,
+    'is-disabled': disabled
+  });
+
+  var onClick = function onClick() {
+    return onClickRemove({
+      value: value
+    });
+  };
+
+  var transformedValue = displayTransform(value);
+  var termPositionAndCount = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["sprintf"])(
+  /* translators: 1: term name, 2: term position in a set of terms, 3: total term set count. */
+  Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('%1$s (%2$s of %3$s)'), transformedValue, termPosition, termsCount);
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", {
+    className: tokenClasses,
+    onMouseEnter: onMouseEnter,
+    onMouseLeave: onMouseLeave,
+    title: title
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", {
+    className: "components-form-token-field__token-text",
+    id: "components-form-token-field__token-text-".concat(instanceId)
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(VisuallyHidden, {
+    as: "span"
+  }, termPositionAndCount), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", {
+    "aria-hidden": "true"
+  }, transformedValue)), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["Button"], {
+    className: "components-form-token-field__remove-token",
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["closeSmall"],
+    onClick: !disabled && onClick,
+    label: messages.remove,
+    "aria-describedby": "components-form-token-field__token-text-".concat(instanceId)
+  }));
+}
 
 /***/ }),
 
@@ -10815,6 +12099,678 @@ var wordpress = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createEl
 
 /***/ }),
 
+/***/ "./node_modules/classnames/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/classnames/index.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2018 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames() {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				if (arg.length) {
+					var inner = classNames.apply(null, arg);
+					if (inner) {
+						classes.push(inner);
+					}
+				}
+			} else if (argType === 'object') {
+				if (arg.toString === Object.prototype.toString) {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				} else {
+					classes.push(arg.toString());
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}());
+
+
+/***/ }),
+
+/***/ "./node_modules/dom-scroll-into-view/lib/dom-scroll-into-view.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/dom-scroll-into-view/lib/dom-scroll-into-view.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var util = __webpack_require__(/*! ./util */ "./node_modules/dom-scroll-into-view/lib/util.js");
+
+function scrollIntoView(elem, container, config) {
+  config = config || {};
+  // document 归一化到 window
+  if (container.nodeType === 9) {
+    container = util.getWindow(container);
+  }
+
+  var allowHorizontalScroll = config.allowHorizontalScroll;
+  var onlyScrollIfNeeded = config.onlyScrollIfNeeded;
+  var alignWithTop = config.alignWithTop;
+  var alignWithLeft = config.alignWithLeft;
+  var offsetTop = config.offsetTop || 0;
+  var offsetLeft = config.offsetLeft || 0;
+  var offsetBottom = config.offsetBottom || 0;
+  var offsetRight = config.offsetRight || 0;
+
+  allowHorizontalScroll = allowHorizontalScroll === undefined ? true : allowHorizontalScroll;
+
+  var isWin = util.isWindow(container);
+  var elemOffset = util.offset(elem);
+  var eh = util.outerHeight(elem);
+  var ew = util.outerWidth(elem);
+  var containerOffset = undefined;
+  var ch = undefined;
+  var cw = undefined;
+  var containerScroll = undefined;
+  var diffTop = undefined;
+  var diffBottom = undefined;
+  var win = undefined;
+  var winScroll = undefined;
+  var ww = undefined;
+  var wh = undefined;
+
+  if (isWin) {
+    win = container;
+    wh = util.height(win);
+    ww = util.width(win);
+    winScroll = {
+      left: util.scrollLeft(win),
+      top: util.scrollTop(win)
+    };
+    // elem 相对 container 可视视窗的距离
+    diffTop = {
+      left: elemOffset.left - winScroll.left - offsetLeft,
+      top: elemOffset.top - winScroll.top - offsetTop
+    };
+    diffBottom = {
+      left: elemOffset.left + ew - (winScroll.left + ww) + offsetRight,
+      top: elemOffset.top + eh - (winScroll.top + wh) + offsetBottom
+    };
+    containerScroll = winScroll;
+  } else {
+    containerOffset = util.offset(container);
+    ch = container.clientHeight;
+    cw = container.clientWidth;
+    containerScroll = {
+      left: container.scrollLeft,
+      top: container.scrollTop
+    };
+    // elem 相对 container 可视视窗的距离
+    // 注意边框, offset 是边框到根节点
+    diffTop = {
+      left: elemOffset.left - (containerOffset.left + (parseFloat(util.css(container, 'borderLeftWidth')) || 0)) - offsetLeft,
+      top: elemOffset.top - (containerOffset.top + (parseFloat(util.css(container, 'borderTopWidth')) || 0)) - offsetTop
+    };
+    diffBottom = {
+      left: elemOffset.left + ew - (containerOffset.left + cw + (parseFloat(util.css(container, 'borderRightWidth')) || 0)) + offsetRight,
+      top: elemOffset.top + eh - (containerOffset.top + ch + (parseFloat(util.css(container, 'borderBottomWidth')) || 0)) + offsetBottom
+    };
+  }
+
+  if (diffTop.top < 0 || diffBottom.top > 0) {
+    // 强制向上
+    if (alignWithTop === true) {
+      util.scrollTop(container, containerScroll.top + diffTop.top);
+    } else if (alignWithTop === false) {
+      util.scrollTop(container, containerScroll.top + diffBottom.top);
+    } else {
+      // 自动调整
+      if (diffTop.top < 0) {
+        util.scrollTop(container, containerScroll.top + diffTop.top);
+      } else {
+        util.scrollTop(container, containerScroll.top + diffBottom.top);
+      }
+    }
+  } else {
+    if (!onlyScrollIfNeeded) {
+      alignWithTop = alignWithTop === undefined ? true : !!alignWithTop;
+      if (alignWithTop) {
+        util.scrollTop(container, containerScroll.top + diffTop.top);
+      } else {
+        util.scrollTop(container, containerScroll.top + diffBottom.top);
+      }
+    }
+  }
+
+  if (allowHorizontalScroll) {
+    if (diffTop.left < 0 || diffBottom.left > 0) {
+      // 强制向上
+      if (alignWithLeft === true) {
+        util.scrollLeft(container, containerScroll.left + diffTop.left);
+      } else if (alignWithLeft === false) {
+        util.scrollLeft(container, containerScroll.left + diffBottom.left);
+      } else {
+        // 自动调整
+        if (diffTop.left < 0) {
+          util.scrollLeft(container, containerScroll.left + diffTop.left);
+        } else {
+          util.scrollLeft(container, containerScroll.left + diffBottom.left);
+        }
+      }
+    } else {
+      if (!onlyScrollIfNeeded) {
+        alignWithLeft = alignWithLeft === undefined ? true : !!alignWithLeft;
+        if (alignWithLeft) {
+          util.scrollLeft(container, containerScroll.left + diffTop.left);
+        } else {
+          util.scrollLeft(container, containerScroll.left + diffBottom.left);
+        }
+      }
+    }
+  }
+}
+
+module.exports = scrollIntoView;
+
+/***/ }),
+
+/***/ "./node_modules/dom-scroll-into-view/lib/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/dom-scroll-into-view/lib/index.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(/*! ./dom-scroll-into-view */ "./node_modules/dom-scroll-into-view/lib/dom-scroll-into-view.js");
+
+/***/ }),
+
+/***/ "./node_modules/dom-scroll-into-view/lib/util.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/dom-scroll-into-view/lib/util.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
+
+function getClientPosition(elem) {
+  var box = undefined;
+  var x = undefined;
+  var y = undefined;
+  var doc = elem.ownerDocument;
+  var body = doc.body;
+  var docElem = doc && doc.documentElement;
+  // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
+  box = elem.getBoundingClientRect();
+
+  // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
+  // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
+  // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
+
+  x = box.left;
+  y = box.top;
+
+  // In IE, most of the time, 2 extra pixels are added to the top and left
+  // due to the implicit 2-pixel inset border.  In IE6/7 quirks mode and
+  // IE6 standards mode, this border can be overridden by setting the
+  // document element's border to zero -- thus, we cannot rely on the
+  // offset always being 2 pixels.
+
+  // In quirks mode, the offset can be determined by querying the body's
+  // clientLeft/clientTop, but in standards mode, it is found by querying
+  // the document element's clientLeft/clientTop.  Since we already called
+  // getClientBoundingRect we have already forced a reflow, so it is not
+  // too expensive just to query them all.
+
+  // ie 下应该减去窗口的边框吧，毕竟默认 absolute 都是相对窗口定位的
+  // 窗口边框标准是设 documentElement ,quirks 时设置 body
+  // 最好禁止在 body 和 html 上边框 ，但 ie < 9 html 默认有 2px ，减去
+  // 但是非 ie 不可能设置窗口边框，body html 也不是窗口 ,ie 可以通过 html,body 设置
+  // 标准 ie 下 docElem.clientTop 就是 border-top
+  // ie7 html 即窗口边框改变不了。永远为 2
+  // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
+
+  x -= docElem.clientLeft || body.clientLeft || 0;
+  y -= docElem.clientTop || body.clientTop || 0;
+
+  return {
+    left: x,
+    top: y
+  };
+}
+
+function getScroll(w, top) {
+  var ret = w['page' + (top ? 'Y' : 'X') + 'Offset'];
+  var method = 'scroll' + (top ? 'Top' : 'Left');
+  if (typeof ret !== 'number') {
+    var d = w.document;
+    // ie6,7,8 standard mode
+    ret = d.documentElement[method];
+    if (typeof ret !== 'number') {
+      // quirks mode
+      ret = d.body[method];
+    }
+  }
+  return ret;
+}
+
+function getScrollLeft(w) {
+  return getScroll(w);
+}
+
+function getScrollTop(w) {
+  return getScroll(w, true);
+}
+
+function getOffset(el) {
+  var pos = getClientPosition(el);
+  var doc = el.ownerDocument;
+  var w = doc.defaultView || doc.parentWindow;
+  pos.left += getScrollLeft(w);
+  pos.top += getScrollTop(w);
+  return pos;
+}
+function _getComputedStyle(elem, name, computedStyle_) {
+  var val = '';
+  var d = elem.ownerDocument;
+  var computedStyle = computedStyle_ || d.defaultView.getComputedStyle(elem, null);
+
+  // https://github.com/kissyteam/kissy/issues/61
+  if (computedStyle) {
+    val = computedStyle.getPropertyValue(name) || computedStyle[name];
+  }
+
+  return val;
+}
+
+var _RE_NUM_NO_PX = new RegExp('^(' + RE_NUM + ')(?!px)[a-z%]+$', 'i');
+var RE_POS = /^(top|right|bottom|left)$/;
+var CURRENT_STYLE = 'currentStyle';
+var RUNTIME_STYLE = 'runtimeStyle';
+var LEFT = 'left';
+var PX = 'px';
+
+function _getComputedStyleIE(elem, name) {
+  // currentStyle maybe null
+  // http://msdn.microsoft.com/en-us/library/ms535231.aspx
+  var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
+
+  // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
+  // 一开始就处理了! CUSTOM_STYLE.height,CUSTOM_STYLE.width ,cssHook 解决@2011-08-19
+  // 在 ie 下不对，需要直接用 offset 方式
+  // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
+
+  // From the awesome hack by Dean Edwards
+  // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
+  // If we're not dealing with a regular pixel number
+  // but a number that has a weird ending, we need to convert it to pixels
+  // exclude left right for relativity
+  if (_RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
+    // Remember the original values
+    var style = elem.style;
+    var left = style[LEFT];
+    var rsLeft = elem[RUNTIME_STYLE][LEFT];
+
+    // prevent flashing of content
+    elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
+
+    // Put in the new values to get a computed value out
+    style[LEFT] = name === 'fontSize' ? '1em' : ret || 0;
+    ret = style.pixelLeft + PX;
+
+    // Revert the changed values
+    style[LEFT] = left;
+
+    elem[RUNTIME_STYLE][LEFT] = rsLeft;
+  }
+  return ret === '' ? 'auto' : ret;
+}
+
+var getComputedStyleX = undefined;
+if (typeof window !== 'undefined') {
+  getComputedStyleX = window.getComputedStyle ? _getComputedStyle : _getComputedStyleIE;
+}
+
+function each(arr, fn) {
+  for (var i = 0; i < arr.length; i++) {
+    fn(arr[i]);
+  }
+}
+
+function isBorderBoxFn(elem) {
+  return getComputedStyleX(elem, 'boxSizing') === 'border-box';
+}
+
+var BOX_MODELS = ['margin', 'border', 'padding'];
+var CONTENT_INDEX = -1;
+var PADDING_INDEX = 2;
+var BORDER_INDEX = 1;
+var MARGIN_INDEX = 0;
+
+function swap(elem, options, callback) {
+  var old = {};
+  var style = elem.style;
+  var name = undefined;
+
+  // Remember the old values, and insert the new ones
+  for (name in options) {
+    if (options.hasOwnProperty(name)) {
+      old[name] = style[name];
+      style[name] = options[name];
+    }
+  }
+
+  callback.call(elem);
+
+  // Revert the old values
+  for (name in options) {
+    if (options.hasOwnProperty(name)) {
+      style[name] = old[name];
+    }
+  }
+}
+
+function getPBMWidth(elem, props, which) {
+  var value = 0;
+  var prop = undefined;
+  var j = undefined;
+  var i = undefined;
+  for (j = 0; j < props.length; j++) {
+    prop = props[j];
+    if (prop) {
+      for (i = 0; i < which.length; i++) {
+        var cssProp = undefined;
+        if (prop === 'border') {
+          cssProp = prop + which[i] + 'Width';
+        } else {
+          cssProp = prop + which[i];
+        }
+        value += parseFloat(getComputedStyleX(elem, cssProp)) || 0;
+      }
+    }
+  }
+  return value;
+}
+
+/**
+ * A crude way of determining if an object is a window
+ * @member util
+ */
+function isWindow(obj) {
+  // must use == for ie8
+  /* eslint eqeqeq:0 */
+  return obj != null && obj == obj.window;
+}
+
+var domUtils = {};
+
+each(['Width', 'Height'], function (name) {
+  domUtils['doc' + name] = function (refWin) {
+    var d = refWin.document;
+    return Math.max(
+    // firefox chrome documentElement.scrollHeight< body.scrollHeight
+    // ie standard mode : documentElement.scrollHeight> body.scrollHeight
+    d.documentElement['scroll' + name],
+    // quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
+    d.body['scroll' + name], domUtils['viewport' + name](d));
+  };
+
+  domUtils['viewport' + name] = function (win) {
+    // pc browser includes scrollbar in window.innerWidth
+    var prop = 'client' + name;
+    var doc = win.document;
+    var body = doc.body;
+    var documentElement = doc.documentElement;
+    var documentElementProp = documentElement[prop];
+    // 标准模式取 documentElement
+    // backcompat 取 body
+    return doc.compatMode === 'CSS1Compat' && documentElementProp || body && body[prop] || documentElementProp;
+  };
+});
+
+/*
+ 得到元素的大小信息
+ @param elem
+ @param name
+ @param {String} [extra]  'padding' : (css width) + padding
+ 'border' : (css width) + padding + border
+ 'margin' : (css width) + padding + border + margin
+ */
+function getWH(elem, name, extra) {
+  if (isWindow(elem)) {
+    return name === 'width' ? domUtils.viewportWidth(elem) : domUtils.viewportHeight(elem);
+  } else if (elem.nodeType === 9) {
+    return name === 'width' ? domUtils.docWidth(elem) : domUtils.docHeight(elem);
+  }
+  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
+  var borderBoxValue = name === 'width' ? elem.offsetWidth : elem.offsetHeight;
+  var computedStyle = getComputedStyleX(elem);
+  var isBorderBox = isBorderBoxFn(elem, computedStyle);
+  var cssBoxValue = 0;
+  if (borderBoxValue == null || borderBoxValue <= 0) {
+    borderBoxValue = undefined;
+    // Fall back to computed then un computed css if necessary
+    cssBoxValue = getComputedStyleX(elem, name);
+    if (cssBoxValue == null || Number(cssBoxValue) < 0) {
+      cssBoxValue = elem.style[name] || 0;
+    }
+    // Normalize '', auto, and prepare for extra
+    cssBoxValue = parseFloat(cssBoxValue) || 0;
+  }
+  if (extra === undefined) {
+    extra = isBorderBox ? BORDER_INDEX : CONTENT_INDEX;
+  }
+  var borderBoxValueOrIsBorderBox = borderBoxValue !== undefined || isBorderBox;
+  var val = borderBoxValue || cssBoxValue;
+  if (extra === CONTENT_INDEX) {
+    if (borderBoxValueOrIsBorderBox) {
+      return val - getPBMWidth(elem, ['border', 'padding'], which, computedStyle);
+    }
+    return cssBoxValue;
+  }
+  if (borderBoxValueOrIsBorderBox) {
+    var padding = extra === PADDING_INDEX ? -getPBMWidth(elem, ['border'], which, computedStyle) : getPBMWidth(elem, ['margin'], which, computedStyle);
+    return val + (extra === BORDER_INDEX ? 0 : padding);
+  }
+  return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra), which, computedStyle);
+}
+
+var cssShow = {
+  position: 'absolute',
+  visibility: 'hidden',
+  display: 'block'
+};
+
+// fix #119 : https://github.com/kissyteam/kissy/issues/119
+function getWHIgnoreDisplay(elem) {
+  var val = undefined;
+  var args = arguments;
+  // in case elem is window
+  // elem.offsetWidth === undefined
+  if (elem.offsetWidth !== 0) {
+    val = getWH.apply(undefined, args);
+  } else {
+    swap(elem, cssShow, function () {
+      val = getWH.apply(undefined, args);
+    });
+  }
+  return val;
+}
+
+function css(el, name, v) {
+  var value = v;
+  if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
+    for (var i in name) {
+      if (name.hasOwnProperty(i)) {
+        css(el, i, name[i]);
+      }
+    }
+    return undefined;
+  }
+  if (typeof value !== 'undefined') {
+    if (typeof value === 'number') {
+      value += 'px';
+    }
+    el.style[name] = value;
+    return undefined;
+  }
+  return getComputedStyleX(el, name);
+}
+
+each(['width', 'height'], function (name) {
+  var first = name.charAt(0).toUpperCase() + name.slice(1);
+  domUtils['outer' + first] = function (el, includeMargin) {
+    return el && getWHIgnoreDisplay(el, name, includeMargin ? MARGIN_INDEX : BORDER_INDEX);
+  };
+  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
+
+  domUtils[name] = function (elem, val) {
+    if (val !== undefined) {
+      if (elem) {
+        var computedStyle = getComputedStyleX(elem);
+        var isBorderBox = isBorderBoxFn(elem);
+        if (isBorderBox) {
+          val += getPBMWidth(elem, ['padding', 'border'], which, computedStyle);
+        }
+        return css(elem, name, val);
+      }
+      return undefined;
+    }
+    return elem && getWHIgnoreDisplay(elem, name, CONTENT_INDEX);
+  };
+});
+
+// 设置 elem 相对 elem.ownerDocument 的坐标
+function setOffset(elem, offset) {
+  // set position first, in-case top/left are set even on static elem
+  if (css(elem, 'position') === 'static') {
+    elem.style.position = 'relative';
+  }
+
+  var old = getOffset(elem);
+  var ret = {};
+  var current = undefined;
+  var key = undefined;
+
+  for (key in offset) {
+    if (offset.hasOwnProperty(key)) {
+      current = parseFloat(css(elem, key)) || 0;
+      ret[key] = current + offset[key] - old[key];
+    }
+  }
+  css(elem, ret);
+}
+
+module.exports = _extends({
+  getWindow: function getWindow(node) {
+    var doc = node.ownerDocument || node;
+    return doc.defaultView || doc.parentWindow;
+  },
+  offset: function offset(el, value) {
+    if (typeof value !== 'undefined') {
+      setOffset(el, value);
+    } else {
+      return getOffset(el);
+    }
+  },
+
+  isWindow: isWindow,
+  each: each,
+  css: css,
+  clone: function clone(obj) {
+    var ret = {};
+    for (var i in obj) {
+      if (obj.hasOwnProperty(i)) {
+        ret[i] = obj[i];
+      }
+    }
+    var overflow = obj.overflow;
+    if (overflow) {
+      for (var i in obj) {
+        if (obj.hasOwnProperty(i)) {
+          ret.overflow[i] = obj.overflow[i];
+        }
+      }
+    }
+    return ret;
+  },
+  scrollLeft: function scrollLeft(w, v) {
+    if (isWindow(w)) {
+      if (v === undefined) {
+        return getScrollLeft(w);
+      }
+      window.scrollTo(v, getScrollTop(w));
+    } else {
+      if (v === undefined) {
+        return w.scrollLeft;
+      }
+      w.scrollLeft = v;
+    }
+  },
+  scrollTop: function scrollTop(w, v) {
+    if (isWindow(w)) {
+      if (v === undefined) {
+        return getScrollTop(w);
+      }
+      window.scrollTo(getScrollLeft(w), v);
+    } else {
+      if (v === undefined) {
+        return w.scrollTop;
+      }
+      w.scrollTop = v;
+    }
+  },
+
+  viewportWidth: 0,
+  viewportHeight: 0
+}, domUtils);
+
+/***/ }),
+
 /***/ "./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":
 /*!**********************************************************************************!*\
   !*** ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
@@ -17520,6 +19476,17 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "@wordpress/compose":
+/*!*********************************!*\
+  !*** external ["wp","compose"] ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["wp"]["compose"]; }());
+
+/***/ }),
+
 /***/ "@wordpress/element":
 /*!*********************************!*\
   !*** external ["wp","element"] ***!
@@ -17542,6 +19509,28 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "@wordpress/is-shallow-equal":
+/*!****************************************!*\
+  !*** external ["wp","isShallowEqual"] ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["wp"]["isShallowEqual"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/keycodes":
+/*!**********************************!*\
+  !*** external ["wp","keycodes"] ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["wp"]["keycodes"]; }());
+
+/***/ }),
+
 /***/ "@wordpress/primitives":
 /*!************************************!*\
   !*** external ["wp","primitives"] ***!
@@ -17550,6 +19539,17 @@ module.exports = g;
 /***/ (function(module, exports) {
 
 (function() { module.exports = window["wp"]["primitives"]; }());
+
+/***/ }),
+
+/***/ "lodash":
+/*!*************************!*\
+  !*** external "lodash" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["lodash"]; }());
 
 /***/ }),
 

@@ -57,10 +57,12 @@ function NewCase_InspectorControls(props){
 		return (
 			<Panel>
 				<PanelBody title="Case Creation">
-					<ControlsTemplate id="rep" >
+					{/* <ControlsTemplate id="rep" >
 					</ ControlsTemplate>
 					<ControlsTemplate id="department" >
-					</ ControlsTemplate>
+					</ ControlsTemplate> */}
+					{ControlsTemplate({id:'rep'})}
+					{ControlsTemplate({id:'department'})}
 					{ControlsTemplate({id:'casetagids'})}
 					{/* <ControlsTemplate id="casetagids" > </ControlsTemplate> */}
 				</PanelBody>
@@ -165,7 +167,7 @@ function NewCase_InspectorControls(props){
 	return (
 		<>
 		<InspectorControls>
-			{getCaseCreationPanel()}
+			{ getCaseCreationPanel() }
 			{ getNewCaseFormPanel() }
 			{ getCaseTitlePanel() }
 			{ getFormTextPanel() }

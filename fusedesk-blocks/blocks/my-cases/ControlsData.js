@@ -11,7 +11,7 @@ const statusOptionsShared = [
 export default {
     display:{
         columns:{
-            type: 'select',
+            type: 'multiSelect',
             label: __('Columns','fusedesk'),
             options: [
 				{ label: __('Case Number','fusedesk'), value: 'casenum' },
@@ -106,5 +106,19 @@ export default {
             help: __('','fusedesk'),
         },
 
+    },
+    advanced: {
+        anchor:{
+            type: 'text',
+            label: __('HTML anchor','fusedesk'),
+            bind: 'anchor',         
+            help: __('Enter a word or two — without spaces — to make a unique web address just for this block, called an "anchor."','fusedesk'),
+        },
+        style:{
+            type: 'text',
+            label: __('Additional CSS styles(s) for the fields','fusedesk'),
+            bind: 'style',         
+            help: __('style: What CSS style to apply to our inputs','fusedesk'),
+        }
     }
 };
