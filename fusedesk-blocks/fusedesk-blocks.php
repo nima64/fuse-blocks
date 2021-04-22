@@ -71,6 +71,10 @@ function fusedesk_blocks_category( $categories, $post ) {
 }
 
 function fusedesk_blocks_render_mycases($atts,$content){
+
+    //token field attributes are layout out as [obj,obj,...] 
+    //where obj is {value,id} its equalivent to the form {label,value}, where value is same as label
+    //converts to string for mycases
     foreach ($atts as $attName=>$att) {
         if ( is_array($att) ){
             $strJoin = '';
@@ -80,6 +84,7 @@ function fusedesk_blocks_render_mycases($atts,$content){
             $atts[$attName] = $strJoin;
         }
     }
+
     return fusedesk_mycases_cached($atts);
 }
 
@@ -91,11 +96,6 @@ function fusedesk_blocks_init() {
     $newCaseBlock->register();
     $myCasesBlock->register([
         'render_callback' => 'fusedesk_blocks_render_mycases',
-        'attributes' => [
-            'limit' => [
-                'type' => 'integer',
-            ]
-        ]
     ]);
 
     wp_localize_script($newCaseBlock->editor_script_handle, 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
