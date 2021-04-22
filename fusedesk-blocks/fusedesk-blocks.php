@@ -80,12 +80,10 @@ function fusedesk_blocks_render_mycases($atts,$content){
             $atts[$attName] = $strJoin;
         }
     }
-    // if (key_exists('columns',$atts))
     return fusedesk_mycases_cached($atts);
 }
 
 function fusedesk_blocks_init() {
-    // wp_register_script('fusedesk_blocks_renderMyCases','fusedesk_blocks_renderMyCases');
 
     $newCaseBlock = new fusedesk_Block('new-case');
     $myCasesBlock = new fusedesk_Block('my-cases');
