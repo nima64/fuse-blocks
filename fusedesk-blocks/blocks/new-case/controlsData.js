@@ -24,7 +24,7 @@ export default {
             help: __('Optionally apply some FuseDesk case tags to your new case.','fusedesk'),
             //suggestions can't be objects, so when turned into objects for saving they must be mapped to their value/ids
             idmap: {},
-            // maxSuggestiosn: 30,
+            // maxSuggestions: 30,
         },
     },
     newCaseForm: {

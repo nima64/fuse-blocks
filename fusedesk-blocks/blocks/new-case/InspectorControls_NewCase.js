@@ -33,7 +33,7 @@ class FormTitleOptions{
 
 let formTitleOptions = new FormTitleOptions();
 
-function NewCase_InspectorControls(props){
+function InspectorControls_NewCase(props){
 
 	const { attributes, setAttributes } = props
 
@@ -181,4 +181,4 @@ function NewCase_InspectorControls(props){
 	);
 }
 
-export {formTitleOptions,NewCase_InspectorControls};
+export {formTitleOptions,InspectorControls_NewCase};

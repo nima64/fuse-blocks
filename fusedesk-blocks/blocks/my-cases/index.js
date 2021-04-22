@@ -61,7 +61,7 @@ registerBlockType( 'fusedesk/my-cases', {
 			default: 'M j, Y g:ia',
 		},
 		limit:{
-			type: 'string',
+			type: 'integer',
 			default: 50,
 		},
 

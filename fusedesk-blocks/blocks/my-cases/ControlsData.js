@@ -11,14 +11,21 @@ const statusOptionsShared = [
 export default {
     display:{
         columns:{
-            type: 'multiSelect',
+            type: 'formTokenField',
             label: __('Columns','fusedesk'),
-            options: [
-				{ label: __('Case Number','fusedesk'), value: 'casenum' },
-				{ label: __('Date Updated','fusedesk'), value: 'date_updated' },
-				{ label: __('Status','fusedesk'), value: 'status' },
-				{ label: __('Summary','fusedesk'), value: 'summary' },
-			],
+            idmap: {
+				'Case Number': 'casenum' ,
+				'Date Updated': 'date_updated' ,
+				'Status': 'status',
+				'Summary': 'summary',
+			},
+            suggestions: ['Case Number','Date Updated','Status','Summary'],
+            // options: [
+			// 	{ label: __('Case Number','fusedesk'), value: 'casenum' },
+			// 	{ label: __('Date Updated','fusedesk'), value: 'date_updated' },
+			// 	{ label: __('Status','fusedesk'), value: 'status' },
+			// 	{ label: __('Summary','fusedesk'), value: 'summary' },
+			// ],
             bind: 'columns',
             help: __('','fusedesk'),
         },

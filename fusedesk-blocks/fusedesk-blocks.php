@@ -1,5 +1,7 @@
 <?php
 
+include plugin_dir_path(__FILE__).'cached-api.php';
+
 /**
  * Registers a Gutenberg block and generates handle in the form blockname-handle
  * Behind the scenes, it also registers all assets so they can be enqueued
@@ -11,8 +13,8 @@ class fusedesk_Block {
     public $name;
     public $meta = [];
     public $editor_script_handle;
-    public $script_handle;
     public $editor_style_handle;
+    public $script_handle;
     public $style_handle;
 
     function __construct(string $name){
@@ -23,7 +25,7 @@ class fusedesk_Block {
         $this->style_handle = $name.'-style';
     }
 
-    function register(){
+    function register($additionArgs=[]){
         $NAMESPACE = 'fusedesk';
         $name = $this->name;
         $editorStyleHandle = $this->editor_style_handle; 
@@ -42,18 +44,16 @@ class fusedesk_Block {
             $asset_file['version']
         );
 
-        //localization / Internationization
+        //localization / Internationalization
         wp_set_script_translations($editorScriptHandle,'fusedesk',plugin_dir_path(__FILE__) . 'languages');
 
         $meta = $this->meta;
         $meta['api_version'] = 2;
         $meta['editor_script'] = $editorScriptHandle;
         $meta['editor_style'] = $editorStyleHandle;
+        $meta = array_merge($meta,$additionArgs);
 
-        return register_block_type($NAMESPACE.'/'.$name,[
-            'apiVersion' => 2,
-            'editor_script' => $editorScriptHandle, 
-        ]);
+        return register_block_type($NAMESPACE.'/'.$name, $meta);
 
     }
 }
@@ -70,15 +70,39 @@ function fusedesk_blocks_category( $categories, $post ) {
 	);
 }
 
+function fusedesk_blocks_render_mycases($atts,$content){
+    foreach ($atts as $attName=>$att) {
+        if ( is_array($att) ){
+            $strJoin = '';
+            foreach($att as $obj){
+                $strJoin = $strJoin . $obj['id'].',';
+            }
+            $atts[$attName] = $strJoin;
+        }
+    }
+    // if (key_exists('columns',$atts))
+    return fusedesk_mycases_cached($atts);
+}
 
 function fusedesk_blocks_init() {
+    // wp_register_script('fusedesk_blocks_renderMyCases','fusedesk_blocks_renderMyCases');
+
     $newCaseBlock = new fusedesk_Block('new-case');
     $myCasesBlock = new fusedesk_Block('my-cases');
+
     $newCaseBlock->register();
-    $myCasesBlock->register();
+    $myCasesBlock->register([
+        'render_callback' => 'fusedesk_blocks_render_mycases',
+        'attributes' => [
+            'limit' => [
+                'type' => 'integer',
+            ]
+        ]
+    ]);
 
     wp_localize_script($newCaseBlock->editor_script_handle, 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
     add_filter( 'block_categories', 'fusedesk_blocks_category', 10, 2);
 }
 
-add_action( 'admin_init', 'fusedesk_blocks_init' );
+//admin_init will disable render_callback 
+add_action( 'init', 'fusedesk_blocks_init' );

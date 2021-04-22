@@ -170,17 +170,17 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./blocks/new-case/NewCase_InspectorControls.js":
+/***/ "./blocks/new-case/InspectorControls_NewCase.js":
 /*!******************************************************!*\
-  !*** ./blocks/new-case/NewCase_InspectorControls.js ***!
+  !*** ./blocks/new-case/InspectorControls_NewCase.js ***!
   \******************************************************/
-/*! exports provided: formTitleOptions, NewCase_InspectorControls */
+/*! exports provided: formTitleOptions, InspectorControls_NewCase */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formTitleOptions", function() { return formTitleOptions; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NewCase_InspectorControls", function() { return NewCase_InspectorControls; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InspectorControls_NewCase", function() { return InspectorControls_NewCase; });
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
@@ -266,7 +266,7 @@ var FormTitleOptions = /*#__PURE__*/function () {
 
 var formTitleOptions = new FormTitleOptions();
 
-function NewCase_InspectorControls(props) {
+function InspectorControls_NewCase(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
   var renderControlObj = Object(_lib_createControlRenderer__WEBPACK_IMPORTED_MODULE_6__["default"])(props); //renders control data
@@ -446,7 +446,7 @@ __webpack_require__.r(__webpack_exports__);
       suggestions: [],
       help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Optionally apply some FuseDesk case tags to your new case.', 'fusedesk'),
       //suggestions can't be objects, so when turned into objects for saving they must be mapped to their value/ids
-      idmap: {} // maxSuggestiosn: 30,
+      idmap: {} // maxSuggestions: 30,
 
     }
   },
@@ -651,7 +651,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _NewCase_InspectorControls__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NewCase_InspectorControls */ "./blocks/new-case/NewCase_InspectorControls.js");
+/* harmony import */ var _InspectorControls_NewCase__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./InspectorControls_NewCase */ "./blocks/new-case/InspectorControls_NewCase.js");
 /* harmony import */ var _fetchCalls__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./fetchCalls */ "./blocks/new-case/fetchCalls.js");
 /* harmony import */ var _controlsData__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./controlsData */ "./blocks/new-case/controlsData.js");
 /* harmony import */ var _css_editor_scss__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./css/editor.scss */ "./blocks/new-case/css/editor.scss");
@@ -812,7 +812,7 @@ function Edit(props) {
       name: "summary",
       value: "Support Request"
     }), attributes.showtitle && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["Fragment"], null, attributes.titletext || Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Briefly, what is the request about?', 'fusedesk'), attributes.titleoptions ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["SelectControl"], {
-      options: _NewCase_InspectorControls__WEBPACK_IMPORTED_MODULE_10__["formTitleOptions"].get(),
+      options: _InspectorControls_NewCase__WEBPACK_IMPORTED_MODULE_10__["formTitleOptions"].get(),
       name: "summary",
       id: "fusedesk-title",
       class: "fusedesk-contactform"
@@ -850,7 +850,7 @@ function Edit(props) {
     }));
   };
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_8__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(OptionsPuller, props), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(_NewCase_InspectorControls__WEBPACK_IMPORTED_MODULE_10__["NewCase_InspectorControls"], props), getForm(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(RepaintButton, null));
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_8__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(OptionsPuller, props), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(_InspectorControls_NewCase__WEBPACK_IMPORTED_MODULE_10__["InspectorControls_NewCase"], props), getForm(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(RepaintButton, null));
 }
 
 /***/ }),

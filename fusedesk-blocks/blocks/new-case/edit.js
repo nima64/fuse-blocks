@@ -22,7 +22,7 @@ import {
 	TextControl,
 	RangeControl,
 } from '@wordpress/components';
-import {NewCase_InspectorControls,formTitleOptions} from './NewCase_InspectorControls';
+import {InspectorControls_NewCase,formTitleOptions} from './InspectorControls_NewCase';
 import fetchCalls from './fetchCalls';
 import controls from './controlsData';
 /**
@@ -140,7 +140,7 @@ export default function Edit( props ) {
 	return (
 		<div { ...useBlockProps() }>
 			<OptionsPuller {...props} />
-			<NewCase_InspectorControls {...props} />
+			<InspectorControls_NewCase {...props} />
 			{getForm()}
 			<RepaintButton />
 		</div>
