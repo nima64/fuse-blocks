@@ -65,7 +65,10 @@ export default function ({attributes,setAttributes}){
                         onChange={onChangeHandle} 
                         help={obj.help} 
                         />);
+
             //see https://developer.wordpress.org/block-editor/reference-guides/components/form-token-field/
+            //tokenfield suggestions don't support {label, value}
+            //so idmap was made to map the label(value) to value(id), when saving suggestions as objects
             case 'formTokenField':
                 return (					
                     <BaseControl
@@ -86,7 +89,6 @@ export default function ({attributes,setAttributes}){
 
                                 }).filter(v => v != undefined);
 
-                                // console.log(getAttVal('casetagids'));
                                 mutAtt(temp,obj.bind,attAry);
 
                             }}

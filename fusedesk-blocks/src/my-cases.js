@@ -216,7 +216,7 @@ var statusOptionsShared = [{
       suggestions: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case Number', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Updated', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Status', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Summary', 'fusedesk')],
       bind: 'columns',
       placeholder: 'ex: Case Number, Date Updated...',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("A comma delimited list of which columns to show. Choose from casenum, date_updated, date_opened,date_closed, status, summary, details. Defaults to casenum,date_updated,status,summary", 'fusedesk')
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Choose from casenum, date_updated, date_opened,date_closed, status, summary, details. Defaults to casenum,date_updated,status,summary", 'fusedesk')
     },
     status: {
       type: 'select',
@@ -1057,6 +1057,8 @@ __webpack_require__.r(__webpack_exports__);
           help: obj.help
         });
       //see https://developer.wordpress.org/block-editor/reference-guides/components/form-token-field/
+      //tokenfield suggestions don't support {label, value}
+      //so idmap was made to map the label(value) to value(id), when saving suggestions as objects
 
       case 'formTokenField':
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["BaseControl"], {
@@ -1076,8 +1078,7 @@ __webpack_require__.r(__webpack_exports__);
               } : undefined;
             }).filter(function (v) {
               return v != undefined;
-            }); // console.log(getAttVal('casetagids'));
-
+            });
             mutAtt(temp, obj.bind, attAry);
           },
           maxSuggestions: obj.maxSuggestions,

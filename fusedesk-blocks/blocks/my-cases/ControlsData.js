@@ -27,7 +27,7 @@ export default {
             ],
             bind: 'columns',
             placeholder: 'ex: Case Number, Date Updated...',
-            help: __("A comma delimited list of which columns to show. Choose from casenum, date_updated, date_opened,date_closed, status, summary, details. Defaults to casenum,date_updated,status,summary",'fusedesk'),
+            help: __( `Choose from casenum, date_updated, date_opened,date_closed, status, summary, details. Defaults to casenum,date_updated,status,summary`,'fusedesk'),
           
         },
         status:{

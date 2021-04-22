@@ -1610,6 +1610,8 @@ __webpack_require__.r(__webpack_exports__);
           help: obj.help
         });
       //see https://developer.wordpress.org/block-editor/reference-guides/components/form-token-field/
+      //tokenfield suggestions don't support {label, value}
+      //so idmap was made to map the label(value) to value(id), when saving suggestions as objects
 
       case 'formTokenField':
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["BaseControl"], {
@@ -1629,8 +1631,7 @@ __webpack_require__.r(__webpack_exports__);
               } : undefined;
             }).filter(function (v) {
               return v != undefined;
-            }); // console.log(getAttVal('casetagids'));
-
+            });
             mutAtt(temp, obj.bind, attAry);
           },
           maxSuggestions: obj.maxSuggestions,
