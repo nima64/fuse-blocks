@@ -19,7 +19,11 @@ const normFuseDeskDataToOptions = ( json ) =>
 		value: v,
 	} ) );
 
-
+/**
+ * Fetch data, and load it into suggestions and idmap.
+ * @param controlObj
+ * @param {string} endpoint
+ */
 function updateCasetagIds (controlObj,endpoint){
 	let URL = WP_BASEURL + endpoint;
 
@@ -33,6 +37,7 @@ function updateCasetagIds (controlObj,endpoint){
 	apiFetch( { url: URL } ).then( data => {
 
 		//flip key value pairs and load them into idmap
+		//idmap{caseName:caseId}
 		controlObj.idmap = Object.keys(data).reduce((obj, key) => (obj[data[key]] = key, obj), {});
 
 		//load suggestions 
@@ -43,6 +48,11 @@ function updateCasetagIds (controlObj,endpoint){
 	});
 }
 
+/**
+ * Fetch data, and load it into suggestions and idmap.
+ * @param controlObj
+ * @param {string} endpoint
+ */
 function get_categories(controlObj, endpoint){
 	let URL = WP_BASEURL + endpoint;
 
@@ -55,7 +65,7 @@ function get_categories(controlObj, endpoint){
 
 	apiFetch( { url: URL } ).then( data => {
 
-		//load suggestions and idmap
+		//idmap{categoryName:categoryId}
 		data.map( (obj,i) => {
 			controlObj.idmap[obj.name] = obj.id
 			controlObj.suggestions[i] = obj.name;
@@ -64,6 +74,11 @@ function get_categories(controlObj, endpoint){
 	});
 }
 
+/**
+ * @param {function} normalizer function that returns {label,value}
+ * @param {boolean} withRefresh(Optional)
+ * @return 
+ */
 function composeOptionsFetcher( normalizer, withRefresh=false ) {
 	return function ( obj, endpoint, callback) {
 		let BASEURL = WP_BASEURL + endpoint;
@@ -77,7 +92,8 @@ function composeOptionsFetcher( normalizer, withRefresh=false ) {
 					normalizer( json ).forEach( ( v, i ) => {
 
 						if (obj.bind =="rep"){
-							options[ i +1 ] = v; //don't override first default option
+							//don't override default option
+							options[ i +1 ] = v; 
 						}else{
 							options[ i ] = v;
 						}

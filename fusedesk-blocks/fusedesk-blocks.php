@@ -73,7 +73,7 @@ function fusedesk_blocks_category( $categories, $post ) {
 function fusedesk_blocks_render_mycases($atts,$content){
 
     //token field attributes are layout out as [obj,obj,...] 
-    //where obj is {value,id} its equalivent to the form {label,value}, where value is same as label
+    //where obj is {value,id} its equalivent to the form {label,value}, where value is same as label 
     //converts to string for mycases
     foreach ($atts as $attName=>$att) {
         if ( is_array($att) ){

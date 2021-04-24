@@ -1,6 +1,8 @@
 import {__} from '@wordpress/i18n';
 
 export default {
+    //contaning objects into groups such as caseCreation, caseTitle, suggestedPosts...
+    //makes it easy to iterate and render a group in one line
     caseCreation:{
         department:{
             type: 'select',
@@ -22,7 +24,10 @@ export default {
             bind: 'casetagids',
             suggestions: [],
             help: __('Optionally apply some FuseDesk case tags to your new case.','fusedesk'),
-            //suggestions can't be objects, so when turned into objects for saving they must be mapped to their value/ids
+            /**
+             * suggestions can't be objects(must be strings),
+             * so when turned into objects for saving they must be mapped to their value/ids 
+            **/
             idmap: {},
             // maxSuggestions: 30,
         },

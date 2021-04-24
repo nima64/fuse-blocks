@@ -11,13 +11,14 @@ import FormTokenField from './form-token-field/index';
 
 import MultiSelect from './MultiSelect';
 
-    /**
-	 * Closure takes attributes from props and returns function that renders controls
-	 * @param  {Object} props 
-	*/
+/**
+ * Returns a function that renders controls ex: textControl, checkControl, fromTokenField...
+ * @param {object} props
+ * @returns {function} renderer
+*/
+export default function createControlRenderer({attributes,setAttributes}){
 
-export default function ({attributes,setAttributes}){
-
+    //warpper around setAttributes
     const mutAtt = ( newval, attName ) => {
         setAttributes( { [ attName ]: newval } );
     };
@@ -27,13 +28,12 @@ export default function ({attributes,setAttributes}){
     }
 
     /**
-	 * @param  {String} boj
-	 * @param  {Object} attAry
-     * @param {()=>String} customOnChange
-	 * @returns {JSX.Element} function
+	 * @param  {object} obj 
+	 * @param  {array} attAry Deprecated, no longer does anything.
+     * @param {()=>string} customOnChange
+	 * @returns {JSX.Element} 
 	*/
-
-    return function (obj,attAry,customOnChange=null) {
+    const renderer = (obj,attAry,customOnChange=null) {
         // mutate / change binded attribute
         const mutBinded = (v) => mutAtt(v,obj.bind);
         const onChangeHandle = (newval) => !!customOnChange? mutBinded(customOnChange(newval)) : mutBinded(newval);
@@ -67,8 +67,6 @@ export default function ({attributes,setAttributes}){
                         />);
 
             //see https://developer.wordpress.org/block-editor/reference-guides/components/form-token-field/
-            //tokenfield suggestions don't support {label, value}
-            //so idmap was made to map the label(value) to value(id), when saving suggestions as objects
             case 'formTokenField':
                 return (					
                     <BaseControl
@@ -80,14 +78,19 @@ export default function ({attributes,setAttributes}){
                             placeholder={obj.placeholder}
                             onChange = {(tokens) => {
 
-                                //transform new tokens into objects {value:v,id:i}
+                                //idmap was made because suggestions don't support objects,
+                                //and those suggestions need to be saved as tokens(which are objects).
+                                //it also prevents users to entering items which are not in suggestions.
                                 let temp = tokens.map( (t) => {
 
+                                    //transform new tokens into objects{value:v,id:i} if they aren't already 
                                     let val = t.value? t.value : t;
                                     let id = obj.idmap[val];
-                                    return id? {value:val,id:id}: undefined; 
 
-                                }).filter(v => v != undefined);
+                                    return id? {value:val,id:id}: undefined; 
+                                })
+                                //remove items which aren't in suggestions
+                                .filter(v => v != undefined);
 
                                 mutAtt(temp,obj.bind,attAry);
 
@@ -135,4 +138,5 @@ export default function ({attributes,setAttributes}){
 
         }
     }
+    return renderer;
 };

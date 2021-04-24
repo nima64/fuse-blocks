@@ -9,11 +9,14 @@ import {
 import ControlsData from './ControlsData';
 import createControlRenderer from '../../lib/createControlRenderer';
 
+/**
+ * @param props
+ * @returns InspectorControls and IspectorAdvancedControls
+ */
 export function InspectorControls_MyCases(props){
 
 	const renderControlObj = createControlRenderer( props );
 
-    //create all display panel controls
     const getDisplayPlanel = () => {
         const DisplayGroup = ControlsData.display;
         return (
@@ -27,7 +30,6 @@ export function InspectorControls_MyCases(props){
         );
     };
 
-    //create all text panel controls
     const getTextPanel = () => {
         const TextGroup = ControlsData.text;
         return (
@@ -45,6 +47,7 @@ export function InspectorControls_MyCases(props){
         const AdvancedGroup = ControlsData.advanced;
         return (
 			<>
+                {/* function passed replaces spaces with dashes */}
 				{ renderControlObj(AdvancedGroup.anchor ,'advanced',(v) => v.slice(-1) == ' '? v.slice(0,-1) + '-' : v ) }
 				{ renderControlObj(AdvancedGroup.style ,'advanced') }
 			</>

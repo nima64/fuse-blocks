@@ -33,16 +33,12 @@ import controls from './controlsData';
  */
 import './css/editor.scss';
 import controlsData from './controlsData';
+
+
 /**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- *
- * @return {WPElement} Element to render.
+ * Update data on mount
  */
 
-//Singleton that pulls data on mount and updates options
 class OptionsPuller extends React.Component {
 	constructor( props ) {
 		super( props );
@@ -66,16 +62,17 @@ class OptionsPuller extends React.Component {
 	}
 }
 
+/**
+ * The edit function describes the structure of your block in the context of the
+ * editor. This represents what the editor will render when the block is used.
+ *
+ * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
+ *
+ * @return {WPElement} Element to render.
+*/
 export default function Edit( props ) {
+
 	const { attributes, setAttributes } = props;
-	/**
-	 * Change an Attribute Array's key value
-	 *
-	 * @param  {string} newval
-	 * @param  {string} key
-	 * @param  {string} attName name of the attribute of type array
-	 * @return {void}
-	 */
 
 	const RepaintButton = () => (
 		<button
@@ -87,6 +84,9 @@ export default function Edit( props ) {
 		></button>
 	);
 
+	/**
+	 * @return {JSX.Element} New case form
+	 */
 	const getForm = () => {
 		return(
 			<form id="fusedesk-contact" action="#" data-successredirect="">
