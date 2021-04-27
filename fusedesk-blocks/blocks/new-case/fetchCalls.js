@@ -20,7 +20,7 @@ const normFuseDeskDataToOptions = ( json ) =>
 	} ) );
 
 /**
- * Fetch data, and load it into suggestions and idmap.
+ * Fetch data, and load it into suggestions and suggestionmap.
  * @param controlObj
  * @param {string} endpoint
  */
@@ -36,9 +36,9 @@ function updateCasetagIds (controlObj,endpoint){
 
 	apiFetch( { url: URL } ).then( data => {
 
-		//flip key value pairs and load them into idmap
-		//idmap{caseName:caseId}
-		controlObj.idmap = Object.keys(data).reduce((obj, key) => (obj[data[key]] = key, obj), {});
+		//flip key value pairs and load them into suggestionmap
+		//suggestionmap{caseName:caseId}
+		controlObj.suggestionmap = Object.keys(data).reduce((obj, key) => (obj[data[key]] = key, obj), {});
 
 		//load suggestions 
 		Object.entries( data ).map( ( [ k, v ], i ) => 
@@ -49,7 +49,7 @@ function updateCasetagIds (controlObj,endpoint){
 }
 
 /**
- * Fetch data, and load it into suggestions and idmap.
+ * Fetch data, and load it into suggestions and suggestionmap.
  * @param controlObj
  * @param {string} endpoint
  */
@@ -65,9 +65,9 @@ function get_categories(controlObj, endpoint){
 
 	apiFetch( { url: URL } ).then( data => {
 
-		//idmap{categoryName:categoryId}
+		//suggestionmap{categoryName:categoryId}
 		data.map( (obj,i) => {
-			controlObj.idmap[obj.name] = obj.id
+			controlObj.suggestionmap[obj.name] = obj.id
 			controlObj.suggestions[i] = obj.name;
 		});
 		

@@ -55,15 +55,14 @@ export default function save( props ) {
 
 	const genAllShortcodeAtts = () => settings.map( (v) => genShortcodeAtt(v) ).join(' ');
 
-	return null;
-	// return (
-	// 	<div { ...useBlockProps.save() }>
-	// 		<RawHTML { ...useBlockProps.save() } >
-	// 			{ '[fusedesk_mycases ' + genAllShortcodeAtts() + ']' }
-	// 		</RawHTML>
-	// 		<div>
-	// 			{genAllShortcodeAtts()}
-	// 		</div>
-	// 	</div>
-	// );
+	return (
+		<div { ...useBlockProps.save() }>
+			<RawHTML { ...useBlockProps.save() } >
+				{ '[fusedesk_mycases ' + genAllShortcodeAtts() + ']' }
+			</RawHTML>
+			<div>
+				{genAllShortcodeAtts()}
+			</div>
+		</div>
+	);
 }

@@ -28,7 +28,7 @@ export default {
              * suggestions can't be objects(must be strings),
              * so when turned into objects for saving they must be mapped to their value/ids 
             **/
-            idmap: {},
+            suggestionmap: {},
             // maxSuggestions: 30,
         },
     },
@@ -101,7 +101,7 @@ export default {
             bind: 'suggestioncategories',
             help: __('You can optionally limit suggested posts to certain post categories. By default all post categories will be searched.','fusedesk'),
             suggestions: [],
-            idmap: {},
+            suggestionmap: {},
         },
     },
     formText: {

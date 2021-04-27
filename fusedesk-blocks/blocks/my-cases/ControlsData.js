@@ -13,7 +13,7 @@ export default {
         columns:{
             type: 'formTokenField',
             label: __('Columns','fusedesk'),
-            idmap: {
+            suggestionmap: {
 				[ __('Case Number','fusedesk') ]: 'casenum' ,
 				[ __('Date Updated','fusedesk') ]: 'date_updated' ,
 				[ __('Status','fusedesk') ]: 'status',

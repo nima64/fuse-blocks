@@ -9,7 +9,7 @@ import {
 } from '@wordpress/components';
 import FormTokenField from './form-token-field/index';
 
-import MultiSelect from './MultiSelect';
+// import MultiSelect from './MultiSelect';
 
 /**
  * Returns a function that renders controls ex: textControl, checkControl, fromTokenField...
@@ -33,7 +33,7 @@ export default function createControlRenderer({attributes,setAttributes}){
      * @param {()=>string} customOnChange
 	 * @returns {JSX.Element} 
 	*/
-    const renderer = (obj,attAry,customOnChange=null) {
+    const renderer = (obj,attAry,customOnChange=null) => {
         // mutate / change binded attribute
         const mutBinded = (v) => mutAtt(v,obj.bind);
         const onChangeHandle = (newval) => !!customOnChange? mutBinded(customOnChange(newval)) : mutBinded(newval);
@@ -78,14 +78,14 @@ export default function createControlRenderer({attributes,setAttributes}){
                             placeholder={obj.placeholder}
                             onChange = {(tokens) => {
 
-                                //idmap was made because suggestions don't support objects,
+                                //suggestionmap was made because suggestions don't support objects,
                                 //and those suggestions need to be saved as tokens(which are objects).
                                 //it also prevents users to entering items which are not in suggestions.
                                 let temp = tokens.map( (t) => {
 
                                     //transform new tokens into objects{value:v,id:i} if they aren't already 
                                     let val = t.value? t.value : t;
-                                    let id = obj.idmap[val];
+                                    let id = obj.suggestionmap[val];
 
                                     return id? {value:val,id:id}: undefined; 
                                 })
