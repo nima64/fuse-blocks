@@ -500,7 +500,7 @@ var MockData = /*#__PURE__*/function () {
       switch (order) {
         case 'date_updated':
           this.cases.sort(function (a, b) {
-            return a['date_updated'] < b['date_updated'];
+            return a['date_updated'] - b['date_updated'];
           });
           break;
 
@@ -541,7 +541,7 @@ function Edit(props) {
    * @param {*} col 
    */
 
-  var getColName = function getColName(col) {
+  var getDefaultColName = function getDefaultColName(col) {
     var defaults = {
       'casenum': 'Case Number',
       'date_updated': 'Date Updated',
@@ -554,11 +554,11 @@ function Edit(props) {
 
   mockData.orderBy(attributes.orderby);
 
-  var renderTable = function renderTable(columns, getColName, cases) {
+  var renderTable = function renderTable(columns, getDefaultColName, cases) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("table", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("thead", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("tr", null, columns.map(function (column) {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("td", {
         class: "fusedesk-cases-columnhead-".concat(column)
-      }, getColName(column));
+      }, getDefaultColName(column));
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("td", {
       class: "fusedesk-cases-columnhead-"
     }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("tbody", null, mockData.filterByStatus(attributes.status).slice(0, attributes.limit).map(function (_case) {
@@ -568,7 +568,7 @@ function Edit(props) {
     })));
   };
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["useBlockProps"])(), Object(_InspectorControls_MyCases__WEBPACK_IMPORTED_MODULE_6__["InspectorControls_MyCases"])(props, mockData.cases), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["Placeholder"], null, renderTable(columns, getColName, mockData.cases)));
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["useBlockProps"])(), Object(_InspectorControls_MyCases__WEBPACK_IMPORTED_MODULE_6__["InspectorControls_MyCases"])(props, mockData.cases), renderTable(columns, getDefaultColName, mockData.cases));
 }
 
 /***/ }),

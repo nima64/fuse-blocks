@@ -67,7 +67,7 @@ class MockData{
 	orderBy(order){
 		switch (order) {
 			case 'date_updated':
-				this.cases.sort( (a,b) => a['date_updated'] < b['date_updated'] );	
+				this.cases.sort( (a,b) => a['date_updated'] - b['date_updated'] );	
 				break;
 			default:
 				break;
@@ -97,7 +97,7 @@ export default function Edit( props ) {
 	 *returns default column name if it isn't declared 
 	 * @param {*} col 
 	 */
-	const getColName = (col) => {
+	const getDefaultColName = (col) => {
 		const defaults = {
 			'casenum' : 'Case Number',
 			'date_updated' : 'Date Updated',
@@ -110,13 +110,14 @@ export default function Edit( props ) {
 
 	mockData.orderBy(attributes.orderby);
 
-	const renderTable = (columns,getColName,cases) =>{
+
+	const renderTable = (columns, getDefaultColName, cases) =>{
 		return(
 			<table >
 				<thead>
 					<tr>
 						{columns.map(column => (
-							<td class={`fusedesk-cases-columnhead-${column}`}>{getColName(column)}</td>
+							<td class={`fusedesk-cases-columnhead-${column}`}>{ getDefaultColName(column) }</td>
 						))}
 						<td class="fusedesk-cases-columnhead-"></td>
 					</tr>
@@ -150,9 +151,7 @@ export default function Edit( props ) {
 	return (
 		<div { ...useBlockProps() }>
 			{InspectorControls_MyCases(props,mockData.cases) }
-			<Placeholder>
-			{ renderTable(columns, getColName, mockData.cases) }
-			</Placeholder>
+			{ renderTable(columns, getDefaultColName, mockData.cases) }
 		</div>
 	);
 }
