@@ -1,0 +1,27 @@
+[
+    {
+        "casenum" : "ABCD1234",
+        "date_updated" : "date('c')",
+        "date_lastupdated" : "date('c')",
+        "date_closed" : "date('c')",
+        "status" : "new",
+        "summary" : "Sample First Case"
+    },
+    {
+        "casenum" : "CDEF5678",
+        "date_updated" : "date('c', strtotime('-3 days, -3 hours'))",
+        "date_lastupdated" : "date('c')",
+        "date_closed" : "date('c')",
+        "status" : "open",
+        "summary" : "Sample Second Case"
+    },
+    {
+        "casenum" : "ACEB2468",
+        "date_updated" : "date('c', strtotime('-15 days, -8 hours, -9 minutes')",
+        "date_lastupdated" : "date('c')",
+        "date_closed" : "date('c')",
+        "status" : "open",
+        "summary" : "Sample Third Case"
+    }
+
+]

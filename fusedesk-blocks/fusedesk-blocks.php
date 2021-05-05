@@ -1,6 +1,5 @@
 <?php
 
-include plugin_dir_path(__FILE__).'cached-api.php';
 
 /**
  * Registers a Gutenberg block and generates handle in the form blockname-handle
@@ -85,7 +84,7 @@ function fusedesk_blocks_render_mycases($atts,$content){
         }
     }
 
-    return fusedesk_mycases_cached($atts);
+    // return fusedesk_mycases_cached($atts);
 }
 
 function fusedesk_blocks_init() {
@@ -94,13 +93,10 @@ function fusedesk_blocks_init() {
     $myCasesBlock = new fusedesk_Block('my-cases');
 
     $newCaseBlock->register();
-    $myCasesBlock->register([
-        'render_callback' => 'fusedesk_blocks_render_mycases',
-    ]);
+    $myCasesBlock->register();
 
     wp_localize_script($newCaseBlock->editor_script_handle, 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
     add_filter( 'block_categories', 'fusedesk_blocks_category', 10, 2);
 }
-
 //admin_init will disable render_callback 
 add_action( 'init', 'fusedesk_blocks_init' );

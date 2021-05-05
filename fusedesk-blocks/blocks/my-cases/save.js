@@ -23,45 +23,44 @@ import controlsData from './ControlsData';
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
  * @return {WPElement} Element to render.
  */
+
+
 export default function save( props ) {
 	const { attributes, setAttributes } = props;
-	const settings = ['display','text'];
+	const groups = ['display','text'];
 
-	//look in controlsData, then look in attributes
-	const genShortcodeAtt = (attGroup) => {
+	const attributeToString = (attName,attGroup) => {
+		let controlObj = controlsData[attGroup][attName];
+		let attval = attributes[attName];
+
+		//convert object into a array of strings ["s1","s2",...]
+		if (controlObj.type == 'multiSelect'){
+			attval = attval.map( obj => obj.value).join();
+		}
+
+		if( controlObj.type == 'formTokenField' ){
+			attval = attval.map(obj => obj.id).join();
+		}
+
+		//convert to string "name=value"
+		return attval !== '' ? `${ attName }="${ attval }" ` : '';
+
+	};
+
+	const genGroupAtts = (attGroup) => {
 		let attNames =  Object.entries(controlsData[attGroup]).map( ([k, v]) => k);
-
-		return attNames.map( attName => {
-			let controlObj = controlsData[attGroup][attName];
-			let attval = attributes[attName];
-
-			if (controlObj.type == 'multiSelect'){
-				attval = attval.map( obj => {
-					return obj.value
-				}).join();
-			}
-
-			if( controlObj.type == 'formTokenField' ){
-				attval = attval.map(obj => {
-					return obj.id;
-				}).join();
-			}
-			//dont make a attribute if empty string or false
-			// return attval || attval !== '' ? `${ attName }="${ attval }" ` : '';
-			return attval !== '' ? `${ attName }="${ attval }" ` : '';
-
-		}).join(' ');	;
+		return attNames.map( attName => attributeToString(attName,attGroup) ).join(' ');	;
 	}
 
-	const genAllShortcodeAtts = () => settings.map( (v) => genShortcodeAtt(v) ).join(' ');
+	const genAllGroupAtts = () => groups.map( (v) => genGroupAtts(v) ).join(' ');
 
 	return (
 		<div { ...useBlockProps.save() }>
 			<RawHTML { ...useBlockProps.save() } >
-				{ '[fusedesk_mycases ' + genAllShortcodeAtts() + ']' }
+				{ '[fusedesk_mycases ' + genAllGroupAtts() + ']' }
 			</RawHTML>
 			<div>
-				{genAllShortcodeAtts()}
+				{genGroupAtts('display')}
 			</div>
 		</div>
 	);
