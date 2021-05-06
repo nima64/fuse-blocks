@@ -16,14 +16,20 @@ export default {
             suggestionmap: {
 				[ __('Case Number','fusedesk') ]: 'casenum' ,
 				[ __('Date Updated','fusedesk') ]: 'date_updated' ,
+				[ __('Date Opened','fusedesk') ]: 'date_opened' ,
+				[ __('Date Closed','fusedesk') ]: 'date_closed' ,
 				[ __('Status','fusedesk') ]: 'status',
 				[ __('Summary','fusedesk') ]: 'summary',
+				[ __('Details','fusedesk') ]: 'details',
 			},
             suggestions: [
                 __('Case Number','fusedesk'),
                 __('Date Updated','fusedesk'),
+                __('Date Opened','fusedesk'),
+                __('Date Closed','fusedesk'),
                 __('Status','fusedesk'),
                 __('Summary','fusedesk'),
+                __('Details','fusedesk'),
             ],
             bind: 'columns',
             placeholder: __('casenum,date_updated,status,summary','fusedesk'),
@@ -63,10 +69,8 @@ export default {
             // placeholder: __('date_lastresponse asc, date_updated asc','fusedesk'),
             placeholder: __('Date Last Response Oldest to Newest, Date Updated Oldest to Newest','fusedesk'),
             suggestionmap:{
-                // status, caseid, contactid, date_opened, date_assigned, date_firstresponse, date_lastresponse, date_updated, date_created, date_closed
+                // caseid, contactid, date_opened, date_assigned, date_firstresponse, date_lastresponse, date_updated, date_created, date_closed
                 //ascending oldest to newest, descending newest to oldest
-                [ __('Status, Oldest to Newest','fusedesk') ]: "status asc", 
-                [ __('Status, Newest to Oldest','fusedesk') ]: "status desc",
 
                 [ __('Case ID, Oldest to Newest','fusedesk') ]: "caseid asc", 
                 [ __('Case ID, Newest to Oldest','fusedesk') ]: "caseid desc",
@@ -100,9 +104,6 @@ export default {
                 // [ __(', Newest to Oldest','fusedesk') ]: "date_updated desc",
             },
             suggestions: [
-                __('Status, Oldest to Newest','fusedesk'),
-                __('Status, Newest to Oldest','fusedesk'),
-
                 __('Case ID, Oldest to Newest','fusedesk'),
                 __('Case ID, Newest to Oldest','fusedesk'),
 

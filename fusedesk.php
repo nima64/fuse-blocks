@@ -606,16 +606,16 @@ function fusedesk_mycases($originalAtts)
     ], $originalAtts);
 
     $query = [];
-    // if($contactid = fusedesk_mycontactid()) {
-    //     $query['contactid'] = $contactid;
+    if($contactid = fusedesk_mycontactid()) {
+        $query['contactid'] = $contactid;
 
-    // } elseif ($email = fusedesk_myemail()) {
-    //     $query['email'] = $email;
+    } elseif ($email = fusedesk_myemail()) {
+        $query['email'] = $email;
 
-    // } else {
-    //     // No way to search!
-    //     return $atts['errornotloggedin'];
-    // }
+    } else {
+        // No way to search!
+        return $atts['errornotloggedin'];
+    }
 
     return fusedesk_showcases($query, $originalAtts);
 }
