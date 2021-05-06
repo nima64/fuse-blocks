@@ -61,29 +61,17 @@ class MockData{
 		if(status == 'all'){
 			return this.cases;
 		}	
-		let result = this.cases.filter( _case => _case.status === status );
-		return result.length > 0 ? result : this.cases; 
+		return this.cases.filter( _case => _case.status === status );
 	}
 
-	orderBy(orders){
-		let fobj = orders[0];
-		const whichsort = (id) => { 
-			let id_s = id.split(" ");
-
-			if (id_s[1] == "asc"){
-				//sort smallest to largest
-				this.cases.sort( (a,b) => a[ id_s[0] ] - b[ id_s[0] ] );	
-			}
-			if (id_s[1] == "desc"){
-				this.cases.sort( (a,b) => b[ id_s[0] ] - a[ id_s[0] ] );	
-			}
-		};
-
-		if (!fobj){
-			return
-		}
-
-		whichsort(fobj.id);
+	orderBy(order){
+		switch (order) {
+			case 'date_updated':
+				this.cases.sort( (a,b) => a['date_updated'] - b['date_updated'] );	
+				break;
+			default:
+				break;
+		}	
 	}
 }
 
@@ -108,32 +96,23 @@ export default function Edit( props ) {
 	
 	/**
 	 *returns default column name if it isn't declared 
-	 * @param {String} col 
+	 * @param {*} col 
 	 */
 	const getDefaultColName = (col) => {
 		const defaults = {
 			'casenum' : 'Case Number',
 			'date_updated' : 'Date Updated',
-			'date_opened' : 'Date Opened',
-			'date_closed' : 'Date Closed',
 			'status' : 'Status',
 			'summary' : 'Summary',
-			'details' : 'Details',
 		}
-
 		const colName = attributes[col+'_name'];
-		
-		if(colName == undefined)
-			console.log(`attribute ${col}_name doesn't exist, please create one.`);
-
-		//if string is empty return defaults
 		return ( colName != '') ? colName : defaults[col]; 
 	};
 
 	mockData.orderBy(attributes.orderby);
 
 
-	const renderTable = (columns, cases) =>{
+	const renderTable = (columns, getDefaultColName, cases) =>{
 		return(
 			<table >
 				<thead>
@@ -153,7 +132,7 @@ export default function Edit( props ) {
 								{columns.map(col => 
 									<td>
 									{
-										col.substr(0,4) == "date" ?
+										col == "date_updated" ?
 											formatTimeStamp(_case[col], attributes.dateformat)	
 										:
 										_case[col]
@@ -172,8 +151,8 @@ export default function Edit( props ) {
 
 	return (
 		<div { ...useBlockProps() }>
-			{ InspectorControls_MyCases(props,mockData.cases) }
-			{ renderTable(columns, mockData.cases) }
+			{InspectorControls_MyCases(props,mockData.cases) }
+			{ renderTable(columns, getDefaultColName, mockData.cases) }
 		</div>
 	);
 }

@@ -27,7 +27,7 @@ import controlsData from './ControlsData';
 
 export default function save( props ) {
 	const { attributes, setAttributes } = props;
-	const groups = ['display','text','advanced'];
+	const groups = ['display','text'];
 
 	const attributeToString = (attName,attGroup) => {
 		let controlObj = controlsData[attGroup][attName];
@@ -47,7 +47,7 @@ export default function save( props ) {
 
 	};
 
-	//ex: genGroupAtts('advanced') => "anchor='#', style='color:blue'"
+	//ex: genGroupAtts('advanced') : "anchor='..', style='..'"
 	const genGroupAtts = (attGroup) => {
 		let attNames =  Object.entries(controlsData[attGroup]).map( ([k, v]) => k);
 		return attNames.map( attName => attributeToString(attName,attGroup) ).join(' ');	;
@@ -61,7 +61,7 @@ export default function save( props ) {
 				{ '[fusedesk_mycases ' + genAllGroupAtts() + ']' }
 			</RawHTML>
 			<div>
-				{genAllGroupAtts()}
+				{genGroupAtts('display')}
 			</div>
 		</div>
 	);
