@@ -49,12 +49,13 @@ registerBlockType( 'fusedesk/my-cases', {
 			default: 'all',
 		},
 		userstatuses:{
-			type: 'string',
-			default: 'all',
+			type: 'array',
+			default: [],
 		},
 		orderby:{
-			type: 'string',
-			default: 'date_opened, date_updated',
+			type: 'array',
+			// default: 'date_opened, date_updated',
+			default: [],
 		},
 		dateformat:{
 			type: 'string',

@@ -33,7 +33,7 @@ export default function save( props ) {
 		let controlObj = controlsData[attGroup][attName];
 		let attval = attributes[attName];
 
-		//convert object into a array of strings ["s1","s2",...]
+		//convert array[s1,s2,...] into a strings "s1","s2",...
 		if (controlObj.type == 'multiSelect'){
 			attval = attval.map( obj => obj.value).join();
 		}
@@ -42,11 +42,12 @@ export default function save( props ) {
 			attval = attval.map(obj => obj.id).join();
 		}
 
-		//convert to string "name=value"
+		//return string "name=value"
 		return attval !== '' ? `${ attName }="${ attval }" ` : '';
 
 	};
 
+	//ex: genGroupAtts('advanced') : "anchor='..', style='..'"
 	const genGroupAtts = (attGroup) => {
 		let attNames =  Object.entries(controlsData[attGroup]).map( ([k, v]) => k);
 		return attNames.map( attName => attributeToString(attName,attGroup) ).join(' ');	;

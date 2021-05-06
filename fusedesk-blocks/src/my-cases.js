@@ -187,7 +187,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 
 
-var _suggestionmap;
+var _suggestionmap, _suggestionmap2, _suggestionmap3;
 
 
 
@@ -215,35 +215,36 @@ var statusOptionsShared = [{
       suggestionmap: (_suggestionmap = {}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case Number', 'fusedesk'), 'casenum'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Updated', 'fusedesk'), 'date_updated'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Status', 'fusedesk'), 'status'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Summary', 'fusedesk'), 'summary'), _suggestionmap),
       suggestions: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case Number', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Updated', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Status', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Summary', 'fusedesk')],
       bind: 'columns',
-      placeholder: 'ex: Case Number, Date Updated...',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Choose from casenum, date_updated, date_opened,date_closed, status, summary, details. Defaults to casenum,date_updated,status,summary", 'fusedesk')
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('casenum,date_updated,status,summary', 'fusedesk'),
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Which columns to show. Choose from casenum, date_updated, date_opened,date_closed, status, summary, details.", 'fusedesk')
     },
     status: {
       type: 'select',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case Statuses', 'fusedesk'),
       options: statusOptionsShared,
       bind: 'status',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Filter for which case statuses to show. Options are new, active, open, and closed. If blank, defaults to All Cases.", 'fusedesk')
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Filter for which case statuses to show.", 'fusedesk')
     },
     userstatuses: {
-      type: 'select',
+      type: 'formTokenField',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('User Filterable Statuses', 'fusedesk'),
       options: statusOptionsShared,
       bind: 'userstatuses',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Filter for which case statuses you allow a user to set with the casestatus query paramater. Expects a CSV with none to any of new, active, open, and closed. If not set, defaults to any valid status. Setting this restriction allows you to prevent users from viewing certain cases statuses like closed cases, for example.", 'fusedesk')
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('new,active,open,closed', 'fusedesk'),
+      suggestionmap: (_suggestionmap2 = {}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap2, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('New', 'fusedesk'), 'new'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap2, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Active', 'fusedesk'), 'active'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap2, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Open', 'fusedesk'), 'open'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap2, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Closed', 'fusedesk'), 'closed'), _suggestionmap2),
+      suggestions: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('New', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Active', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Open', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Closed', 'fusedesk')],
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Filter for which case statuses you allow a user to set with the casestatus query paramater. Setting this restriction allows you to prevent users from viewing certain cases statuses like closed cases, for example.", 'fusedesk')
     },
     orderby: {
-      type: 'select',
+      type: 'formTokenField',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case Order', 'fusedesk'),
-      options: [{
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Oldest to Newest', 'fusedesk'),
-        value: 'date_updated'
-      }, {
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Dated Opened', 'fusedesk'),
-        value: 'date_opened'
-      }],
+      // placeholder: __('date_lastresponse asc, date_updated asc','fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Last Response Oldest to Newest, Date Updated Oldest to Newest', 'fusedesk'),
+      suggestionmap: (_suggestionmap3 = {}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Status, Oldest to Newest', 'fusedesk'), "status asc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Status, Newest to Oldest', 'fusedesk'), "status desc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case ID, Oldest to Newest', 'fusedesk'), "caseid asc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case ID, Newest to Oldest', 'fusedesk'), "caseid desc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Contact ID, Oldest to Newest', 'fusedesk'), "contactid asc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Contact ID, Newest to Oldest', 'fusedesk'), "contactid desc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Opened, Oldest to Newest', 'fusedesk'), "date_opened asc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Opened, Newest to Oldest', 'fusedesk'), "date_opened desc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Assigned, Oldest to Newest', 'fusedesk'), "date_assigned asc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Assigned, Newest to Oldest', 'fusedesk'), "date_assigned desc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date First Response, Oldest to Newest', 'fusedesk'), "date_firstresponse asc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date First Response, Newest to Oldest', 'fusedesk'), "date_firstresponse desc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Last Response, Oldest to Newest', 'fusedesk'), "date_lastresponse asc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Last Response, Newest to Oldest', 'fusedesk'), "date_lastresponse desc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Updated, Oldest to Newest', 'fusedesk'), "date_updated asc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Updated, Newest to Oldest', 'fusedesk'), "date_updated desc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Created, Oldest to Newest', 'fusedesk'), "date_created asc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Created, Newest to Oldest', 'fusedesk'), "date_created asc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Closed, Oldest to Newest', 'fusedesk'), "date_closed desc"), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap3, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Closed, Newest to Oldest', 'fusedesk'), "date_closed desc"), _suggestionmap3),
+      suggestions: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Status, Oldest to Newest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Status, Newest to Oldest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case ID, Oldest to Newest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case ID, Newest to Oldest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Opened, Oldest to Newest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Opened, Newest to Oldest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Assigned, Oldest to Newest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Assigned, Newest to Oldest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date First Response, Oldest to Newest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date First Response, Newest to Oldest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Last Response, Oldest to Newest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Last Response, Newest to Oldest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Updated, Oldest to Newest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Updated, Newest to Oldest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Created, Oldest to Newest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Created, Newest to Oldest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Closed, Oldest to Newest', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Closed, Newest to Oldest', 'fusedesk')],
       bind: 'orderby',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("orderby: How to sort your cases. Expects a CSV of date and order pairs, i.e. date_lastresponse desc, or date_opened asc Defaults to date_lastresponse asc, date_updated asc", 'fusedesk')
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("How to sort your cases.", 'fusedesk') // help: __("How to sort your cases. Defaults to date_lastresponse asc, date_updated asc",'fusedesk'),
+
     },
     dateformat: {
       type: 'text',
@@ -253,62 +254,62 @@ var statusOptionsShared = [{
         value: 'M j, Y g:ia'
       }],
       bind: 'dateformat',
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('M j, Y g:ia', 'fusedesk'),
       help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])(Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("span", null, "How to format your dates. Accepts PHP's ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("a", {
         href: "http://php.net/manual/en/function.date.php",
         target: "_blank"
-      }, "date"), " formatting. Defaults to M j, Y g:ia"), 'fusedesk')
+      }, "date"), " formatting."), 'fusedesk')
     },
     limit: {
       type: 'range',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('How many cases should we display?', 'fusedesk'),
       min: 1,
       max: 80,
-      bind: 'limit',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("How many cases (max) to display. Defaults to 50", 'fusedesk')
+      bind: 'limit'
     }
   },
   text: {
     casenum_name: {
       type: 'text',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case Number Column', 'fusedesk'),
-      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case #', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case Number', 'fusedesk'),
       bind: 'casenum_name',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('', 'fusedesk')
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case Number Column Label', 'fusedesk')
     },
     status_name: {
       type: 'text',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Status Column', 'fusedesk'),
-      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('rename status col', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Status', 'fusedesk'),
       bind: 'status_name',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('', 'fusedesk')
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Status Column Label', 'fusedesk')
     },
     date_updated_name: {
       type: 'text',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Updated Column', 'fusedesk'),
-      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('rename dateupdated col', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Updated', 'fusedesk'),
       bind: 'date_updated_name',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('', 'fusedesk')
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Updated Column Label', 'fusedesk')
     },
     summary_name: {
       type: 'text',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Summary Column', 'fusedesk'),
-      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('rename summary updated', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Summary', 'fusedesk'),
       bind: 'summary_name',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('The summary/title for your FuseDesk Case', 'fusedesk')
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Summary Column Label', 'fusedesk')
     },
     errornotloggedin: {
       type: 'text',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Error, Not Logged In', 'fusedesk'),
       placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Please login to view your cases', 'fusedesk'),
       bind: 'errornotloggedin',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("What message to show to customers who aren't logged in (since we won't be able to show cases to anyone who's not logged in. ", 'fusedesk')
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("What message to show to customers who aren't logged in (since we won't be able to show cases to anyone who's not logged in). ", 'fusedesk')
     },
     errornocases: {
       type: 'text',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Error, No Cases', 'fusedesk'),
       placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Looks like you don't have any support cases!", 'fusedesk'),
       bind: 'errornocases',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("What message to show to customers where they don't have any cases. Defaults to Looks like you don't have any support cases!", 'fusedesk')
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("What message to show to customers where they don't have any cases.", 'fusedesk')
     }
   },
   advanced: {
@@ -322,7 +323,7 @@ var statusOptionsShared = [{
       type: 'text',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Additional CSS styles(s) for the fields', 'fusedesk'),
       bind: 'style',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('style: What CSS style to apply to our inputs', 'fusedesk')
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('What CSS style to apply to our inputs', 'fusedesk')
     }
   }
 });
@@ -659,12 +660,13 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('fus
       default: 'all'
     },
     userstatuses: {
-      type: 'string',
-      default: 'all'
+      type: 'array',
+      default: []
     },
     orderby: {
-      type: 'string',
-      default: 'date_opened, date_updated'
+      type: 'array',
+      // default: 'date_opened, date_updated',
+      default: []
     },
     dateformat: {
       type: 'string',
@@ -789,7 +791,7 @@ function save(props) {
 
   var attributeToString = function attributeToString(attName, attGroup) {
     var controlObj = _ControlsData__WEBPACK_IMPORTED_MODULE_4__["default"][attGroup][attName];
-    var attval = attributes[attName]; //convert object into a array of strings ["s1","s2",...]
+    var attval = attributes[attName]; //convert array[s1,s2,...] into a strings "s1","s2",...
 
     if (controlObj.type == 'multiSelect') {
       attval = attval.map(function (obj) {
@@ -801,11 +803,12 @@ function save(props) {
       attval = attval.map(function (obj) {
         return obj.id;
       }).join();
-    } //convert to string "name=value"
+    } //return string "name=value"
 
 
     return attval !== '' ? "".concat(attName, "=\"").concat(attval, "\" ") : '';
-  };
+  }; //ex: genGroupAtts('advanced') : "anchor='..', style='..'"
+
 
   var genGroupAtts = function genGroupAtts(attGroup) {
     var attNames = Object.entries(_ControlsData__WEBPACK_IMPORTED_MODULE_4__["default"][attGroup]).map(function (_ref) {
