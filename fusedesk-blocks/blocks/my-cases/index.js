@@ -79,7 +79,19 @@ registerBlockType( 'fusedesk/my-cases', {
 			type: 'string',
 			default:  '',
 		},
+		date_opened_name:{
+			type: 'string',
+			default:  '',
+		},
+		date_closed_name:{
+			type: 'string',
+			default:  '',
+		},
 		summary_name:{
+			type: 'string',
+			default:  '',
+		},
+		details_name:{
 			type: 'string',
 			default:  '',
 		},

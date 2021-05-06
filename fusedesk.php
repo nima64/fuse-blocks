@@ -16,8 +16,6 @@ Copyright (C) 2013-2021 Asandia, Corp.
 // error_reporting(E_ALL); // Helpful for checking for warnings that are TYPICALLY hidden but may be present on some installs
 
 // Register our shortcodes with WordPress
-include plugin_dir_path(__FILE__).'fusedesk-blocks/fusedesk-blocks.php';
-
 add_shortcode('fusedesk_newcase', 'fusedesk_newcase');
 add_shortcode('fusedesk_mycases', 'fusedesk_mycases');
 add_shortcode('fusedesk_teamcases', 'fusedesk_teamcases');
@@ -43,10 +41,10 @@ if (is_admin())
      * For example, to refresh our reps cache and return an array of reps, call:
      *  `/wp-admin/admin-ajax.php?action=fusedesk_reps&refresh=1`
      */
-    add_action('wp_ajax_fusedesk_reps', 'fusedesk_ajax_reps');
-    add_action('wp_ajax_fusedesk_departments', 'fusedesk_ajax_departments');
-    add_action('wp_ajax_fusedesk_casetags', 'fusedesk_ajax_casetags');
-    add_action('wp_ajax_fusedesk_chatwidgets', 'fusedesk_ajax_chatwidgets');
+	add_action('wp_ajax_fusedesk_reps', 'fusedesk_ajax_reps');
+	add_action('wp_ajax_fusedesk_departments', 'fusedesk_ajax_departments');
+	add_action('wp_ajax_fusedesk_casetags', 'fusedesk_ajax_casetags');
+	add_action('wp_ajax_fusedesk_chatwidgets', 'fusedesk_ajax_chatwidgets');
 }
 
 function admin_menu_fusedesk()
@@ -71,9 +69,10 @@ function options_page_fusedesk()
 {
     include __DIR__ .'/options.php';
 }
-function activate_fusedesk(){
 
+function activate_fusedesk() {
 }
+
 function deactivate_fusedesk() {
     # for now, deactivate shouldn't do anything
 }
@@ -88,10 +87,10 @@ function uninstall_fusedesk() {
     delete_option('fusedesk_partnercode');
     delete_option('fusedesk_livechatid');
     delete_option('fusedesk_livechat_setcontact');
-    delete_option('fusedesk_cache_reps');
-    delete_option('fusedesk_cache_departments');
-    delete_option('fusedesk_cache_casetags');
-    delete_option('fusedesk_cache_chatwidgets');
+	delete_option('fusedesk_cache_reps');
+	delete_option('fusedesk_cache_departments');
+	delete_option('fusedesk_cache_casetags');
+	delete_option('fusedesk_cache_chatwidgets');
 }
 
 function admin_init_fusedesk() {
@@ -140,9 +139,9 @@ function fusedesk_checkpartner($partner)
             return class_exists('AccessAlly');
             break;
 
-        case 'gravityforms':
-            return class_exists('GFForms');
-            break;
+	    case 'gravityforms':
+	    	return class_exists('GFForms');
+	    	break;
 
         default:
             return false;
@@ -213,17 +212,17 @@ function fusedesk_partners()
                 'Protected content can still be found via search as WisP does not hide pages, but rather just hides the content'
             ]
         ],
-        'gravityforms'    => [
-            'name'  => 'GravityForms',
-            'site' => 'https://www.fusedesk.com/getgravityforms',
-            'appname' => false,
-            'contactid' => false,
-            'contact' => false,
-            'teamcases' => false,
-            'forms' => true,
-            'lasttested' => '2021-03-24',
-            'knownissues' => [],
-        ]
+	    'gravityforms'    => [
+		    'name'  => 'GravityForms',
+		    'site' => 'https://www.fusedesk.com/getgravityforms',
+		    'appname' => false,
+		    'contactid' => false,
+		    'contact' => false,
+		    'teamcases' => false,
+		    'forms' => true,
+		    'lasttested' => '2021-03-24',
+		    'knownissues' => [],
+	    ]
     ];
 }
 
@@ -350,7 +349,7 @@ function fusedesk_myemail()
 {
     if(is_user_logged_in()) {
         global $current_user;
-        wp_get_current_user();
+	    wp_get_current_user();
         return $current_user->user_email;
     }
 
@@ -425,8 +424,8 @@ function fusedesk_poweredby($sync = false)
     if($sync)
     {
         if(($response = fusedesk_apicall('session/poweredby'))
-            && is_object($response)
-            && !property_exists($response, 'error'))
+           && is_object($response)
+           && !property_exists($response, 'error'))
         {
             update_option( 'fusedesk_planname', $response->plan);
             update_option( 'fusedesk_footerlink', $response->footerlink);
@@ -496,11 +495,11 @@ function fusedesk_newcase($atts, $content)
 
     # This atrocious one-long-line formatting is to prevent dang WP from adding line break after every input! ARG!
     $ret = '<form id="fusedesk-contact" action="#" data-successredirect="'.$atts['successredirect'].'">'.
-        '<input type="hidden" name="action" value="fusedesk_newcase">'.
-        '<input type="hidden" name="repid" value="'.$atts['rep'].'">'.
-        '<input type="hidden" name="depid" value="'.$atts['department'].'">'.
-        '<input type="hidden" name="casetags" value="'.$atts['casetagids'].'">'.
-        '<input type="hidden" name="opened_from" value="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].'">';
+    '<input type="hidden" name="action" value="fusedesk_newcase">'.
+    '<input type="hidden" name="repid" value="'.$atts['rep'].'">'.
+    '<input type="hidden" name="depid" value="'.$atts['department'].'">'.
+    '<input type="hidden" name="casetags" value="'.$atts['casetagids'].'">'.
+    '<input type="hidden" name="opened_from" value="http'.(isset($_SERVER['HTTPS']) ? 's' : '').'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].'">';
 
     $ret .= ($atts['table']) ? '<table id="fusedesk-contact-table">':'';
 
@@ -606,16 +605,16 @@ function fusedesk_mycases($originalAtts)
     ], $originalAtts);
 
     $query = [];
-    // if($contactid = fusedesk_mycontactid()) {
-    //     $query['contactid'] = $contactid;
+    if($contactid = fusedesk_mycontactid()) {
+        $query['contactid'] = $contactid;
 
-    // } elseif ($email = fusedesk_myemail()) {
-    //     $query['email'] = $email;
+    } elseif ($email = fusedesk_myemail()) {
+        $query['email'] = $email;
 
-    // } else {
-    //     // No way to search!
-    //     return $atts['errornotloggedin'];
-    // }
+    } else {
+        // No way to search!
+        return $atts['errornotloggedin'];
+    }
 
     return fusedesk_showcases($query, $originalAtts);
 }
@@ -773,8 +772,7 @@ function fusedesk_showcases($query, $originalAtts)
         'orderby' => 'date_lastresponse, date_updated',
         'errornotloggedin' => 'Please login to view your cases.',
         'dateformat'    => 'M j, Y g:ia',
-        'errornocases'  => "Looks like you don't have any support cases!",
-        'mockdata' => false,
+        'errornocases'  => "Looks like you don't have any support cases!"
     ], $originalAtts);
 
     foreach(['status', 'limit', 'orderby'] as $attribute)
@@ -808,42 +806,13 @@ function fusedesk_showcases($query, $originalAtts)
         $query['status'] = $userSetCaseStatus;
     }
 
-    if($atts['mockdata']) {
-        $cases = [
-            (object)[
-                'casenum' => 'ABCD1234',
-                'date_updated' => date('c'),
-                'date_lastupdated' => date('c'),
-                'date_closed' => date('c'),
-                'status' => 'new',
-                'summary' => 'Sample First Case'
-            ],
-            (object)[
-                'casenum' => 'CDEF5678',
-                'date_updated' => date('c', strtotime('-3 days, -3 hours')),
-                'date_lastupdated' => date('c'),
-                'date_closed' => date('c'),
-                'status' => 'open',
-                'summary' => 'Sample Second Case'
-            ],
-            (object)[
-                'casenum' => 'ACEB2468',
-                'date_updated' => date('c', strtotime('-15 days, -8 hours, -9 minutes')),
-                'date_lastupdated' => date('c'),
-                'date_closed' => date('c'),
-                'status' => 'open',
-                'summary' => 'Sample Third Case'
-            ]
-        ];
-    } else {
-        if(!($cases = fusedesk_apicall('cases', $query))) {
-            return $atts['errornocases'];
-        }
+    if(!($cases = fusedesk_apicall('cases', $query))) {
+        return $atts['errornocases'];
     }
 
     if(is_object($cases)
-        && property_exists($cases, 'error')
-        && $cases->error
+       && property_exists($cases, 'error')
+       && $cases->error
     ) {
         # ToDo: allow options for how to report this error
         return $atts['errornocases']. '<!-- FuseDesk Error: ' .$cases->error. ' -->';
@@ -977,31 +946,31 @@ function fusedesk_ajax_newcase()
 }
 
 function fusedesk_ajax_reps() {
-    $forceRefresh = (array_key_exists('refresh', $_GET) && $_GET['refresh']);
-    echo(json_encode(fusedesk_reps($forceRefresh)));
-    die();
+	$forceRefresh = (array_key_exists('refresh', $_GET) && $_GET['refresh']);
+	echo(json_encode(fusedesk_reps($forceRefresh)));
+	die();
 }
 
 function fusedesk_ajax_departments() {
-    $forceRefresh = (array_key_exists('refresh', $_GET) && $_GET['refresh']);
-    echo(json_encode(fusedesk_departments($forceRefresh)));
-    die();
+	$forceRefresh = (array_key_exists('refresh', $_GET) && $_GET['refresh']);
+	echo(json_encode(fusedesk_departments($forceRefresh)));
+	die();
 }
 
 function fusedesk_ajax_casetags() {
-    $forceRefresh = (array_key_exists('refresh', $_GET) && $_GET['refresh']);
-    echo(json_encode(fusedesk_casetags($forceRefresh)));
-    die();
+	$forceRefresh = (array_key_exists('refresh', $_GET) && $_GET['refresh']);
+	echo(json_encode(fusedesk_casetags($forceRefresh)));
+	die();
 }
 
 function fusedesk_ajax_chatwidgets() {
-    $forceRefresh = (array_key_exists('refresh', $_GET) && $_GET['refresh']);
-    echo(json_encode(fusedesk_chatwidgets($forceRefresh)));
-    die();
+	$forceRefresh = (array_key_exists('refresh', $_GET) && $_GET['refresh']);
+	echo(json_encode(fusedesk_chatwidgets($forceRefresh)));
+	die();
 }
 
 function fuseDeskCreateCase($case) {
-    return fusedesk_apicall('cases', $case, 'POST');
+	return fusedesk_apicall('cases', $case, 'POST');
 }
 
 function fusedesk_error($errorString = '') {
@@ -1117,16 +1086,16 @@ function fusedesk_apicall($uri, $args = [], $type = 'GET', $apiVersion = 1)
  * FuseDesk Add-On for Gravity Forms.
  */
 function gf_fusedesk_load() {
-    // This should only ever be called by Gravity Forms, but just in case, let's make sure that our class and method exist
-    if (!class_exists('GFForms')
-        || !method_exists( 'GFForms', 'include_addon_framework')
-    ) {
-        return;
-    }
+	// This should only ever be called by Gravity Forms, but just in case, let's make sure that our class and method exist
+	if (!class_exists('GFForms')
+	    || !method_exists( 'GFForms', 'include_addon_framework')
+	) {
+		return;
+	}
 
-    require_once( 'fusedesk-gfaddon.php' );
+	require_once( 'fusedesk-gfaddon.php' );
 
-    GFAddOn::register( 'FuseDeskGfAddon' );
+	GFAddOn::register( 'FuseDeskGfAddon' );
 }
 
 /**
@@ -1141,92 +1110,92 @@ function gf_fusedesk_load() {
  * @return false|mixed
  */
 function gf_fusedesk_createcase( $submission, $form ) {
-    // If `fusedesk` isn't configured or `enabled` for this form, bail
-    if(!is_array($fuseDeskConfig = rgar($form, 'fusedesk'))
-        || !rgar($fuseDeskConfig, 'enabled')
-    ) {
-        return false;
-    }
+	// If `fusedesk` isn't configured or `enabled` for this form, bail
+	if(!is_array($fuseDeskConfig = rgar($form, 'fusedesk'))
+	   || !rgar($fuseDeskConfig, 'enabled')
+	) {
+		return false;
+	}
 
-    $newCase = [
-        'details' => '',
-        'summary' => rgar($fuseDeskConfig, 'summary', esc_html__( 'Support Request', 'fusedesk')),
-        'openedby' => fusedesk_myname() ?: fusedesk_myemail(),
-        'depid' => rgar($fuseDeskConfig, 'depid', get_option('fusedesk_defaultdepartment')),
-        'repid' => rgar($fuseDeskConfig, 'repid', get_option('fusedesk_defaultrep')),
-    ];
+	$newCase = [
+		'details' => '',
+		'summary' => rgar($fuseDeskConfig, 'summary', esc_html__( 'Support Request', 'fusedesk')),
+		'openedby' => fusedesk_myname() ?: fusedesk_myemail(),
+		'depid' => rgar($fuseDeskConfig, 'depid', get_option('fusedesk_defaultdepartment')),
+		'repid' => rgar($fuseDeskConfig, 'repid', get_option('fusedesk_defaultrep')),
+	];
 
-    // Set our CRM Contact ID if possible
-    if($contactId = fusedesk_mycontactid()) {
-        $newCase['contactid'] = $contactId;
-    }
+	// Set our CRM Contact ID if possible
+	if($contactId = fusedesk_mycontactid()) {
+		$newCase['contactid'] = $contactId;
+	}
 
-    // If certain fields have an admin label matching one of these names then we will use that value for our case
-    $fieldWeCanSetWithAdminLabel = ['summary', 'repid', 'depid', 'email', 'casetags'];
+	// If certain fields have an admin label matching one of these names then we will use that value for our case
+	$fieldWeCanSetWithAdminLabel = ['summary', 'repid', 'depid', 'email', 'casetags'];
 
-    // Go through each of our form fields
-    foreach ( $form['fields'] as $field ) {
-        if (($field->type === 'email')
-            && !empty($submission[$field->id])
-            && !array_key_exists('email', $newCase)
-        ) {
-            // Set our email if it's not set yet and the type of this field is 'email'
-            $newCase['email'] = $submission[$field->id];
-        } elseif(in_array($fieldNameLowerCase = strtolower($field->adminLabel), $fieldWeCanSetWithAdminLabel)
-            && !empty($submission[$field->id])
-        ) {
-            // Allow certain of our fields to be overridden based on admin label
-            $newCase[$fieldNameLowerCase] = $submission[$field->id];
-        } elseif(!empty($submission[$field->id])) {
-            // Not a special field, so add it to our description
-            $newCase['details'] .= $field->label. ': ' .$submission[$field->id]."\n";
-        }
-    }
+	// Go through each of our form fields
+	foreach ( $form['fields'] as $field ) {
+		if (($field->type === 'email')
+		     && !empty($submission[$field->id])
+		     && !array_key_exists('email', $newCase)
+		) {
+			// Set our email if it's not set yet and the type of this field is 'email'
+			$newCase['email'] = $submission[$field->id];
+		} elseif(in_array($fieldNameLowerCase = strtolower($field->adminLabel), $fieldWeCanSetWithAdminLabel)
+		         && !empty($submission[$field->id])
+		) {
+			// Allow certain of our fields to be overridden based on admin label
+			$newCase[$fieldNameLowerCase] = $submission[$field->id];
+		} elseif(!empty($submission[$field->id])) {
+			// Not a special field, so add it to our description
+			$newCase['details'] .= $field->label. ': ' .$submission[$field->id]."\n";
+		}
+	}
 
-    // Append some additional GF fields we care about
-    foreach(['IP', 'Source_URL', 'User_Agent', 'ID', 'Form_ID'] as $submissionField) {
-        if(!empty($submission[strtolower($submissionField)])) {
-            $newCase['details'] .= "\n".str_replace('_', ' ', $submissionField). ': ' .$submission[strtolower($submissionField)];
-        }
-    }
+	// Append some additional GF fields we care about
+	foreach(['IP', 'Source_URL', 'User_Agent', 'ID', 'Form_ID'] as $submissionField) {
+		if(!empty($submission[strtolower($submissionField)])) {
+			$newCase['details'] .= "\n".str_replace('_', ' ', $submissionField). ': ' .$submission[strtolower($submissionField)];
+		}
+	}
 
-    // No email address? Try and get it from the current user
-    if(!array_key_exists('email', $newCase)) {
-        if($contactEmail = fusedesk_myemail()) {
-            // Got an email for our logged in user? Use that.
-            $newCase['email'] = $contactEmail;
-        } else {
-            // Couldn't find an email? Bail
-            GFCommon::log_debug( 'gf_fusedesk_createcase: No email found. No FuseDesk Case Created');
-            return false;
-        }
-    }
+	// No email address? Try and get it from the current user
+	if(!array_key_exists('email', $newCase)) {
+		if($contactEmail = fusedesk_myemail()) {
+			// Got an email for our logged in user? Use that.
+			$newCase['email'] = $contactEmail;
+		} else {
+			// Couldn't find an email? Bail
+			GFCommon::log_debug( 'gf_fusedesk_createcase: No email found. No FuseDesk Case Created');
+			return false;
+		}
+	}
 
-    // print "<h2>Submission</h2><pre>".var_export($submission, true)."</pre><h2>Form</h2><pre>".var_export($form, true)."</pre><h2>New Case</h2><pre>".var_export($newCase, true)."</pre>";
+	// print "<h2>Submission</h2><pre>".var_export($submission, true)."</pre><h2>Form</h2><pre>".var_export($form, true)."</pre><h2>New Case</h2><pre>".var_export($newCase, true)."</pre>";
 
-    GFCommon::log_debug( 'gf_fusedesk_createcase: FuseDesk Case => ' . print_r( $newCase, true ) );
+	GFCommon::log_debug( 'gf_fusedesk_createcase: FuseDesk Case => ' . print_r( $newCase, true ) );
 
-    // No response? Not good.
-    if(!($fuseDeskCase = fuseDeskCreateCase($newCase))) {
-        GFAPI::add_note( $submission['id'], null, 'FuseDesk', esc_html__( 'Unknown error creating case', 'fusedesk'));
-        return false;
-    }
+	// No response? Not good.
+	if(!($fuseDeskCase = fuseDeskCreateCase($newCase))) {
+		GFAPI::add_note( $submission['id'], null, 'FuseDesk', esc_html__( 'Unknown error creating case', 'fusedesk'));
+		return false;
+	}
 
-    // Error? Not good. Log the error
-    if(property_exists($fuseDeskCase, 'error')) {
-        GFAPI::add_note( $submission['id'], null, 'FuseDesk', esc_html__( 'Error creating case. ', 'fusedesk').$fuseDeskCase->error);
-        return false;
-    }
+	// Error? Not good. Log the error
+	if(property_exists($fuseDeskCase, 'error')) {
+		GFAPI::add_note( $submission['id'], null, 'FuseDesk', esc_html__( 'Error creating case. ', 'fusedesk').$fuseDeskCase->error);
+		return false;
+	}
 
-    // Case number? Good! Log the case number
-    if(property_exists($fuseDeskCase, 'casenum')) {
-        GFAPI::add_note( $submission['id'], null, 'FuseDesk', 'FuseDesk Case #'.$fuseDeskCase->casenum.' Created!'."\n".'https://'.get_option('fusedesk_appname').'.fusedesk.com/app/#cases/view/'.$fuseDeskCase->casenum);
-        return true;
-    }
+	// Case number? Good! Log the case number
+	if(property_exists($fuseDeskCase, 'casenum')) {
+		GFAPI::add_note( $submission['id'], null, 'FuseDesk', 'FuseDesk Case #'.$fuseDeskCase->casenum.' Created!'."\n".'https://'.get_option('fusedesk_appname').'.fusedesk.com/app/#cases/view/'.$fuseDeskCase->casenum);
+		return true;
+	}
 
-    // No error or case number? Not good... Log the raw response
-    GFAPI::add_note( $submission['id'], null, 'FuseDesk', var_export($fuseDeskCase, true));
-    return false;
+	// No error or case number? Not good... Log the raw response
+	GFAPI::add_note( $submission['id'], null, 'FuseDesk', var_export($fuseDeskCase, true));
+	return false;
 }
 
 function fusedesk_apicallV2($url, $args = [], $type = 'GET') {
@@ -1244,25 +1213,25 @@ function fusedesk_apicallV2($url, $args = [], $type = 'GET') {
  * @return array
  */
 function fusedesk_departments($forceRefresh = false) {
-    if(!$forceRefresh
-        && ($departments = fusedesk_cacheGet('departments'))
-    ) {
-        return $departments;
-    }
+	if(!$forceRefresh
+	   && ($departments = fusedesk_cacheGet('departments'))
+	) {
+		return $departments;
+	}
 
-    if(($departments = fusedesk_apicallV2('departments'))
-        && is_array($departments)
-    ) {
-        // Clean our departments to just ID/Name
-        $departmentsSimple = [];
-        foreach($departments as $department) {
-            $departmentsSimple[$department->id] = $department->name;
-        }
+	if(($departments = fusedesk_apicallV2('departments'))
+	   && is_array($departments)
+	) {
+		// Clean our departments to just ID/Name
+		$departmentsSimple = [];
+		foreach($departments as $department) {
+			$departmentsSimple[$department->id] = $department->name;
+		}
 
-        return fusedesk_cacheSet('departments', $departmentsSimple);
-    } else {
-        return [];
-    }
+		return fusedesk_cacheSet('departments', $departmentsSimple);
+	} else {
+		return [];
+	}
 }
 
 /**
@@ -1276,26 +1245,26 @@ function fusedesk_departments($forceRefresh = false) {
  * @return array
  */
 function fusedesk_reps($forceRefresh = false) {
-    if(!$forceRefresh
-        && ($reps = fusedesk_cacheGet('reps'))
-    ) {
-        return $reps;
-    }
+	if(!$forceRefresh
+	   && ($reps = fusedesk_cacheGet('reps'))
+	) {
+		return $reps;
+	}
 
-    if(($reps = fusedesk_apicallV2('reps'))
-        && is_array($reps)
-    ) {
-        // Cache only active reps...
-        $activeReps = [];
-        foreach($reps as $rep) {
-            if ($rep->active) {
-                $activeReps[$rep->userId] = $rep->firstName.' '.$rep->lastName;
-            }
-        }
-        return fusedesk_cacheSet('reps', $activeReps);
-    } else {
-        return [];
-    }
+	if(($reps = fusedesk_apicallV2('reps'))
+	   && is_array($reps)
+	) {
+		// Cache only active reps...
+		$activeReps = [];
+		foreach($reps as $rep) {
+			if ($rep->active) {
+				$activeReps[$rep->userId] = $rep->firstName.' '.$rep->lastName;
+			}
+		}
+		return fusedesk_cacheSet('reps', $activeReps);
+	} else {
+		return [];
+	}
 }
 
 
@@ -1310,25 +1279,25 @@ function fusedesk_reps($forceRefresh = false) {
  * @return array
  */
 function fusedesk_casetags($forceRefresh = false) {
-    if(!$forceRefresh
-        && ($caseTags = fusedesk_cacheGet('casetags'))
-    ) {
-        return $caseTags;
-    }
+	if(!$forceRefresh
+	   && ($caseTags = fusedesk_cacheGet('casetags'))
+	) {
+		return $caseTags;
+	}
 
-    if(($caseTags = fusedesk_apicall('casetags'))
-        && is_array($caseTags)
-    ) {
-        // Clean our case tags to just ID/Name
-        $tagsSimple = [];
-        foreach($caseTags as $caseTag) {
-            $tagsSimple[$caseTag->id] = $caseTag->tagname;
-        }
+	if(($caseTags = fusedesk_apicall('casetags'))
+	   && is_array($caseTags)
+	) {
+		// Clean our case tags to just ID/Name
+		$tagsSimple = [];
+		foreach($caseTags as $caseTag) {
+			$tagsSimple[$caseTag->id] = $caseTag->tagname;
+		}
 
-        return fusedesk_cacheSet('casetags', $tagsSimple);
-    } else {
-        return [];
-    }
+		return fusedesk_cacheSet('casetags', $tagsSimple);
+	} else {
+		return [];
+	}
 }
 /**
  *
@@ -1341,37 +1310,37 @@ function fusedesk_casetags($forceRefresh = false) {
  * @return array|object
  */
 function fusedesk_chatwidgets($forceRefresh = false) {
-    if(!$forceRefresh
-        && ($chatWidgets = fusedesk_cacheGet('chatwidgets'))
-    ) {
-        return $chatWidgets;
-    }
+	if(!$forceRefresh
+	   && ($chatWidgets = fusedesk_cacheGet('chatwidgets'))
+	) {
+		return $chatWidgets;
+	}
 
-    if(($chatWidgets = fusedesk_apicall('integrations'))
-    ) {
-        // Got an array? Super. Cache it.
-        if(is_array($chatWidgets)) {
-            // Clean our chat widgets to just ID/name
-            $integrationsSimple = [];
-            foreach($chatWidgets as $chatWidget) {
-                if($chatWidget->platform === 'livechat') {
-                    $integrationsSimple[$chatWidget->id] = $chatWidget->name;
-                }
-            }
+	if(($chatWidgets = fusedesk_apicall('integrations'))
+	) {
+		// Got an array? Super. Cache it.
+		if(is_array($chatWidgets)) {
+			// Clean our chat widgets to just ID/name
+			$integrationsSimple = [];
+			foreach($chatWidgets as $chatWidget) {
+				if($chatWidget->platform === 'livechat') {
+					$integrationsSimple[$chatWidget->id] = $chatWidget->name;
+				}
+			}
 
-            return fusedesk_cacheSet('casetags', $integrationsSimple);
-        }
+			return fusedesk_cacheSet('casetags', $integrationsSimple);
+		}
 
-        // Got an object? Not good. Pass the error back
-        if(is_object($chatWidgets)
-            && property_exists($chatWidgets, 'errorcode')
-        ) {
-            return $chatWidgets;
-        }
+		// Got an object? Not good. Pass the error back
+		if(is_object($chatWidgets)
+		   && property_exists($chatWidgets, 'errorcode')
+		) {
+			return $chatWidgets;
+		}
 
-    } else {
-        return [];
-    }
+	} else {
+		return [];
+	}
 }
 
 /**
@@ -1383,12 +1352,12 @@ function fusedesk_chatwidgets($forceRefresh = false) {
  * @return null|array
  */
 function fusedesk_cacheGet($dataset) {
-    if($cachedData = get_option('fusedesk_cache_'.$dataset)) {
-        if($cachedData->cacheExpiry > time()) {
-            return $cachedData->data;
-        }
-    }
-    return null;
+	if($cachedData = get_option('fusedesk_cache_'.$dataset)) {
+		if($cachedData->cacheExpiry > time()) {
+			return $cachedData->data;
+		}
+	}
+	return null;
 }
 
 /**
@@ -1401,12 +1370,12 @@ function fusedesk_cacheGet($dataset) {
  * @return array
  */
 function fusedesk_cacheSet($dataset, $data) {
-    update_option('fusedesk_cache_'.$dataset, (object)[
-        'cacheExpiry' => time() + 60*60*2, // 2 hours
-        'data' => $data
-    ]);
+	update_option('fusedesk_cache_'.$dataset, (object)[
+		'cacheExpiry' => time() + 60*60*2, // 2 hours
+		'data' => $data
+	]);
 
-    return $data;
+	return $data;
 }
 
 // Return the embed code for the Live Chat Widget (if configured)
