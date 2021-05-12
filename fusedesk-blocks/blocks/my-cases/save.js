@@ -27,7 +27,7 @@ import controlsData from './ControlsData';
 
 export default function save( props ) {
 	const { attributes, setAttributes } = props;
-	const groups = ['display','text','advanced'];
+	const groups = ['display','text','text_columns','advanced'];
 
 	const attributeToString = (attName,attGroup) => {
 		let controlObj = controlsData[attGroup][attName];

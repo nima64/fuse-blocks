@@ -80,7 +80,6 @@ export default function createControlRenderer({attributes,setAttributes}){
 
                                 //suggestionmap was made because suggestions don't support objects,
                                 //and those suggestions need to be saved as tokens(which are objects).
-                                //it also prevents users to entering items which are not in suggestions.
                                 let temp = tokens.map( (t) => {
 
                                     //transform new tokens into objects{value:v,id:i} if they aren't already 
@@ -100,6 +99,7 @@ export default function createControlRenderer({attributes,setAttributes}){
                             // __experimentalExpandOnFocus={true}
                             minimumChars={0}
                             __experimentalShowHowTo={false}
+                            __experimentalExpandOnFocus= {obj.expandOnFocus}
                             />
                     </BaseControl>
                     );

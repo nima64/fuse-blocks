@@ -43,11 +43,20 @@ export function InspectorControls_MyCases(props,cases){
 
     const getTextPanel = () => {
         const TextGroup = ControlsData.text;
+        const TextColumnsGroup = ControlsData.text_columns;
+
+        const selectedColumns = props.attributes.columns.map(({val, id}) => id + "_name" );
+        const avaliableLabels = selectedColumns.filter( (col_name) => TextColumnsGroup[col_name] != undefined ); 
+        const columnLabels = avaliableLabels.map( (col_name) => TextColumnsGroup[col_name] );
         return (
             <Panel>
                 <PanelBody title="Text">
-                    { Object.entries(TextGroup).map( ([name,obj]) => 
-                        renderControlObj(obj) )
+                    {
+                        columnLabels.map( obj => renderControlObj(obj) )
+                    }
+                    { 
+                        Object.entries(TextGroup).map( ([name,obj]) => 
+                            renderControlObj(obj) )
                     }
                 </PanelBody>
             </Panel>
@@ -58,7 +67,7 @@ export function InspectorControls_MyCases(props,cases){
         const AdvancedGroup = ControlsData.advanced;
         return (
 			<>
-                {/* function passed replaces spaces with dashes */}
+                {/* replaces spaces with dashes */}
 				{ renderControlObj(AdvancedGroup.anchor ,'advanced',(v) => v.slice(-1) == ' '? v.slice(0,-1) + '-' : v ) }
 				{ renderControlObj(AdvancedGroup.style ,'advanced') }
 			</>

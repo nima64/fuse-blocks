@@ -12,6 +12,7 @@ export default {
     display:{
         columns:{
             type: 'formTokenField',
+            expandOnFocus: true,
             label: __('Columns','fusedesk'),
             suggestionmap: {
 				[ __('Case Number','fusedesk') ]: 'casenum' ,
@@ -33,7 +34,7 @@ export default {
             ],
             bind: 'columns',
             placeholder: __('casenum,date_updated,status,summary','fusedesk'),
-            help: __( `Which columns to show. Choose from casenum, date_updated, date_opened,date_closed, status, summary, details.`,'fusedesk'),
+            help: __( `Which columns to show.`,'fusedesk'),
           
         },
         status:{
@@ -45,6 +46,7 @@ export default {
         },
         userstatuses:{
             type: 'formTokenField',
+            expandOnFocus: true,
             label: __('User Filterable Statuses','fusedesk'),
             options: statusOptionsShared,
             bind: 'userstatuses',
@@ -65,6 +67,7 @@ export default {
         },
         orderby:{
             type: 'formTokenField',
+            expandOnFocus: true,
             label: __('Case Order','fusedesk'),
             // placeholder: __('date_lastresponse asc, date_updated asc','fusedesk'),
             placeholder: __('Date Last Response Oldest to Newest, Date Updated Oldest to Newest','fusedesk'),
@@ -99,6 +102,9 @@ export default {
                 [ __('Date Closed, Oldest to Newest','fusedesk') ]: "date_closed desc", 
                 [ __('Date Closed, Newest to Oldest','fusedesk') ]: "date_closed desc", 
 
+                [ __('Status','fusedesk') ]: 'status',
+                [ __('Contact','fusedesk') ]: 'contactid',
+
                 //template
                 // [ __(', Oldest to Newest','fusedesk') ]: "date_updated asc", 
                 // [ __(', Newest to Oldest','fusedesk') ]: "date_updated desc",
@@ -127,6 +133,9 @@ export default {
 
                 __('Date Closed, Oldest to Newest','fusedesk'),
                 __('Date Closed, Newest to Oldest','fusedesk'),
+
+                __('Status','fusedesk'),
+                __('Contact','fusedesk'),
             ],
             bind: 'orderby',
             help: __("How to sort your cases.",'fusedesk'),
@@ -148,35 +157,37 @@ export default {
             bind: 'limit',
         },
     },
-    text:{
+    text_columns:{
         casenum_name: {
             type: 'text',
             label: __('Case Number Column','fusedesk'),
             placeholder: __('Case Number','fusedesk'),
             bind: 'casenum_name',
-            help: __('Case Number Column Label','fusedesk'),
+            // help: __('Case Number Column Label','fusedesk'),
         },
         status_name: {
             type: 'text',
             label: __('Status Column','fusedesk'),
             placeholder: __('Status','fusedesk'),
             bind: 'status_name',
-            help: __('Status Column Label','fusedesk'),
+            // help: __('Status Column Label','fusedesk'),
         },
         date_updated_name: {
             type: 'text',
             label: __('Date Updated Column','fusedesk'),
             placeholder: __('Date Updated','fusedesk'),
             bind: 'date_updated_name',
-            help: __('Date Updated Column Label','fusedesk'),
+            // help: __('Date Updated Column Label','fusedesk'),
         },
         summary_name: {
             type: 'text',
             label: __('Summary Column','fusedesk'),
             placeholder: __('Summary','fusedesk'),
             bind: 'summary_name',
-            help: __('Summary Column Label','fusedesk'),
+            // help: __('Summary Column Label','fusedesk'),
         },
+    },
+    text:{
         errornotloggedin:{
             type: 'text',
             label: __('Error, Not Logged In','fusedesk'),
