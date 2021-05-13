@@ -36,9 +36,8 @@ import controlsData from './controlsData';
 
 
 /**
- * Update data on mount
+ * IO fetch requests on mount
  */
-
 class OptionsPuller extends React.Component {
 	constructor( props ) {
 		super( props );
@@ -46,13 +45,19 @@ class OptionsPuller extends React.Component {
 		this.caseTitle = props.attributes.caseTitle;
 		this.attributes = props.attributes;
 		this.setAttributes = props.setAttributes;
+		this.department = props.attributes.department;
 	}
 
 	componentDidMount() {
 		let dep_options = controlsData.caseCreation.department.options;
 		this.fetchCalls.get_rep_options();
-		//callback to set attribute to the first option fetched
-		this.fetchCalls.get_dep_options( () => { this.setAttributes( { ['department']:dep_options[0].value }) });
+		this.fetchCalls.get_dep_options( () => { 
+			//don't override existing option
+			if(!this.department){
+				//set it to the first option after fetch
+				this.setAttributes( { ['department']:dep_options[0].value });
+			}
+		});
 		this.fetchCalls.get_casetagids();
 		this.fetchCalls.get_categories();
 	}

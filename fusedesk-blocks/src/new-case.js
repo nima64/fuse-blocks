@@ -672,7 +672,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 /**
- * Update data on mount
+ * IO fetch requests on mount
  */
 
 var OptionsPuller = /*#__PURE__*/function (_React$Component) {
@@ -690,6 +690,7 @@ var OptionsPuller = /*#__PURE__*/function (_React$Component) {
     _this.caseTitle = props.attributes.caseTitle;
     _this.attributes = props.attributes;
     _this.setAttributes = props.setAttributes;
+    _this.department = props.attributes.department;
     return _this;
   }
 
@@ -699,10 +700,13 @@ var OptionsPuller = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       var dep_options = _controlsData__WEBPACK_IMPORTED_MODULE_12__["default"].caseCreation.department.options;
-      this.fetchCalls.get_rep_options(); //callback to set attribute to the first option fetched
-
+      this.fetchCalls.get_rep_options();
       this.fetchCalls.get_dep_options(function () {
-        _this2.setAttributes(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()({}, 'department', dep_options[0].value));
+        //don't override existing option
+        if (!_this2.department) {
+          //set it to the first option after fetch
+          _this2.setAttributes(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()({}, 'department', dep_options[0].value));
+        }
       });
       this.fetchCalls.get_casetagids();
       this.fetchCalls.get_categories();
@@ -1243,8 +1247,8 @@ function save(props) {
       var attval = attributes[attName];
 
       if (controlObj.type == 'formTokenField') {
-        attval = attval.map(function (obj) {
-          return obj.id;
+        attval = attval.map(function (token) {
+          return token.id;
         }).join();
       }
 
@@ -2070,6 +2074,9 @@ var FormTokenField = /*#__PURE__*/function (_Component) {
       var match = saveTransform(searchValue);
       var startsWithMatch = [];
       var containsMatch = [];
+      value = value.map(function (token) {
+        return token.value ? token.value : value;
+      });
 
       if (match.length === 0) {
         suggestions = Object(lodash__WEBPACK_IMPORTED_MODULE_9__["difference"])(suggestions, value);

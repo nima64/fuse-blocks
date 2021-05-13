@@ -1,13 +1,5 @@
 import {__} from '@wordpress/i18n';
 
-const statusOptionsShared = [
-    { label: __('All','fusedesk'), value: 'all' },
-    { label: __('Active','fusedesk'), value: 'active' },
-    { label: __('New','fusedesk'), value: 'new' },
-    { label: __('Open','fusedesk'), value: 'open' },
-    { label: __('Closed','fusedesk'), value: 'closed' },
-];
-
 export default {
     display:{
         columns:{
@@ -40,7 +32,13 @@ export default {
         status:{
             type: 'select',
             label: __('Case Statuses','fusedesk'),
-            options: statusOptionsShared,
+            options:[
+                { label: __('All','fusedesk'), value: 'all' },
+                { label: __('Active','fusedesk'), value: 'active' },
+                { label: __('New','fusedesk'), value: 'new' },
+                { label: __('Open','fusedesk'), value: 'open' },
+                { label: __('Closed','fusedesk'), value: 'closed' },
+            ],
             bind: 'status',
             help: __( "Filter for which case statuses to show.",'fusedesk'),
         },
@@ -48,18 +46,15 @@ export default {
             type: 'formTokenField',
             expandOnFocus: true,
             label: __('User Filterable Statuses','fusedesk'),
-            options: statusOptionsShared,
             bind: 'userstatuses',
-            placeholder: __('new,active,open,closed','fusedesk'),
+            placeholder: __('new,open,closed','fusedesk'),
             suggestionmap:{
 				[ __('New','fusedesk') ]: 'new' ,
-				[ __('Active','fusedesk') ]: 'active' ,
 				[ __('Open','fusedesk') ]: 'open',
 				[ __('Closed','fusedesk') ]: 'closed',
             },
             suggestions:[
 				__('New','fusedesk'),
-				__('Active','fusedesk'),
 				__('Open','fusedesk'),
 				__('Closed','fusedesk'),
             ],
@@ -69,7 +64,6 @@ export default {
             type: 'formTokenField',
             expandOnFocus: true,
             label: __('Case Order','fusedesk'),
-            // placeholder: __('date_lastresponse asc, date_updated asc','fusedesk'),
             placeholder: __('Date Last Response Oldest to Newest, Date Updated Oldest to Newest','fusedesk'),
             suggestionmap:{
                 // caseid, contactid, date_opened, date_assigned, date_firstresponse, date_lastresponse, date_updated, date_created, date_closed
@@ -139,12 +133,13 @@ export default {
             ],
             bind: 'orderby',
             help: __("How to sort your cases.",'fusedesk'),
-            // help: __("How to sort your cases. Defaults to date_lastresponse asc, date_updated asc",'fusedesk'),
         },
         dateformat:{
             type: 'text',
             label: __('Date Format','fusedesk'),
-            options: [ { label: __('M j, Y g:ia','fusedesk'), value: 'M j, Y g:ia' } ],
+            options: [ 
+                { label: __('M j, Y g:ia','fusedesk'), value: 'M j, Y g:ia' } 
+            ],
             bind: 'dateformat',
             placeholder: __('M j, Y g:ia','fusedesk'),
             help: __(<span>How to format your dates. Accepts PHP's <a href="http://php.net/manual/en/function.date.php" target="_blank">date</a> formatting.</span>,'fusedesk'),
@@ -157,34 +152,30 @@ export default {
             bind: 'limit',
         },
     },
-    text_columns:{
+    text_column_label:{
         casenum_name: {
             type: 'text',
             label: __('Case Number Column','fusedesk'),
             placeholder: __('Case Number','fusedesk'),
             bind: 'casenum_name',
-            // help: __('Case Number Column Label','fusedesk'),
         },
         status_name: {
             type: 'text',
             label: __('Status Column','fusedesk'),
             placeholder: __('Status','fusedesk'),
             bind: 'status_name',
-            // help: __('Status Column Label','fusedesk'),
         },
         date_updated_name: {
             type: 'text',
             label: __('Date Updated Column','fusedesk'),
             placeholder: __('Date Updated','fusedesk'),
             bind: 'date_updated_name',
-            // help: __('Date Updated Column Label','fusedesk'),
         },
         summary_name: {
             type: 'text',
             label: __('Summary Column','fusedesk'),
             placeholder: __('Summary','fusedesk'),
             bind: 'summary_name',
-            // help: __('Summary Column Label','fusedesk'),
         },
     },
     text:{

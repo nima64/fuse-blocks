@@ -27,7 +27,7 @@ import controlsData from './ControlsData';
 
 export default function save( props ) {
 	const { attributes, setAttributes } = props;
-	const groups = ['display','text','text_columns','advanced'];
+	const groups = ['display','text','text_column_label','advanced'];
 
 	const attributeToString = (attName,attGroup) => {
 		let controlObj = controlsData[attGroup][attName];
@@ -39,10 +39,10 @@ export default function save( props ) {
 		}
 
 		if( controlObj.type == 'formTokenField' ){
-			attval = attval.map(obj => obj.id).join();
+			attval = attval.map(token => token.id).join();
 		}
 
-		//return string "name=value"
+		//return string name="value"
 		return attval !== '' ? `${ attName }="${ attval }" ` : '';
 
 	};
@@ -60,9 +60,9 @@ export default function save( props ) {
 			<RawHTML { ...useBlockProps.save() } >
 				{ '[fusedesk_mycases ' + genAllGroupAtts() + ']' }
 			</RawHTML>
-			<div>
+			{/* <div>
 				{genAllGroupAtts()}
-			</div>
+			</div> */}
 		</div>
 	);
 }

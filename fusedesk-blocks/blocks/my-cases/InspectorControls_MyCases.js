@@ -43,7 +43,7 @@ export function InspectorControls_MyCases(props,cases){
 
     const getTextPanel = () => {
         const TextGroup = ControlsData.text;
-        const TextColumnsGroup = ControlsData.text_columns;
+        const TextColumnsGroup = ControlsData.text_column_label;
 
         const selectedColumns = props.attributes.columns.map(({val, id}) => id + "_name" );
         const avaliableLabels = selectedColumns.filter( (col_name) => TextColumnsGroup[col_name] != undefined ); 

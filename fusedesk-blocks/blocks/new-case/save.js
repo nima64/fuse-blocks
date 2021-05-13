@@ -31,17 +31,15 @@ export default function save( props ) {
 
 	//look in controlsData, then look in attributes
 	const genShortcodeAtt = (attGroup) => {
+		
 		let attNames =  Object.entries(controlsData[attGroup]).map( ([k, v]) => k);
 
 		return attNames.map( attName => {
 			let controlObj = controlsData[attGroup][attName];
 			let attval = attributes[attName];
 
-
 			if( controlObj.type == 'formTokenField' ){
-				attval = attval.map(obj => {
-					return obj.id;
-				}).join();
+				attval = attval.map( token => token.id ).join();
 			}
 
 			return !! attval ? `${ attName }="${ attval }" ` : '';

@@ -455,6 +455,8 @@ class FormTokenField extends Component {
 		const startsWithMatch = [];
 		const containsMatch = [];
 
+		value = value.map( token => token.value ? token.value : value );
+
 		if ( match.length === 0 ) {
 			suggestions = difference( suggestions, value );
 		} else {
