@@ -60,9 +60,9 @@ export default function save( props ) {
 			<RawHTML { ...useBlockProps.save() } >
 				{ '[fusedesk_mycases ' + genAllGroupAtts() + ']' }
 			</RawHTML>
-			<div>
+			{/* <div>
 				{genAllGroupAtts()}
-			</div>
+			</div> */}
 		</div>
 	);
 }
