@@ -75,6 +75,7 @@ class MockData{
 				this.cases.sort( (a,b) => a[ id_s[0] ] - b[ id_s[0] ] );	
 			}
 			if (id_s[1] == "desc"){
+				//sort largest to smallest
 				this.cases.sort( (a,b) => b[ id_s[0] ] - a[ id_s[0] ] );	
 			}
 		};
@@ -107,39 +108,40 @@ export default function Edit( props ) {
 	let columns = (attributes.columns.length != 0) ? attCols : ['casenum', 'date_updated', 'status', 'summary'];
 	
 	/**
-	 *returns default column name if it isn't declared 
-	 * @param {String} col 
+	 *returns default attribute value if it isn't defined 
+	 * @param {String} att 
 	 */
-	const getDefaultColName = (col) => {
+	const getDefaultAttribute = (att) => {
 		const defaults = {
-			'casenum' : 'Case Number',
-			'date_updated' : 'Date Updated',
-			'date_opened' : 'Date Opened',
-			'date_closed' : 'Date Closed',
-			'status' : 'Status',
-			'summary' : 'Summary',
-			'details' : 'Details',
+			'casenum_name' : 'Case Number',
+			'date_updated_name' : 'Date Updated',
+			'date_opened_name' : 'Date Opened',
+			'date_closed_name' : 'Date Closed',
+			'status_name' : 'Status',
+			'summary_name' : 'Summary',
+			'details_name' : 'Details',
+			'dateformat': 'M j, Y g:ia',
 		}
 
-		const colName = attributes[col+'_name'];
-		
-		if(colName == undefined)
-			console.log(`attribute ${col}_name doesn't exist, please create one.`);
+		const attval = attributes[att];
+		if(attval == undefined)
+			console.log(`attribute ${att} doesn't exist, please create one.`);
 
 		//if string is empty return defaults
-		return ( colName != '') ? colName : defaults[col]; 
+		return ( attval != '' ) ? attval : defaults[att]; 
 	};
 
 	mockData.orderBy(attributes.orderby);
 
 
-	const renderTable = (columns, cases) =>{
+	const renderTable = (columns) =>{
 		return(
 			<table >
 				<thead>
 					<tr>
 						{columns.map(column => (
-							<td class={`fusedesk-cases-columnhead-${column}`}>{ getDefaultColName(column) }</td>
+							<td class={`fusedesk-cases-columnhead-${column}`}>{ getDefaultAttribute(column+'_name') }</td>
+							// <td class={`fusedesk-cases-columnhead-${column}`}>{ getDefaultColName(column) }</td>
 						))}
 						<td class="fusedesk-cases-columnhead-"></td>
 					</tr>
@@ -153,8 +155,9 @@ export default function Edit( props ) {
 								{columns.map(col => 
 									<td>
 									{
+										//eval date if columns have date in them
 										col.substr(0,4) == "date" ?
-											formatTimeStamp(_case[col], attributes.dateformat)	
+											formatTimeStamp(_case[col], getDefaultAttribute('dateformat'))	
 										:
 										_case[col]
 									}
@@ -172,8 +175,8 @@ export default function Edit( props ) {
 
 	return (
 		<div { ...useBlockProps() }>
-			{ InspectorControls_MyCases(props,mockData.cases) }
-			{ renderTable(columns, mockData.cases) }
+			{ InspectorControls_MyCases(props) }
+			{ renderTable(columns) }
 		</div>
 	);
 }

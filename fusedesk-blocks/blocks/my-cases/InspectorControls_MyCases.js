@@ -13,7 +13,7 @@ import createControlRenderer from '../../lib/createControlRenderer';
  * @param props
  * @returns InspectorControls and IspectorAdvancedControls
  */
-export function InspectorControls_MyCases(props,cases){
+export function InspectorControls_MyCases(props){
 
 	const renderControlObj = createControlRenderer( props );
 
@@ -26,16 +26,8 @@ export function InspectorControls_MyCases(props,cases){
                     {renderControlObj(DisplayGroup.status)}
                     {renderControlObj(DisplayGroup.userstatuses)}
                     {renderControlObj(DisplayGroup.orderby)}
-                    {/* {renderControlObj(DisplayGroup.orderby, null, (v) =>{
-                        console.log(v);
-                        cases.sort( (a,b) => a['date_updated'] > b['date_updated'] );
-                        return v;
-                    } )} */}
                     {renderControlObj(DisplayGroup.dateformat)}
                     {renderControlObj(DisplayGroup.limit)}
-                    {/* { Object.entries(DisplayGroup).map( ([name,obj] ) => 
-                        renderControlObj(obj) )
-                    } */}
                 </PanelBody>
             </Panel>
         );
@@ -67,8 +59,11 @@ export function InspectorControls_MyCases(props,cases){
         const AdvancedGroup = ControlsData.advanced;
         return (
 			<>
-                {/* replaces spaces with dashes */}
-				{ renderControlObj(AdvancedGroup.anchor ,'advanced',(v) => v.slice(-1) == ' '? v.slice(0,-1) + '-' : v ) }
+				{ 
+                /* replaces spaces with dashes */
+                    renderControlObj(AdvancedGroup.anchor ,'advanced',
+                        (v) => v.slice(-1) == ' ' ? v.slice(0,-1) + '-' : v ) 
+                }
 				{ renderControlObj(AdvancedGroup.style ,'advanced') }
 			</>
         );

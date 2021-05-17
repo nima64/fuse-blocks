@@ -790,7 +790,8 @@ function Edit(props) {
       type: "hidden",
       name: "summary",
       value: "Support Request"
-    }), attributes.showtitle && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["Fragment"], null, attributes.titletext || Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Briefly, what is the request about?', 'fusedesk'), attributes.titleoptions ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["SelectControl"], {
+    }), attributes.showtitle && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["Fragment"], null, attributes.titletext || Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Briefly, what is the request about?', 'fusedesk'), //
+    attributes.titleoptions ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["SelectControl"], {
       options: _InspectorControls_NewCase__WEBPACK_IMPORTED_MODULE_10__["formTitleOptions"].get(),
       name: "summary",
       id: "fusedesk-title",
@@ -818,7 +819,7 @@ function Edit(props) {
       },
       "data-limit": "10",
       "data-categories": ""
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("span", null, " May we suggest one of the following posts?"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("ul", {
+    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("span", null, "May we suggest one of the following posts?"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("ul", {
       style: {
         listStyle: 'none'
       }

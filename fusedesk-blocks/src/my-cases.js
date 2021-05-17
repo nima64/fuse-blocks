@@ -248,12 +248,8 @@ var _suggestionmap, _suggestionmap2, _suggestionmap3;
     dateformat: {
       type: 'text',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Format', 'fusedesk'),
-      options: [{
-        label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('M j, Y g:ia', 'fusedesk'),
-        value: 'M j, Y g:ia'
-      }],
       bind: 'dateformat',
-      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('M j, Y g:ia', 'fusedesk'),
+      placeholder: 'M j, Y g:ia',
       help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])(Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("span", null, "How to format your dates. Accepts PHP's ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("a", {
         href: "http://php.net/manual/en/function.date.php",
         target: "_blank"
@@ -286,11 +282,29 @@ var _suggestionmap, _suggestionmap2, _suggestionmap3;
       placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Updated', 'fusedesk'),
       bind: 'date_updated_name'
     },
+    date_opened_name: {
+      type: 'text',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Opened Column', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Opened', 'fusedesk'),
+      bind: 'date_opened_name'
+    },
+    date_closed_name: {
+      type: 'text',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Closed Column', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Closed', 'fusedesk'),
+      bind: 'date_closed_name'
+    },
     summary_name: {
       type: 'text',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Summary Column', 'fusedesk'),
       placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Summary', 'fusedesk'),
       bind: 'summary_name'
+    },
+    details_name: {
+      type: 'text',
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Details Column', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Details', 'fusedesk'),
+      bind: 'details_name'
     }
   },
   text: {
@@ -358,7 +372,7 @@ __webpack_require__.r(__webpack_exports__);
  * @returns InspectorControls and IspectorAdvancedControls
  */
 
-function InspectorControls_MyCases(props, cases) {
+function InspectorControls_MyCases(props) {
   var renderControlObj = Object(_lib_createControlRenderer__WEBPACK_IMPORTED_MODULE_5__["default"])(props);
 
   var getDisplayPlanel = function getDisplayPlanel() {
@@ -397,7 +411,9 @@ function InspectorControls_MyCases(props, cases) {
 
   var getAdvancedPanel = function getAdvancedPanel() {
     var AdvancedGroup = _ControlsData__WEBPACK_IMPORTED_MODULE_4__["default"].advanced;
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null, renderControlObj(AdvancedGroup.anchor, 'advanced', function (v) {
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null,
+    /* replaces spaces with dashes */
+    renderControlObj(AdvancedGroup.anchor, 'advanced', function (v) {
       return v.slice(-1) == ' ' ? v.slice(0, -1) + '-' : v;
     }), renderControlObj(AdvancedGroup.style, 'advanced'));
   };
@@ -525,6 +541,7 @@ var MockData = /*#__PURE__*/function () {
         }
 
         if (id_s[1] == "desc") {
+          //sort largest to smallest
           _this2.cases.sort(function (a, b) {
             return b[id_s[0]] - a[id_s[0]];
           });
@@ -566,43 +583,46 @@ function Edit(props) {
   });
   var columns = attributes.columns.length != 0 ? attCols : ['casenum', 'date_updated', 'status', 'summary'];
   /**
-   *returns default column name if it isn't declared 
-   * @param {String} col 
+   *returns default attribute value if it isn't defined 
+   * @param {String} att 
    */
 
-  var getDefaultColName = function getDefaultColName(col) {
+  var getDefaultAttribute = function getDefaultAttribute(att) {
     var defaults = {
-      'casenum': 'Case Number',
-      'date_updated': 'Date Updated',
-      'date_opened': 'Date Opened',
-      'date_closed': 'Date Closed',
-      'status': 'Status',
-      'summary': 'Summary',
-      'details': 'Details'
+      'casenum_name': 'Case Number',
+      'date_updated_name': 'Date Updated',
+      'date_opened_name': 'Date Opened',
+      'date_closed_name': 'Date Closed',
+      'status_name': 'Status',
+      'summary_name': 'Summary',
+      'details_name': 'Details',
+      'dateformat': 'M j, Y g:ia'
     };
-    var colName = attributes[col + '_name'];
-    if (colName == undefined) console.log("attribute ".concat(col, "_name doesn't exist, please create one.")); //if string is empty return defaults
+    var attval = attributes[att];
+    if (attval == undefined) console.log("attribute ".concat(att, " doesn't exist, please create one.")); //if string is empty return defaults
 
-    return colName != '' ? colName : defaults[col];
+    return attval != '' ? attval : defaults[att];
   };
 
   mockData.orderBy(attributes.orderby);
 
-  var renderTable = function renderTable(columns, cases) {
+  var renderTable = function renderTable(columns) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("table", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("thead", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("tr", null, columns.map(function (column) {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("td", {
         class: "fusedesk-cases-columnhead-".concat(column)
-      }, getDefaultColName(column));
+      }, getDefaultAttribute(column + '_name')) // <td class={`fusedesk-cases-columnhead-${column}`}>{ getDefaultColName(column) }</td>
+      ;
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("td", {
       class: "fusedesk-cases-columnhead-"
     }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("tbody", null, mockData.filterByStatus(attributes.status).slice(0, attributes.limit).map(function (_case) {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("tr", null, columns.map(function (col) {
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("td", null, col.substr(0, 4) == "date" ? formatTimeStamp(_case[col], attributes.dateformat) : _case[col]);
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("td", null, //eval date if columns have date in them
+        col.substr(0, 4) == "date" ? formatTimeStamp(_case[col], getDefaultAttribute('dateformat')) : _case[col]);
       }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("td", null));
     })));
   };
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["useBlockProps"])(), Object(_InspectorControls_MyCases__WEBPACK_IMPORTED_MODULE_6__["InspectorControls_MyCases"])(props, mockData.cases), renderTable(columns, mockData.cases));
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["useBlockProps"])(), Object(_InspectorControls_MyCases__WEBPACK_IMPORTED_MODULE_6__["InspectorControls_MyCases"])(props), renderTable(columns));
 }
 
 /***/ }),
@@ -875,7 +895,7 @@ function save(props) {
     }).join(' ');
   };
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["RawHTML"], _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), '[fusedesk_mycases ' + genAllGroupAtts() + ']'));
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["RawHTML"], _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), '[fusedesk_mycases ' + genAllGroupAtts() + ']'), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", null, genAllGroupAtts()));
 }
 
 /***/ }),

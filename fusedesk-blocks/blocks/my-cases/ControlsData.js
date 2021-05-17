@@ -137,11 +137,8 @@ export default {
         dateformat:{
             type: 'text',
             label: __('Date Format','fusedesk'),
-            options: [ 
-                { label: __('M j, Y g:ia','fusedesk'), value: 'M j, Y g:ia' } 
-            ],
             bind: 'dateformat',
-            placeholder: __('M j, Y g:ia','fusedesk'),
+            placeholder: 'M j, Y g:ia',
             help: __(<span>How to format your dates. Accepts PHP's <a href="http://php.net/manual/en/function.date.php" target="_blank">date</a> formatting.</span>,'fusedesk'),
         },
         limit:{
@@ -171,11 +168,29 @@ export default {
             placeholder: __('Date Updated','fusedesk'),
             bind: 'date_updated_name',
         },
+        date_opened_name: {
+            type: 'text',
+            label: __('Date Opened Column','fusedesk'),
+            placeholder: __('Date Opened','fusedesk'),
+            bind: 'date_opened_name',
+        },
+        date_closed_name: {
+            type: 'text',
+            label: __('Date Closed Column','fusedesk'),
+            placeholder: __('Date Closed','fusedesk'),
+            bind: 'date_closed_name',
+        },
         summary_name: {
             type: 'text',
             label: __('Summary Column','fusedesk'),
             placeholder: __('Summary','fusedesk'),
             bind: 'summary_name',
+        },
+        details_name: {
+            type: 'text',
+            label: __('Details Column','fusedesk'),
+            placeholder: __('Details','fusedesk'),
+            bind: 'details_name',
         },
     },
     text:{

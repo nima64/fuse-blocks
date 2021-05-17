@@ -112,17 +112,19 @@ export default function Edit( props ) {
 				{ attributes.showtitle &&
 					<>
 					{attributes.titletext || __('Briefly, what is the request about?','fusedesk')}
-					{ attributes.titleoptions?
-						<SelectControl options={formTitleOptions.get()}  name="summary" id="fusedesk-title" class="fusedesk-contactform" />
-						:
-						<input type="text" name="summary" id="fusedesk-title"  class="fusedesk-contactform"></input>
+					{ 
+						//
+						attributes.titleoptions?
+							<SelectControl options={formTitleOptions.get()}  name="summary" id="fusedesk-title" class="fusedesk-contactform" />
+							:
+							<input type="text" name="summary" id="fusedesk-title"  class="fusedesk-contactform"></input>
 					}
 					</>
 				}
 
 				{ attributes.fileupload &&
 					<>
-					{attributes.filetext || __('Attach a file:','fusedesk')}
+					{ attributes.filetext || __('Attach a file:','fusedesk') }
 					<input type="file" name="file_upload[]" accept="image/*,audio/*,application/pdf" id="fusedesk-fileupload" class="fusedesk-contactform" multiple="" /><br/>
 					</>
 				}
@@ -133,7 +135,7 @@ export default function Edit( props ) {
 				</>
 
 				<div id="fusedesk-suggestions" style={{display:'none'}} data-limit="10" data-categories="">
-					<span> May we suggest one of the following posts?</span>
+					<span>May we suggest one of the following posts?</span>
 					<ul style={{listStyle:'none'}}></ul>
 				</div>
 
