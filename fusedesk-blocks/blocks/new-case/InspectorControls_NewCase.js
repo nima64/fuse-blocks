@@ -120,7 +120,7 @@ function InspectorControls_NewCase(props){
 			<Panel>
 				<PanelBody title="Suggested Posts">
 					{
-						//only render/show rest when none is not selected
+						//only render/show all when none is not selected
 						attributes.suggestionplacement != 'none'
 							?  Object.entries(controlsData).map( ( [ k,v ]  ) =>
 									renderControlObj( v, 'suggestedPosts' )

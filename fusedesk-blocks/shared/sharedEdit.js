@@ -14,18 +14,12 @@ import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 } from '@wordpress/block-editor';
-import CustomInspectorControls from './Custom_InspectorControls';
-import ControlsData from './ControlsData';
-import RenderTable from './RenderTable';
+import createInspectorControls from './createInspectorControls';
+import customControlsData from './customControlsData';
 
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-import './styles/editor.scss';
+import editorView from './editorView';
 
+const InspectorControlsView = createInspectorControls(customControlsData);
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -35,13 +29,16 @@ import './styles/editor.scss';
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  * @return {WPElement} Element to render.
  */
-export default function Edit(props) {
-	const { attributes, setAttributes } = props;
-
+function Edit( props  ) {
+	
 	return (
-		<div {...useBlockProps()}>
-			<CustomInspectorControls {...props} ControlsData={ControlsData} />
-			<RenderTable {...props} />
+		<div { ...useBlockProps() }>
+			{ InspectorControlsView(props) }
+			{ editorView(props) }
 		</div>
 	);
+}
+
+export default function customEdit(ControlsData){
+	return Edit;
 }

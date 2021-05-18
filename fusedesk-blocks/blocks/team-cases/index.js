@@ -7,7 +7,7 @@
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { Icon } from '@wordpress/icons';
-import mycases_attributes from './attributes';
+import mycases_attributes from '../my-cases/attributes';
 import fusedesk_ico from '../../fusedesk_ico';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -16,7 +16,7 @@ import fusedesk_ico from '../../fusedesk_ico';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './styles/style.scss';
+// import './styles/style.scss';
 
 /**
  * Internal dependencies
@@ -29,16 +29,26 @@ import save from './save';
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType('fusedesk/my-cases', {
+registerBlockType('fusedesk/team-cases', {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
 	apiVersion: 2,
 	icon: <Icon icon={fusedesk_ico} />,
 	category: 'fusedesk',
-	title: __('FuseDesk My Cases', 'fusedesk'),
-	description: __('Show your logged in users a list of their FuseDesk cases.', 'fusedesk'),
-	attributes: { ...mycases_attributes },
+	title: __('FuseDesk My Team Cases', 'fusedesk'),
+	description: __("Show your logged in users a list of their team's FuseDesk cases.", 'fusedesk'),
+	attributes: { 
+		...mycases_attributes,
+		errornotsupported:{
+			type: 'string',
+			default: '',
+		},
+		errornoteam: {
+			type: 'string',
+			default: '',
+		}
+	 },
 
 	/**
 	 * @see ./edit.js

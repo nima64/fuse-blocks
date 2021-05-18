@@ -13,7 +13,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useBlockProps } from '@wordpress/block-editor';
 import { RawHTML } from '@wordpress/element';
-import controlsData from './ControlsData';
+import controlsData from './ControlData_TeamCases';
 import { createShortCodeAttFromGroup } from '../../lib/shortcode';
 
 
@@ -28,19 +28,18 @@ import { createShortCodeAttFromGroup } from '../../lib/shortcode';
  */
 export default function save(props) {
 	const { attributes, setAttributes } = props;
-	const groups = ['display', 'text', 'text_column_label', 'advanced'];
-
+	const groups = Object.entries(controlsData).map(([k,v]) => k);
 
 	const genShortCodeAtts = () => groups.map((group) => createShortCodeAttFromGroup(group, controlsData, attributes)).join(' ');
 
 	return (
 		<div {...useBlockProps.save()}>
 			<RawHTML {...useBlockProps.save()} >
-				{'[fusedesk_mycases ' + genShortCodeAtts() + ']'}
+				{'[fusedesk_teamcases ' + genShortCodeAtts() + ']'}
 			</RawHTML>
-			<div>
+			{/* <div>
 				{genShortCodeAtts()}
-			</div>
+			</div> */}
 		</div>
 	);
 }

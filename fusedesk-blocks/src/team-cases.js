@@ -1,81 +1,6 @@
-(window["webpackJsonp_fusedesk_blocks"] = window["webpackJsonp_fusedesk_blocks"] || []).push([["style-my-cases"],{
-
-/***/ "./blocks/my-cases/styles/style.scss":
-/*!*******************************************!*\
-  !*** ./blocks/my-cases/styles/style.scss ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ })
-
-}]);
-
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	// install a JSONP callback for chunk loading
-/******/ 	function webpackJsonpCallback(data) {
-/******/ 		var chunkIds = data[0];
-/******/ 		var moreModules = data[1];
-/******/ 		var executeModules = data[2];
-/******/
-/******/ 		// add "moreModules" to the modules object,
-/******/ 		// then flag all "chunkIds" as loaded and fire callback
-/******/ 		var moduleId, chunkId, i = 0, resolves = [];
-/******/ 		for(;i < chunkIds.length; i++) {
-/******/ 			chunkId = chunkIds[i];
-/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
-/******/ 				resolves.push(installedChunks[chunkId][0]);
-/******/ 			}
-/******/ 			installedChunks[chunkId] = 0;
-/******/ 		}
-/******/ 		for(moduleId in moreModules) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
-/******/ 				modules[moduleId] = moreModules[moduleId];
-/******/ 			}
-/******/ 		}
-/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
-/******/
-/******/ 		while(resolves.length) {
-/******/ 			resolves.shift()();
-/******/ 		}
-/******/
-/******/ 		// add entry modules from loaded chunk to deferred list
-/******/ 		deferredModules.push.apply(deferredModules, executeModules || []);
-/******/
-/******/ 		// run deferred modules when all chunks ready
-/******/ 		return checkDeferredModules();
-/******/ 	};
-/******/ 	function checkDeferredModules() {
-/******/ 		var result;
-/******/ 		for(var i = 0; i < deferredModules.length; i++) {
-/******/ 			var deferredModule = deferredModules[i];
-/******/ 			var fulfilled = true;
-/******/ 			for(var j = 1; j < deferredModule.length; j++) {
-/******/ 				var depId = deferredModule[j];
-/******/ 				if(installedChunks[depId] !== 0) fulfilled = false;
-/******/ 			}
-/******/ 			if(fulfilled) {
-/******/ 				deferredModules.splice(i--, 1);
-/******/ 				result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
-/******/ 			}
-/******/ 		}
-/******/
-/******/ 		return result;
-/******/ 	}
-/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
-/******/ 	// object to store loaded and loading chunks
-/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 	// Promise = chunk loading, 0 = chunk loaded
-/******/ 	var installedChunks = {
-/******/ 		"my-cases": 0
-/******/ 	};
-/******/
-/******/ 	var deferredModules = [];
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -154,18 +79,9 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
-/******/ 	var jsonpArray = window["webpackJsonp_fusedesk_blocks"] = window["webpackJsonp_fusedesk_blocks"] || [];
-/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
-/******/ 	jsonpArray.push = webpackJsonpCallback;
-/******/ 	jsonpArray = jsonpArray.slice();
-/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
-/******/ 	var parentJsonpFunction = oldJsonpFunction;
 /******/
-/******/
-/******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push(["./blocks/my-cases/index.js","style-my-cases"]);
-/******/ 	// run deferred modules when ready
-/******/ 	return checkDeferredModules();
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./blocks/team-cases/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -686,10 +602,65 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./blocks/my-cases/edit.js":
-/*!*********************************!*\
-  !*** ./blocks/my-cases/edit.js ***!
-  \*********************************/
+/***/ "./blocks/my-cases/mockdata.json":
+/*!***************************************!*\
+  !*** ./blocks/my-cases/mockdata.json ***!
+  \***************************************/
+/*! exports provided: 0, 1, 2, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("[{\"casenum\":\"ABCD1234\",\"date_updated\":\"date('c')\",\"date_lastupdated\":\"date('c')\",\"date_closed\":\"date('c')\",\"status\":\"new\",\"summary\":\"Sample First Case\"},{\"casenum\":\"CDEF5678\",\"date_updated\":\"date('c', strtotime('-3 days, -3 hours'))\",\"date_lastupdated\":\"date('c')\",\"date_closed\":\"date('c')\",\"status\":\"open\",\"summary\":\"Sample Second Case\"},{\"casenum\":\"ACEB2468\",\"date_updated\":\"date('c', strtotime('-15 days, -8 hours, -9 minutes')\",\"date_lastupdated\":\"date('c')\",\"date_closed\":\"date('c')\",\"status\":\"open\",\"summary\":\"Sample Third Case\"}]");
+
+/***/ }),
+
+/***/ "./blocks/team-cases/ControlData_TeamCases.js":
+/*!****************************************************!*\
+  !*** ./blocks/team-cases/ControlData_TeamCases.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _my_cases_ControlsData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../my-cases/ControlsData */ "./blocks/my-cases/ControlsData.js");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+
+
+
+var teamcases = _objectSpread({}, _my_cases_ControlsData__WEBPACK_IMPORTED_MODULE_2__["default"]); //Adds control objects to the text group
+
+
+teamcases.text['errornotsupported'] = {
+  type: 'text',
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Error, Not Supported", 'fusedesk'),
+  placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Viewing team cases is not supported by our membership platform.", 'fusedesk'),
+  bind: 'errornotsupported',
+  help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("What message to show users when your membership site platform doesn't support teams.", 'fusedesk')
+};
+teamcases.text['errornoteam'] = {
+  type: 'text',
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Error, No Team ", 'fusedesk'),
+  placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Your login is not connected to a team.', 'fusedesk'),
+  bind: 'errornoteam',
+  help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("What message to show users who aren't part of a team.", 'fusedesk')
+};
+/* harmony default export */ __webpack_exports__["default"] = (teamcases);
+
+/***/ }),
+
+/***/ "./blocks/team-cases/edit.js":
+/*!***********************************!*\
+  !*** ./blocks/team-cases/edit.js ***!
+  \***********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -704,10 +675,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Custom_InspectorControls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Custom_InspectorControls */ "./blocks/my-cases/Custom_InspectorControls.js");
-/* harmony import */ var _ControlsData__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ControlsData */ "./blocks/my-cases/ControlsData.js");
-/* harmony import */ var _RenderTable__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RenderTable */ "./blocks/my-cases/RenderTable.js");
-/* harmony import */ var _styles_editor_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./styles/editor.scss */ "./blocks/my-cases/styles/editor.scss");
+/* harmony import */ var _my_cases_RenderTable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../my-cases/RenderTable */ "./blocks/my-cases/RenderTable.js");
+/* harmony import */ var _my_cases_Custom_InspectorControls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../my-cases/Custom_InspectorControls */ "./blocks/my-cases/Custom_InspectorControls.js");
+/* harmony import */ var _ControlData_TeamCases__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ControlData_TeamCases */ "./blocks/team-cases/ControlData_TeamCases.js");
+/* harmony import */ var _styles_editor_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./styles/editor.scss */ "./blocks/team-cases/styles/editor.scss");
 /* harmony import */ var _styles_editor_scss__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_styles_editor_scss__WEBPACK_IMPORTED_MODULE_7__);
 
 
@@ -749,17 +720,17 @@ __webpack_require__.r(__webpack_exports__);
 function Edit(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_Custom_InspectorControls__WEBPACK_IMPORTED_MODULE_4__["default"], _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default()({}, props, {
-    ControlsData: _ControlsData__WEBPACK_IMPORTED_MODULE_5__["default"]
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_RenderTable__WEBPACK_IMPORTED_MODULE_6__["default"], props));
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"])(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_my_cases_Custom_InspectorControls__WEBPACK_IMPORTED_MODULE_5__["default"], _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default()({}, props, {
+    ControlsData: _ControlData_TeamCases__WEBPACK_IMPORTED_MODULE_6__["default"]
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_my_cases_RenderTable__WEBPACK_IMPORTED_MODULE_4__["default"], props));
 }
 
 /***/ }),
 
-/***/ "./blocks/my-cases/index.js":
-/*!**********************************!*\
-  !*** ./blocks/my-cases/index.js ***!
-  \**********************************/
+/***/ "./blocks/team-cases/index.js":
+/*!************************************!*\
+  !*** ./blocks/team-cases/index.js ***!
+  \************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -774,12 +745,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
-/* harmony import */ var _attributes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./attributes */ "./blocks/my-cases/attributes.js");
+/* harmony import */ var _my_cases_attributes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../my-cases/attributes */ "./blocks/my-cases/attributes.js");
 /* harmony import */ var _fusedesk_ico__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../fusedesk_ico */ "./fusedesk_ico.js");
-/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./styles/style.scss */ "./blocks/my-cases/styles/style.scss");
-/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_styles_style_scss__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./edit */ "./blocks/my-cases/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./save */ "./blocks/my-cases/save.js");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./edit */ "./blocks/team-cases/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./save */ "./blocks/team-cases/save.js");
 
 
 
@@ -804,7 +773,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-
+// import './styles/style.scss';
 
 /**
  * Internal dependencies
@@ -818,7 +787,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])('fusedesk/my-cases', {
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])('fusedesk/team-cases', {
   /**
    * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
    */
@@ -827,52 +796,53 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])('fus
     icon: _fusedesk_ico__WEBPACK_IMPORTED_MODULE_6__["default"]
   }),
   category: 'fusedesk',
-  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('FuseDesk My Cases', 'fusedesk'),
-  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Show your logged in users a list of their FuseDesk cases.', 'fusedesk'),
-  attributes: _objectSpread({}, _attributes__WEBPACK_IMPORTED_MODULE_5__["default"]),
+  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('FuseDesk My Team Cases', 'fusedesk'),
+  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Show your logged in users a list of their team's FuseDesk cases.", 'fusedesk'),
+  attributes: _objectSpread(_objectSpread({}, _my_cases_attributes__WEBPACK_IMPORTED_MODULE_5__["default"]), {}, {
+    errornotsupported: {
+      type: 'string',
+      default: ''
+    },
+    errornoteam: {
+      type: 'string',
+      default: ''
+    }
+  }),
 
   /**
    * @see ./edit.js
    */
-  edit: _edit__WEBPACK_IMPORTED_MODULE_8__["default"],
+  edit: _edit__WEBPACK_IMPORTED_MODULE_7__["default"],
 
   /**
    * @see ./save.js
    */
-  save: _save__WEBPACK_IMPORTED_MODULE_9__["default"]
+  save: _save__WEBPACK_IMPORTED_MODULE_8__["default"]
 });
 
 /***/ }),
 
-/***/ "./blocks/my-cases/mockdata.json":
-/*!***************************************!*\
-  !*** ./blocks/my-cases/mockdata.json ***!
-  \***************************************/
-/*! exports provided: 0, 1, 2, default */
-/***/ (function(module) {
-
-module.exports = JSON.parse("[{\"casenum\":\"ABCD1234\",\"date_updated\":\"date('c')\",\"date_lastupdated\":\"date('c')\",\"date_closed\":\"date('c')\",\"status\":\"new\",\"summary\":\"Sample First Case\"},{\"casenum\":\"CDEF5678\",\"date_updated\":\"date('c', strtotime('-3 days, -3 hours'))\",\"date_lastupdated\":\"date('c')\",\"date_closed\":\"date('c')\",\"status\":\"open\",\"summary\":\"Sample Second Case\"},{\"casenum\":\"ACEB2468\",\"date_updated\":\"date('c', strtotime('-15 days, -8 hours, -9 minutes')\",\"date_lastupdated\":\"date('c')\",\"date_closed\":\"date('c')\",\"status\":\"open\",\"summary\":\"Sample Third Case\"}]");
-
-/***/ }),
-
-/***/ "./blocks/my-cases/save.js":
-/*!*********************************!*\
-  !*** ./blocks/my-cases/save.js ***!
-  \*********************************/
+/***/ "./blocks/team-cases/save.js":
+/*!***********************************!*\
+  !*** ./blocks/team-cases/save.js ***!
+  \***********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return save; });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _ControlsData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ControlsData */ "./blocks/my-cases/ControlsData.js");
-/* harmony import */ var _lib_shortcode__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/shortcode */ "./lib/shortcode.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _ControlData_TeamCases__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ControlData_TeamCases */ "./blocks/team-cases/ControlData_TeamCases.js");
+/* harmony import */ var _lib_shortcode__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib/shortcode */ "./lib/shortcode.js");
+
 
 
 /**
@@ -905,23 +875,29 @@ __webpack_require__.r(__webpack_exports__);
 function save(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
-  var groups = ['display', 'text', 'text_column_label', 'advanced'];
+  var groups = Object.entries(_ControlData_TeamCases__WEBPACK_IMPORTED_MODULE_4__["default"]).map(function (_ref) {
+    var _ref2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref, 2),
+        k = _ref2[0],
+        v = _ref2[1];
+
+    return k;
+  });
 
   var genShortCodeAtts = function genShortCodeAtts() {
     return groups.map(function (group) {
-      return Object(_lib_shortcode__WEBPACK_IMPORTED_MODULE_4__["createShortCodeAttFromGroup"])(group, _ControlsData__WEBPACK_IMPORTED_MODULE_3__["default"], attributes);
+      return Object(_lib_shortcode__WEBPACK_IMPORTED_MODULE_5__["createShortCodeAttFromGroup"])(group, _ControlData_TeamCases__WEBPACK_IMPORTED_MODULE_4__["default"], attributes);
     }).join(' ');
   };
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"].save(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["RawHTML"], _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"].save(), '[fusedesk_mycases ' + genShortCodeAtts() + ']'), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, genShortCodeAtts()));
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["RawHTML"], _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"].save(), '[fusedesk_teamcases ' + genShortCodeAtts() + ']'));
 }
 
 /***/ }),
 
-/***/ "./blocks/my-cases/styles/editor.scss":
-/*!********************************************!*\
-  !*** ./blocks/my-cases/styles/editor.scss ***!
-  \********************************************/
+/***/ "./blocks/team-cases/styles/editor.scss":
+/*!**********************************************!*\
+  !*** ./blocks/team-cases/styles/editor.scss ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12452,4 +12428,4 @@ module.exports = function strtotime(str, now) {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=my-cases.js.map
+//# sourceMappingURL=team-cases.js.map

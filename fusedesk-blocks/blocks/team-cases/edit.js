@@ -14,9 +14,9 @@ import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 } from '@wordpress/block-editor';
-import CustomInspectorControls from './Custom_InspectorControls';
-import ControlsData from './ControlsData';
-import RenderTable from './RenderTable';
+import RenderTable from '../my-cases/RenderTable';
+import CustomInspectorControls from '../my-cases/Custom_InspectorControls';
+import ControlsData from './ControlData_TeamCases';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.

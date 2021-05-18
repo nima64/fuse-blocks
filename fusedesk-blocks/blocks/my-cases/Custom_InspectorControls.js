@@ -6,15 +6,15 @@ import {
     InspectorControls,
     InspectorAdvancedControls
 } from '@wordpress/block-editor';
-import ControlsData from './ControlsData';
+// import ControlsData from './ControlsData';
 import createControlRenderer from '../../lib/createControlRenderer';
 
 /**
  * @param props
  * @returns InspectorControls and IspectorAdvancedControls
  */
-export function InspectorControls_MyCases(props){
-
+export default function CustomInspectorControls(props ){
+    let {ControlsData} = props;
 	const renderControlObj = createControlRenderer( props );
 
     const getDisplayPlanel = () => {
@@ -22,12 +22,10 @@ export function InspectorControls_MyCases(props){
         return (
             <Panel>
                 <PanelBody title="Display">
-                    {renderControlObj(DisplayGroup.columns)}
-                    {renderControlObj(DisplayGroup.status)}
-                    {renderControlObj(DisplayGroup.userstatuses)}
-                    {renderControlObj(DisplayGroup.orderby)}
-                    {renderControlObj(DisplayGroup.dateformat)}
-                    {renderControlObj(DisplayGroup.limit)}
+                    { 
+                        Object.entries(DisplayGroup).map( ([name,obj]) => 
+                            renderControlObj(obj) )
+                    }
                 </PanelBody>
             </Panel>
         );

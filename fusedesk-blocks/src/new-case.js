@@ -337,7 +337,7 @@ function InspectorControls_NewCase(props) {
     var controlsData = _controlsData__WEBPACK_IMPORTED_MODULE_4__["default"].suggestedPosts;
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["Panel"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__["PanelBody"], {
       title: "Suggested Posts"
-    }, //only render/show rest when none is not selected
+    }, //only render/show all when none is not selected
     attributes.suggestionplacement != 'none' ? Object.entries(controlsData).map(function (_ref5) {
       var _ref6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_ref5, 2),
           k = _ref6[0],
@@ -1056,7 +1056,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('fus
   icon: Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_icons__WEBPACK_IMPORTED_MODULE_3__["Icon"], {
     icon: _fusedesk_ico__WEBPACK_IMPORTED_MODULE_4__["default"]
   }),
-  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('New Case', 'fusedesk'),
+  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('FuseDesk New Case', 'fusedesk'),
   category: 'fusedesk',
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Allow your website visitors to create a new case in FuseDesk', 'fusedesk'),
   attributes: {
