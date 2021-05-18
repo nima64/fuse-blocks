@@ -16,7 +16,8 @@ import fusedesk_ico from '../../fusedesk_ico';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-// import './styles/style.scss';
+
+import './styles/style.scss';
 
 /**
  * Internal dependencies

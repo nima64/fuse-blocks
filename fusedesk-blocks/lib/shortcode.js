@@ -7,8 +7,6 @@
 function convertCompounDataToStr(objType, data) {
 
     switch (objType) {
-        case 'multiSelect':
-            return data.map(obj => obj.value).join();
         case 'formTokenField':
             return data.map(token => token.id).join();
         default:
@@ -32,4 +30,5 @@ function createShortCodeAttFromGroup(group, controlsData, attributes) {
     let str = shortcodeAtts.join(' ');
     return str;
 }
+
 export {createShortCodeAttFromGroup};

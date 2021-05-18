@@ -1,6 +1,81 @@
+(window["webpackJsonp_fusedesk_blocks"] = window["webpackJsonp_fusedesk_blocks"] || []).push([["style-team-cases"],{
+
+/***/ "./blocks/team-cases/styles/style.scss":
+/*!*********************************************!*\
+  !*** ./blocks/team-cases/styles/style.scss ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ })
+
+}]);
+
 /******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	function webpackJsonpCallback(data) {
+/******/ 		var chunkIds = data[0];
+/******/ 		var moreModules = data[1];
+/******/ 		var executeModules = data[2];
+/******/
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
+/******/
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 		// add entry modules from loaded chunk to deferred list
+/******/ 		deferredModules.push.apply(deferredModules, executeModules || []);
+/******/
+/******/ 		// run deferred modules when all chunks ready
+/******/ 		return checkDeferredModules();
+/******/ 	};
+/******/ 	function checkDeferredModules() {
+/******/ 		var result;
+/******/ 		for(var i = 0; i < deferredModules.length; i++) {
+/******/ 			var deferredModule = deferredModules[i];
+/******/ 			var fulfilled = true;
+/******/ 			for(var j = 1; j < deferredModule.length; j++) {
+/******/ 				var depId = deferredModule[j];
+/******/ 				if(installedChunks[depId] !== 0) fulfilled = false;
+/******/ 			}
+/******/ 			if(fulfilled) {
+/******/ 				deferredModules.splice(i--, 1);
+/******/ 				result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
+/******/ 			}
+/******/ 		}
+/******/
+/******/ 		return result;
+/******/ 	}
+/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 	// Promise = chunk loading, 0 = chunk loaded
+/******/ 	var installedChunks = {
+/******/ 		"team-cases": 0
+/******/ 	};
+/******/
+/******/ 	var deferredModules = [];
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -79,9 +154,18 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/ 	var jsonpArray = window["webpackJsonp_fusedesk_blocks"] = window["webpackJsonp_fusedesk_blocks"] || [];
+/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
+/******/ 	jsonpArray.push = webpackJsonpCallback;
+/******/ 	jsonpArray = jsonpArray.slice();
+/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+/******/ 	var parentJsonpFunction = oldJsonpFunction;
 /******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./blocks/team-cases/index.js");
+/******/
+/******/ 	// add entry module to deferred list
+/******/ 	deferredModules.push(["./blocks/team-cases/index.js","style-team-cases"]);
+/******/ 	// run deferred modules when ready
+/******/ 	return checkDeferredModules();
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -279,7 +363,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // import ControlsData from './ControlsData';
 
 
 /**
@@ -306,7 +389,8 @@ function CustomInspectorControls(props) {
 
   var getTextPanel = function getTextPanel() {
     var TextGroup = ControlsData.text;
-    var TextColumnsGroup = ControlsData.text_column_label;
+    var TextColumnsGroup = ControlsData.text_column_label; //gets column labels from columns
+
     var selectedColumns = props.attributes.columns.map(function (_ref3) {
       var val = _ref3.val,
           id = _ref3.id;
@@ -384,7 +468,8 @@ var MockData = /*#__PURE__*/function () {
       var caseCopy = Object.assign({}, _case); //replace date strings with evaulated timestamp
 
       ['date_updated', 'date_lastupdated', 'date_closed'].forEach(function (att) {
-        var strtotimeStr = _case[att].match(/strtotime\('([^']*)'/);
+        var strtotimeStr = _case[att].match(/strtotime\('([^']*)'/); //if strtotime function found call it, else return the current time in seconds
+
 
         caseCopy[att] = strtotimeStr ? locutus_php_datetime_strtotime__WEBPACK_IMPORTED_MODULE_2___default()(strtotimeStr[1]) : new Date().getTime() / 1000;
       });
@@ -399,7 +484,8 @@ var MockData = /*#__PURE__*/function () {
 
       var result = this.cases.filter(function (_case) {
         return _case.status === status;
-      });
+      }); //if there are no matches, then return all cases
+
       return result.length > 0 ? result : this.cases;
     }
   }, {
@@ -462,7 +548,7 @@ var _mockdata_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpa
 
 
 
-
+ //wrapper around date that defaults to format 'c'
 
 function formatTimeStamp(timestamp) {
   var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'c';
@@ -494,11 +580,14 @@ function getDefaultAttribute(att, attributes) {
 ;
 var mockData = new _MockData__WEBPACK_IMPORTED_MODULE_2__["default"](_mockdata_json__WEBPACK_IMPORTED_MODULE_3__);
 function RenderTable(props) {
-  var attributes = props.attributes;
+  var attributes = props.attributes; //get column names from list of column objects
+
   var attCols = attributes.columns.map(function (obj) {
     return obj.id;
-  });
-  var columns = attributes.columns.length != 0 ? attCols : ['casenum', 'date_updated', 'status', 'summary'];
+  }); //if there are no columns, use a default set
+
+  var columns = attributes.columns.length != 0 ? attCols : ['casenum', 'date_updated', 'status', 'summary']; //sort the mockdata by orderby
+
   mockData.orderBy(attributes.orderby);
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("table", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("thead", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("tr", null, columns.map(function (column) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("td", {
@@ -506,7 +595,8 @@ function RenderTable(props) {
     }, getDefaultAttribute(column + '_name', attributes));
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("td", {
     class: "fusedesk-cases-columnhead-"
-  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("tbody", null, mockData.filterByStatus(attributes.status).slice(0, attributes.limit).map(function (_case) {
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("tbody", null, //filter cases by status, and limit number of cases by limit
+  mockData.filterByStatus(attributes.status).slice(0, attributes.limit).map(function (_case) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("tr", null, columns.map(function (col) {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("td", null, //eval date if columns have date in them
       col.substr(0, 4) == "date" ? formatTimeStamp(_case[col], getDefaultAttribute('dateformat', attributes)) : _case[col]);
@@ -541,7 +631,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   orderby: {
     type: 'array',
-    // default: 'date_opened, date_updated',
     default: []
   },
   dateformat: {
@@ -747,8 +836,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
 /* harmony import */ var _my_cases_attributes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../my-cases/attributes */ "./blocks/my-cases/attributes.js");
 /* harmony import */ var _fusedesk_ico__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../fusedesk_ico */ "./fusedesk_ico.js");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./edit */ "./blocks/team-cases/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./save */ "./blocks/team-cases/save.js");
+/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./styles/style.scss */ "./blocks/team-cases/styles/style.scss");
+/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_styles_style_scss__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./edit */ "./blocks/team-cases/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./save */ "./blocks/team-cases/save.js");
 
 
 
@@ -773,7 +864,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-// import './styles/style.scss';
+
 
 /**
  * Internal dependencies
@@ -812,12 +903,12 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])('fus
   /**
    * @see ./edit.js
    */
-  edit: _edit__WEBPACK_IMPORTED_MODULE_7__["default"],
+  edit: _edit__WEBPACK_IMPORTED_MODULE_8__["default"],
 
   /**
    * @see ./save.js
    */
-  save: _save__WEBPACK_IMPORTED_MODULE_8__["default"]
+  save: _save__WEBPACK_IMPORTED_MODULE_9__["default"]
 });
 
 /***/ }),
@@ -2405,11 +2496,6 @@ __webpack_require__.r(__webpack_exports__);
 //ex: if value is string "helloworld" => "helloworld"
 function convertCompounDataToStr(objType, data) {
   switch (objType) {
-    case 'multiSelect':
-      return data.map(function (obj) {
-        return obj.value;
-      }).join();
-
     case 'formTokenField':
       return data.map(function (token) {
         return token.id;

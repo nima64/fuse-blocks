@@ -38,9 +38,9 @@ export default function save(props) {
 			<RawHTML {...useBlockProps.save()} >
 				{'[fusedesk_mycases ' + genShortCodeAtts() + ']'}
 			</RawHTML>
-			<div>
+			{/* <div>
 				{genShortCodeAtts()}
-			</div>
+			</div> */}
 		</div>
 	);
 }

@@ -15,7 +15,6 @@ export default {
     },
     orderby: {
         type: 'array',
-        // default: 'date_opened, date_updated',
         default: [],
     },
     dateformat: {

@@ -2,6 +2,7 @@ import date from 'locutus/php/datetime/date';
 import MockData from './MockData';
 import mockDataJson from './mockdata.json';
 
+//wrapper around date that defaults to format 'c'
 function formatTimeStamp(timestamp, format = 'c') {
     return date(format, timestamp);
 }
@@ -36,9 +37,13 @@ export default function RenderTable(props) {
 
     let { attributes } = props;
 
+    //get column names from list of column objects
 	let attCols = (attributes.columns).map(obj => obj.id);
+
+    //if there are no columns, use a default set
 	let columns = (attributes.columns.length != 0) ? attCols : ['casenum', 'date_updated', 'status', 'summary'];
 
+    //sort the mockdata by orderby
 	mockData.orderBy(attributes.orderby);
 
     return (
@@ -53,6 +58,7 @@ export default function RenderTable(props) {
             </thead>
             <tbody>
                 {
+                    //filter cases by status, and limit number of cases by limit
                     mockData.filterByStatus(attributes.status)
                         .slice(0, attributes.limit).map(
                             _case => (

@@ -363,7 +363,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // import ControlsData from './ControlsData';
 
 
 /**
@@ -390,7 +389,8 @@ function CustomInspectorControls(props) {
 
   var getTextPanel = function getTextPanel() {
     var TextGroup = ControlsData.text;
-    var TextColumnsGroup = ControlsData.text_column_label;
+    var TextColumnsGroup = ControlsData.text_column_label; //gets column labels from columns
+
     var selectedColumns = props.attributes.columns.map(function (_ref3) {
       var val = _ref3.val,
           id = _ref3.id;
@@ -468,7 +468,8 @@ var MockData = /*#__PURE__*/function () {
       var caseCopy = Object.assign({}, _case); //replace date strings with evaulated timestamp
 
       ['date_updated', 'date_lastupdated', 'date_closed'].forEach(function (att) {
-        var strtotimeStr = _case[att].match(/strtotime\('([^']*)'/);
+        var strtotimeStr = _case[att].match(/strtotime\('([^']*)'/); //if strtotime function found call it, else return the current time in seconds
+
 
         caseCopy[att] = strtotimeStr ? locutus_php_datetime_strtotime__WEBPACK_IMPORTED_MODULE_2___default()(strtotimeStr[1]) : new Date().getTime() / 1000;
       });
@@ -483,7 +484,8 @@ var MockData = /*#__PURE__*/function () {
 
       var result = this.cases.filter(function (_case) {
         return _case.status === status;
-      });
+      }); //if there are no matches, then return all cases
+
       return result.length > 0 ? result : this.cases;
     }
   }, {
@@ -546,7 +548,7 @@ var _mockdata_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpa
 
 
 
-
+ //wrapper around date that defaults to format 'c'
 
 function formatTimeStamp(timestamp) {
   var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'c';
@@ -578,11 +580,14 @@ function getDefaultAttribute(att, attributes) {
 ;
 var mockData = new _MockData__WEBPACK_IMPORTED_MODULE_2__["default"](_mockdata_json__WEBPACK_IMPORTED_MODULE_3__);
 function RenderTable(props) {
-  var attributes = props.attributes;
+  var attributes = props.attributes; //get column names from list of column objects
+
   var attCols = attributes.columns.map(function (obj) {
     return obj.id;
-  });
-  var columns = attributes.columns.length != 0 ? attCols : ['casenum', 'date_updated', 'status', 'summary'];
+  }); //if there are no columns, use a default set
+
+  var columns = attributes.columns.length != 0 ? attCols : ['casenum', 'date_updated', 'status', 'summary']; //sort the mockdata by orderby
+
   mockData.orderBy(attributes.orderby);
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("table", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("thead", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("tr", null, columns.map(function (column) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("td", {
@@ -590,7 +595,8 @@ function RenderTable(props) {
     }, getDefaultAttribute(column + '_name', attributes));
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("td", {
     class: "fusedesk-cases-columnhead-"
-  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("tbody", null, mockData.filterByStatus(attributes.status).slice(0, attributes.limit).map(function (_case) {
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("tbody", null, //filter cases by status, and limit number of cases by limit
+  mockData.filterByStatus(attributes.status).slice(0, attributes.limit).map(function (_case) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("tr", null, columns.map(function (col) {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("td", null, //eval date if columns have date in them
       col.substr(0, 4) == "date" ? formatTimeStamp(_case[col], getDefaultAttribute('dateformat', attributes)) : _case[col]);
@@ -625,7 +631,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   orderby: {
     type: 'array',
-    // default: 'date_opened, date_updated',
     default: []
   },
   dateformat: {
@@ -913,7 +918,7 @@ function save(props) {
     }).join(' ');
   };
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"].save(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["RawHTML"], _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"].save(), '[fusedesk_mycases ' + genShortCodeAtts() + ']'), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, genShortCodeAtts()));
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"].save(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["RawHTML"], _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"].save(), '[fusedesk_mycases ' + genShortCodeAtts() + ']'));
 }
 
 /***/ }),
@@ -2429,11 +2434,6 @@ __webpack_require__.r(__webpack_exports__);
 //ex: if value is string "helloworld" => "helloworld"
 function convertCompounDataToStr(objType, data) {
   switch (objType) {
-    case 'multiSelect':
-      return data.map(function (obj) {
-        return obj.value;
-      }).join();
-
     case 'formTokenField':
       return data.map(function (token) {
         return token.id;

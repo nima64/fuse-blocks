@@ -16,6 +16,7 @@ export default class MockData{
 		.forEach(
 			(att) => {
 				let strtotimeStr = _case[att].match(/strtotime\('([^']*)'/);
+				//if strtotime function found call it, else return the current time in seconds
 				caseCopy[att] = strtotimeStr ? strtotime(strtotimeStr[1]) : (new Date()).getTime()/1000;
 			}
 		)
@@ -27,6 +28,8 @@ export default class MockData{
 			return this.cases;
 		}	
 		let result = this.cases.filter( _case => _case.status === status );
+		
+		//if there are no matches, then return all cases
 		return result.length > 0 ? result : this.cases; 
 	}
 

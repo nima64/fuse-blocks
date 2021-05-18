@@ -6,7 +6,7 @@ import {
     InspectorControls,
     InspectorAdvancedControls
 } from '@wordpress/block-editor';
-// import ControlsData from './ControlsData';
+
 import createControlRenderer from '../../lib/createControlRenderer';
 
 /**
@@ -35,9 +35,11 @@ export default function CustomInspectorControls(props ){
         const TextGroup = ControlsData.text;
         const TextColumnsGroup = ControlsData.text_column_label;
 
+        //gets column labels from columns
         const selectedColumns = props.attributes.columns.map(({val, id}) => id + "_name" );
         const avaliableLabels = selectedColumns.filter( (col_name) => TextColumnsGroup[col_name] != undefined ); 
         const columnLabels = avaliableLabels.map( (col_name) => TextColumnsGroup[col_name] );
+
         return (
             <Panel>
                 <PanelBody title="Text">
