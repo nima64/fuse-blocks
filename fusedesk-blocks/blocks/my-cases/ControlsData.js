@@ -25,7 +25,7 @@ export default {
                 __('Details','fusedesk'),
             ],
             bind: 'columns',
-            placeholder: __('casenum,date_updated,status,summary','fusedesk'),
+            placeholder: __('Case Number, Date Updated, Status, Summary','fusedesk'),
             help: __( `Which columns to show.`,'fusedesk'),
           
         },
@@ -47,7 +47,7 @@ export default {
             expandOnFocus: true,
             label: __('User Filterable Statuses','fusedesk'),
             bind: 'userstatuses',
-            placeholder: __('new,open,closed','fusedesk'),
+            placeholder: __('New, Open, Closed','fusedesk'),
             suggestionmap:{
 				[ __('New','fusedesk') ]: 'new' ,
 				[ __('Open','fusedesk') ]: 'open',

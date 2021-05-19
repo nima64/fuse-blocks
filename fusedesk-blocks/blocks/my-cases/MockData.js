@@ -7,15 +7,18 @@ export default class MockData{
 		this.cases = json.map( _case => this.evalDate(_case) );
 	}
 
+	//evaluate string as function
 	evalDate(_case){
-		//shallow copy the case
+
 		let caseCopy = Object.assign({},_case);
 
 		//replace date strings with evaulated timestamp
 		(['date_updated','date_lastupdated','date_closed'])
 		.forEach(
 			(att) => {
+				//does string contain a "strtotime()"?
 				let strtotimeStr = _case[att].match(/strtotime\('([^']*)'/);
+
 				//if strtotime function found call it, else return the current time in seconds
 				caseCopy[att] = strtotimeStr ? strtotime(strtotimeStr[1]) : (new Date()).getTime()/1000;
 			}

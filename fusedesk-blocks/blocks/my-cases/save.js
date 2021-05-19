@@ -28,20 +28,5 @@ import { createShortCodeAttFromGroup } from '../../lib/shortcode';
  */
 export default function save(props) {
 	const { attributes, setAttributes } = props;
-	const groups = ['display', 'text', 'text_column_label', 'advanced'];
-
-
-	const genShortCodeAtts = () => groups.map((group) => createShortCodeAttFromGroup(group, controlsData, attributes)).join(' ');
-
 	return null;
-	// return (
-	// 	<div {...useBlockProps.save()}>
-	// 		<RawHTML {...useBlockProps.save()} >
-	// 			{'[fusedesk_mycases ' + genShortCodeAtts() + ']'}
-	// 		</RawHTML>
-	// 		{/* <div>
-	// 			{genShortCodeAtts()}
-	// 		</div> */}
-	// 	</div>
-	// );
 }

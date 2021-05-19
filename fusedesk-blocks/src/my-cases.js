@@ -200,7 +200,7 @@ var _suggestionmap, _suggestionmap2, _suggestionmap3;
       suggestionmap: (_suggestionmap = {}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case Number', 'fusedesk'), 'casenum'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Updated', 'fusedesk'), 'date_updated'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Opened', 'fusedesk'), 'date_opened'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Closed', 'fusedesk'), 'date_closed'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Status', 'fusedesk'), 'status'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Summary', 'fusedesk'), 'summary'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Details', 'fusedesk'), 'details'), _suggestionmap),
       suggestions: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case Number', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Updated', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Opened', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date Closed', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Status', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Summary', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Details', 'fusedesk')],
       bind: 'columns',
-      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('casenum,date_updated,status,summary', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Case Number, Date Updated, Status, Summary', 'fusedesk'),
       help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Which columns to show.", 'fusedesk')
     },
     status: {
@@ -230,7 +230,7 @@ var _suggestionmap, _suggestionmap2, _suggestionmap3;
       expandOnFocus: true,
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('User Filterable Statuses', 'fusedesk'),
       bind: 'userstatuses',
-      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('new,open,closed', 'fusedesk'),
+      placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('New, Open, Closed', 'fusedesk'),
       suggestionmap: (_suggestionmap2 = {}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap2, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('New', 'fusedesk'), 'new'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap2, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Open', 'fusedesk'), 'open'), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_suggestionmap2, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Closed', 'fusedesk'), 'closed'), _suggestionmap2),
       suggestions: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('New', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Open', 'fusedesk'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Closed', 'fusedesk')],
       help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])("Filter for which case statuses you allow a user to set with the casestatus query paramater. Setting this restriction allows you to prevent users from viewing certain cases statuses like closed cases, for example.", 'fusedesk')
@@ -459,15 +459,16 @@ var MockData = /*#__PURE__*/function () {
     this.cases = json.map(function (_case) {
       return _this.evalDate(_case);
     });
-  }
+  } //evaluate string as function
+
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(MockData, [{
     key: "evalDate",
     value: function evalDate(_case) {
-      //shallow copy the case
       var caseCopy = Object.assign({}, _case); //replace date strings with evaulated timestamp
 
       ['date_updated', 'date_lastupdated', 'date_closed'].forEach(function (att) {
+        //does string contain a "strtotime()"?
         var strtotimeStr = _case[att].match(/strtotime\('([^']*)'/); //if strtotime function found call it, else return the current time in seconds
 
 
@@ -908,24 +909,7 @@ __webpack_require__.r(__webpack_exports__);
 function save(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
-  var groups = ['display', 'text', 'text_column_label', 'advanced'];
-
-  var genShortCodeAtts = function genShortCodeAtts() {
-    return groups.map(function (group) {
-      return Object(_lib_shortcode__WEBPACK_IMPORTED_MODULE_4__["createShortCodeAttFromGroup"])(group, _ControlsData__WEBPACK_IMPORTED_MODULE_3__["default"], attributes);
-    }).join(' ');
-  };
-
-  return null; // return (
-  // 	<div {...useBlockProps.save()}>
-  // 		<RawHTML {...useBlockProps.save()} >
-  // 			{'[fusedesk_mycases ' + genShortCodeAtts() + ']'}
-  // 		</RawHTML>
-  // 		{/* <div>
-  // 			{genShortCodeAtts()}
-  // 		</div> */}
-  // 	</div>
-  // );
+  return null;
 }
 
 /***/ }),
