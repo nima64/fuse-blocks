@@ -11,7 +11,6 @@ So to create a control, you must create an attribute and it's model.
 The model must bind the attribute.   
 
 
-
 ## Building Blocks ##
 To build a block
 ```

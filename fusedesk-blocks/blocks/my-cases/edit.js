@@ -37,7 +37,6 @@ import './styles/editor.scss';
  */
 export default function Edit(props) {
 	const { attributes, setAttributes } = props;
-
 	return (
 		<div {...useBlockProps()}>
 			<CustomInspectorControls {...props} ControlsData={ControlsData} />

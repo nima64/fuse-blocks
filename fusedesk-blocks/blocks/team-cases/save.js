@@ -32,14 +32,15 @@ export default function save(props) {
 
 	const genShortCodeAtts = () => groups.map((group) => createShortCodeAttFromGroup(group, controlsData, attributes)).join(' ');
 
-	return (
-		<div {...useBlockProps.save()}>
-			<RawHTML {...useBlockProps.save()} >
-				{'[fusedesk_teamcases ' + genShortCodeAtts() + ']'}
-			</RawHTML>
-			{/* <div>
-				{genShortCodeAtts()}
-			</div> */}
-		</div>
-	);
+	return null;
+	// return (
+	// 	<div {...useBlockProps.save()}>
+	// 		<RawHTML {...useBlockProps.save()} >
+	// 			{'[fusedesk_teamcases ' + genShortCodeAtts() + ']'}
+	// 		</RawHTML>
+	// 		<div>
+	// 			{genShortCodeAtts()}
+	// 		</div>
+	// 	</div>
+	// );
 }
