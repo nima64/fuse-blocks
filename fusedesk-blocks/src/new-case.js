@@ -629,9 +629,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _InspectorControls_NewCase__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./InspectorControls_NewCase */ "./blocks/new-case/InspectorControls_NewCase.js");
 /* harmony import */ var _fetchCalls__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./fetchCalls */ "./blocks/new-case/fetchCalls.js");
-/* harmony import */ var _controlsData__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./controlsData */ "./blocks/new-case/controlsData.js");
-/* harmony import */ var _css_editor_scss__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./css/editor.scss */ "./blocks/new-case/css/editor.scss");
-/* harmony import */ var _css_editor_scss__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_css_editor_scss__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _css_editor_scss__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./css/editor.scss */ "./blocks/new-case/css/editor.scss");
+/* harmony import */ var _css_editor_scss__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_css_editor_scss__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _controlsData__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./controlsData */ "./blocks/new-case/controlsData.js");
 
 
 
@@ -661,7 +661,6 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
-
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -670,10 +669,36 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
  */
 
 
+ //convert css string to react css obj
 
+function cssStrToObj(str) {
+  //convert dash to camelcase ex: background-color => backgroundColor
+  var getCamelCase = function getCamelCase(str) {
+    return str.replace(/-([a-z])/g, function (g) {
+      return g[1].toUpperCase();
+    });
+  };
+
+  if (typeof str != "string") return; // converts string to array of arrays ex: [[color:blue],[border: black]]
+
+  var styles = str.split(";").map(function (style) {
+    return style.split(":");
+  });
+  var stylesObj = {}; // convert array to object
+
+  styles.forEach(function (style) {
+    if (style.length == 2) {
+      var property = style[0].trim();
+      var value = style[1].trim();
+      stylesObj[getCamelCase(property)] = value;
+    }
+  });
+  return stylesObj;
+}
 /**
  * IO fetch requests on mount
  */
+
 
 var OptionsPuller = /*#__PURE__*/function (_React$Component) {
   _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_3___default()(OptionsPuller, _React$Component);
@@ -699,7 +724,7 @@ var OptionsPuller = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var dep_options = _controlsData__WEBPACK_IMPORTED_MODULE_12__["default"].caseCreation.department.options;
+      var dep_options = _controlsData__WEBPACK_IMPORTED_MODULE_13__["default"].caseCreation.department.options;
       this.fetchCalls.get_rep_options();
       this.fetchCalls.get_dep_options(function () {
         //don't override existing option
@@ -733,6 +758,7 @@ var OptionsPuller = /*#__PURE__*/function (_React$Component) {
 function Edit(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
+  var inputStyle = cssStrToObj(attributes.style);
 
   var RepaintButton = function RepaintButton() {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("button", {
@@ -761,32 +787,40 @@ function Edit(props) {
       action: "#",
       "data-successredirect": ""
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("input", {
+      style: inputStyle,
       type: "hidden",
       name: "action",
       value: "fusedesk_newcase"
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("input", {
+      style: inputStyle,
       type: "hidden",
       name: "repid"
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("input", {
+      style: inputStyle,
       type: "hidden",
       name: "depid"
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("input", {
+      style: inputStyle,
       type: "hidden",
       name: "casetags"
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("input", {
+      style: inputStyle,
       type: "hidden",
       name: "opened_from"
     }), attributes.nametext || Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Your Name', 'fusedesk'), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("input", {
+      style: inputStyle,
       type: "text",
       name: "openedby",
       id: "fusedesk-contact-name",
       class: "fusedesk-contactform"
     }), attributes.emailtext || Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Your Email', 'fusedesk'), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("input", {
+      style: inputStyle,
       type: "text",
       name: "email",
       id: "fusedesk-contact-email",
       class: "fusedesk-contactform"
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("input", {
+      style: inputStyle,
       type: "hidden",
       name: "summary",
       value: "Support Request"
@@ -797,11 +831,13 @@ function Edit(props) {
       id: "fusedesk-title",
       class: "fusedesk-contactform"
     }) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("input", {
+      style: inputStyle,
       type: "text",
       name: "summary",
       id: "fusedesk-title",
       class: "fusedesk-contactform"
     })), attributes.fileupload && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["Fragment"], null, attributes.filetext || Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Attach a file:', 'fusedesk'), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("input", {
+      style: inputStyle,
       type: "file",
       name: "file_upload[]",
       accept: "image/*,audio/*,application/pdf",
@@ -809,6 +845,7 @@ function Edit(props) {
       class: "fusedesk-contactform",
       multiple: ""
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("br", null)), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["Fragment"], null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])("How can we help you?", 'fusedesk'), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__["createElement"])("textarea", {
+      style: inputStyle,
       name: "details",
       id: "fusedesk-message",
       class: "fusedesk-contactform"

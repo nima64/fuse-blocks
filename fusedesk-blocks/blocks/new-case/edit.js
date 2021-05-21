@@ -11,20 +11,12 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { useBlockProps  } from '@wordpress/block-editor';
 import {
-	Panel,
-	PanelRow,
-	PanelBody,
-	Placeholder,
 	SelectControl,
-	CheckboxControl,
-	TextControl,
-	RangeControl,
 } from '@wordpress/components';
 import {InspectorControls_NewCase,formTitleOptions} from './InspectorControls_NewCase';
 import fetchCalls from './fetchCalls';
-import controls from './controlsData';
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -34,6 +26,31 @@ import controls from './controlsData';
 import './css/editor.scss';
 import controlsData from './controlsData';
 
+//convert css string to react css obj
+function cssStrToObj(str){
+	//convert dash to camelcase ex: background-color => backgroundColor
+	let getCamelCase = (str) => str.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });  
+
+	if (typeof str != "string")
+		return;
+
+	// converts string to array of arrays ex: [[color:blue],[border: black]]
+	let styles = str.split(";").map( style => style.split(":"));
+
+	let stylesObj = {};
+
+	// convert array to object
+	styles.forEach( style => {
+
+		if(style.length == 2 ){
+			var property = style[0].trim();
+			var value = style[1].trim();
+			stylesObj[getCamelCase(property)] = value;
+		}
+	});
+	
+	return stylesObj;
+}
 
 /**
  * IO fetch requests on mount
@@ -79,6 +96,8 @@ export default function Edit( props ) {
 
 	const { attributes, setAttributes } = props;
 
+	let inputStyle = cssStrToObj(attributes.style);
+
 	const RepaintButton = () => (
 		<button
 			id={ 'fusedesk_repaintMe' }
@@ -95,18 +114,18 @@ export default function Edit( props ) {
 	const getForm = () => {
 		return(
 			<form id="fusedesk-contact" action="#" data-successredirect="">
-				<input type="hidden" name="action" value="fusedesk_newcase" />
-				<input type="hidden" name="repid" />
-				<input type="hidden" name="depid" />
-				<input type="hidden" name="casetags" />
-				<input type="hidden" name="opened_from" />
+				<input style={inputStyle} type="hidden" name="action" value="fusedesk_newcase" />
+				<input style={inputStyle} type="hidden" name="repid" />
+				<input style={inputStyle} type="hidden" name="depid" />
+				<input style={inputStyle} type="hidden" name="casetags" />
+				<input style={inputStyle} type="hidden" name="opened_from" />
 
 				{attributes.nametext || __('Your Name','fusedesk')}
-				<input type="text" name="openedby" id="fusedesk-contact-name"  class="fusedesk-contactform"/>
+				<input style={inputStyle} type="text" name="openedby" id="fusedesk-contact-name"  class="fusedesk-contactform"/>
 
 				{attributes.emailtext || __('Your Email','fusedesk')}
-				<input type="text" name="email" id="fusedesk-contact-email"  class="fusedesk-contactform"/>
-				<input type="hidden" name="summary" value="Support Request"/>
+				<input style={inputStyle} type="text" name="email" id="fusedesk-contact-email"  class="fusedesk-contactform"/>
+				<input style={inputStyle} type="hidden" name="summary" value="Support Request"/>
 
 
 				{ attributes.showtitle &&
@@ -117,7 +136,7 @@ export default function Edit( props ) {
 						attributes.titleoptions?
 							<SelectControl options={formTitleOptions.get()}  name="summary" id="fusedesk-title" class="fusedesk-contactform" />
 							:
-							<input type="text" name="summary" id="fusedesk-title"  class="fusedesk-contactform"></input>
+							<input style={inputStyle} type="text" name="summary" id="fusedesk-title"  class="fusedesk-contactform"></input>
 					}
 					</>
 				}
@@ -125,13 +144,13 @@ export default function Edit( props ) {
 				{ attributes.fileupload &&
 					<>
 					{ attributes.filetext || __('Attach a file:','fusedesk') }
-					<input type="file" name="file_upload[]" accept="image/*,audio/*,application/pdf" id="fusedesk-fileupload" class="fusedesk-contactform" multiple="" /><br/>
+					<input style={inputStyle} type="file" name="file_upload[]" accept="image/*,audio/*,application/pdf" id="fusedesk-fileupload" class="fusedesk-contactform" multiple="" /><br/>
 					</>
 				}
 
 				<>
 				{__("How can we help you?",'fusedesk')}
-				<textarea name="details" id="fusedesk-message" class="fusedesk-contactform"></textarea>
+				<textarea style={inputStyle} name="details" id="fusedesk-message" class="fusedesk-contactform"></textarea>
 				</>
 
 				<div id="fusedesk-suggestions" style={{display:'none'}} data-limit="10" data-categories="">
