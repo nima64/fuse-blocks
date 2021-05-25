@@ -421,7 +421,7 @@ function CustomInspectorControls(props) {
     /* replaces spaces with dashes */
     renderControlObj(AdvancedGroup.anchor, 'advanced', function (v) {
       return v.slice(-1) == ' ' ? v.slice(0, -1) + '-' : v;
-    }), renderControlObj(AdvancedGroup.style, 'advanced'));
+    }));
   };
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["InspectorControls"], null, getDisplayPlanel(), getTextPanel()), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["InspectorAdvancedControls"], null, getAdvancedPanel()));

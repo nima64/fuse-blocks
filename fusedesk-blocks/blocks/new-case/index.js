@@ -146,7 +146,7 @@ registerBlockType( 'fusedesk/new-case', {
 		},
 		style:{
 			type:'string',
-			default: false,
+			default: 'width: 100%;',
 		},
 
 		repaintMe: {

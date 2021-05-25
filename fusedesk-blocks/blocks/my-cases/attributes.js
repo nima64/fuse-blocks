@@ -69,8 +69,4 @@ export default {
         type: 'string',
         default: '',
     },
-    style: {
-        type: 'string',
-        default: false,
-    },
 }

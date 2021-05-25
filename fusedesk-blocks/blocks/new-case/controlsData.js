@@ -179,7 +179,7 @@ export default {
             type: 'text',
             label: __('Additional CSS styles(s) for the fields','fusedesk'),
             bind: 'style',         
-            help: __('style: What CSS style to apply to our inputs','fusedesk'),
+            help: __('What CSS style to apply to our inputs','fusedesk'),
         }
     }
 }

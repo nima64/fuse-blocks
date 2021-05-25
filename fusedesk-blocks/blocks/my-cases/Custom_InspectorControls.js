@@ -64,7 +64,6 @@ export default function CustomInspectorControls(props ){
                     renderControlObj(AdvancedGroup.anchor ,'advanced',
                         (v) => v.slice(-1) == ' ' ? v.slice(0,-1) + '-' : v ) 
                 }
-				{ renderControlObj(AdvancedGroup.style ,'advanced') }
 			</>
         );
     };

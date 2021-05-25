@@ -216,12 +216,6 @@ export default {
             label: __('HTML anchor','fusedesk'),
             bind: 'anchor',         
             help: __('Enter a word or two — without spaces — to make a unique web address just for this block, called an "anchor."','fusedesk'),
-        },
-        style:{
-            type: 'text',
-            label: __('Additional CSS styles(s) for the fields','fusedesk'),
-            bind: 'style',         
-            help: __('What CSS style to apply to our inputs','fusedesk'),
         }
     }
 };
