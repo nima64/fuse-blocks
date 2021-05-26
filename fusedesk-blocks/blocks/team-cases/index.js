@@ -43,11 +43,11 @@ registerBlockType('fusedesk/team-cases', {
 		...mycases_attributes,
 		errornotsupported:{
 			type: 'string',
-			default: '',
+			default: ""
 		},
 		errornoteam: {
 			type: 'string',
-			default: '',
+			default: ""
 		}
 	 },
 

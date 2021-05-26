@@ -1,0 +1,82 @@
+{
+	"apiVersion": 2,
+	"name": "fusedesk/my-cases",
+	"title": "FuseDesk My Cases",
+	"category": "fusedesk",
+	"description": "Show your logged in users a list of their FuseDesk cases.",
+	"supports": {
+		"html": false
+	},
+    "attributes": {
+        "columns": {
+            "type": "array",
+            "default": []
+        },
+        "status": {
+            "type": "string",
+            "default": "all"
+        },
+        "userstatuses": {
+            "type": "array",
+            "default": []
+        },
+        "orderby": {
+            "type": "array",
+            "default": []
+        },
+        "dateformat": {
+            "type": "string",
+            "default": "M j, Y g:ia"
+        },
+        "limit": {
+            "type": "integer",
+            "default": 50
+        },
+
+        "casenum_name": {
+            "type": "string",
+            "default": ""
+        },
+        "status_name": {
+            "type": "string",
+            "default": ""
+        },
+        "date_updated_name": {
+            "type": "string",
+            "default": ""
+        },
+        "date_opened_name": {
+            "type": "string",
+            "default": ""
+        },
+        "date_closed_name": {
+            "type": "string",
+            "default": ""
+        },
+        "summary_name": {
+            "type": "string",
+            "default": ""
+        },
+        "details_name": {
+            "type": "string",
+            "default": ""
+        },
+        "errornotloggedin": {
+            "type": "string",
+            "default": ""
+        },
+        "errornocases": {
+            "type": "string",
+            "default": ""
+        },
+
+        "anchor": {
+            "type": "string",
+            "default": ""
+        }
+    },
+	"textdomain": "fusedesk",
+	"editorScript": "file:../../src/my-cases.js",
+	"editorStyle": "file:../../src/my-cases.css",
+	"style": "file:../../src/style-my-cases.css"
+}

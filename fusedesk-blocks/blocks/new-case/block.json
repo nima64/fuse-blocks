@@ -1,0 +1,124 @@
+{
+	"apiVersion": 2,
+	"name": "fusedesk/new-case",
+	"title": "FuseDesk New Case",
+	"category": "fusedesk",
+	"description": "Allow your website visitors to create a new case in FuseDesk",
+	"supports": {
+		"html": false
+	},
+    "attributes": {
+        "department": {
+            "type": "string",
+            "default": false
+        },
+        "rep": {
+            "type": "string",
+            "default": false
+        },
+        "casetagids": {
+            "type": "array",
+            "default": []
+        },
+
+        "hideknowndata": {
+            "type": "boolean",
+            "default": false
+        },
+        "sucessredirect": {
+            "type": "string",
+            "default": ""
+        },
+
+        "showtitle": {
+            "type": "boolean",
+            "default": false
+        },
+        "titletext": {
+            "type": "string",
+            "default": ""
+        },
+        "titleoptions": {
+            "type": "string",
+            "default": ""
+        },
+
+        "nametext": {
+            "type": "string",
+            "default": ""
+        },
+        "emailtext": {
+            "type": "string",
+            "default": ""
+        },
+        "buttontext": {
+            "type": "string",
+            "default": ""
+        },
+        "creatingtext": {
+            "type": "string",
+            "default": ""
+        },
+        "successtext": {
+            "type": "string",
+            "default": ""
+        },
+
+        "suggestionplacement": {
+            "type": "string",
+            "default": "after"
+        },
+        "suggestionstext": {
+            "type": "string",
+            "default": ""
+        },
+        "suggestionlimit": {
+            "type": "int",
+            "default": 10
+        },
+        "suggestioncategories": {
+            "type": "array",
+            "default": []
+        },
+
+        "fileupload": {
+            "type": "boolean",
+            "default": false
+        },
+        "filerequired": {
+            "type": "boolean",
+            "default": false
+        },
+        "filesmultiple": {
+            "type": "boolean",
+            "default": false
+        },
+        "filetext": {
+            "type": "string",
+            "default": ""
+        },
+        "filetypesallowed": {
+            "type": "string",
+            "default": ""
+        },
+
+        "anchor": {
+            "type": "string",
+            "default": ""
+        },
+        "style": {
+            "type": "string",
+            "default": "width: 100%;"
+        },
+
+        "repaintMe": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+	"textdomain": "fusedesk",
+	"editorScript": "file:../../src/new-case.js",
+	"editorStyle": "file:../../src/new-case.css",
+	"style": "file:../../src/style-new-case.css"
+}
+

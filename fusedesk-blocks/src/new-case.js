@@ -579,7 +579,7 @@ __webpack_require__.r(__webpack_exports__);
       type: 'text',
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Additional CSS styles(s) for the fields', 'fusedesk'),
       bind: 'style',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('style: What CSS style to apply to our inputs', 'fusedesk')
+      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('What CSS style to apply to our inputs', 'fusedesk')
     }
   }
 });
@@ -1117,7 +1117,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('fus
     },
     sucessredirect: {
       type: 'string',
-      default: ''
+      default: ""
     },
     //caseTitle
     showtitle: {
@@ -1126,32 +1126,32 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('fus
     },
     titletext: {
       type: 'string',
-      default: ''
+      default: ""
     },
     titleoptions: {
       type: 'string',
-      default: ''
+      default: ""
     },
     //formText
     nametext: {
       type: 'string',
-      default: ''
+      default: ""
     },
     emailtext: {
       type: 'string',
-      default: ''
+      default: ""
     },
     buttontext: {
       type: 'string',
-      default: ''
+      default: ""
     },
     creatingtext: {
       type: 'string',
-      default: ''
+      default: ""
     },
     successtext: {
       type: 'string',
-      default: ''
+      default: ""
     },
     //suggestedPosts
     suggestionplacement: {
@@ -1160,7 +1160,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('fus
     },
     suggestionstext: {
       type: 'string',
-      default: ''
+      default: ""
     },
     suggestionlimit: {
       type: 'int',
@@ -1185,20 +1185,20 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_2__["registerBlockType"])('fus
     },
     filetext: {
       type: 'string',
-      default: ''
+      default: ""
     },
     filetypesallowed: {
       type: 'string',
-      default: ''
+      default: ""
     },
     //advanced
     anchor: {
       type: 'string',
-      default: ''
+      default: ""
     },
     style: {
       type: 'string',
-      default: false
+      default: 'width: 100%;'
     },
     repaintMe: {
       type: 'boolean',

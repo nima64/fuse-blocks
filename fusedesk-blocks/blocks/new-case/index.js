@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-import {__} from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { Icon } from '@wordpress/icons';
 import fusedesk_ico from '../../fusedesk_ico';
@@ -28,124 +28,124 @@ import save from './save';
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( 'fusedesk/new-case', {
+registerBlockType('fusedesk/new-case', {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
 	apiVersion: 2,
-	icon: <Icon icon={ fusedesk_ico } />,
+	icon: <Icon icon={fusedesk_ico} />,
 	title: __('FuseDesk New Case', 'fusedesk'),
 	category: 'fusedesk',
-	description: __('Allow your website visitors to create a new case in FuseDesk','fusedesk'),
+	description: __('Allow your website visitors to create a new case in FuseDesk', 'fusedesk'),
 	attributes: {
 
 		//caseCreation
-		department:{
+		department: {
 			type: 'string',
 			default: false,
 		},
-		rep:{
+		rep: {
 			type: 'string',
 			default: false,
 		},
-		casetagids:{
-			type:'array',
-			default:[],
+		casetagids: {
+			type: 'array',
+			default: [],
 		},
 
 		//newCaseForm
-		hideknowndata:{
+		hideknowndata: {
 			type: 'boolean',
 			default: false,
 		},
-		sucessredirect:{
+		sucessredirect: {
 			type: 'string',
-			default: '',
+			default: ""
 		},
 
 		//caseTitle
-		showtitle:{
+		showtitle: {
 			type: 'boolean',
 			default: false,
 		},
-		titletext:{
+		titletext: {
 			type: 'string',
-			default: '',
+			default: ""
 		},
-		titleoptions:{
+		titleoptions: {
 			type: 'string',
-			default: '',
+			default: ""
 		},
 
 		//formText
-		nametext:{
+		nametext: {
 			type: 'string',
-			default: '',
+			default: ""
 		},
-		emailtext:{
+		emailtext: {
 			type: 'string',
-			default: '',
+			default: ""
 		},
-		buttontext:{
+		buttontext: {
 			type: 'string',
-			default: '',
+			default: ""
 		},
-		creatingtext:{
+		creatingtext: {
 			type: 'string',
-			default: '',
+			default: ""
 		},
-		successtext:{
+		successtext: {
 			type: 'string',
-			default: '',
+			default: ""
 		},
 
 		//suggestedPosts
-		suggestionplacement:{
+		suggestionplacement: {
 			type: 'string',
 			default: 'after',
 		},
-		suggestionstext:{
+		suggestionstext: {
 			type: 'string',
-			default: '',
+			default: ""
 		},
-		suggestionlimit:{
+		suggestionlimit: {
 			type: 'int',
 			default: 10,
 		},
-		suggestioncategories:{
+		suggestioncategories: {
 			type: 'array',
 			default: [],
 		},
 
 		//fileUploads
-		fileupload:{
+		fileupload: {
 			type: 'boolean',
 			default: false,
 		},
-		filerequired:{
+		filerequired: {
 			type: 'boolean',
 			default: false,
 		},
-		filesmultiple:{
+		filesmultiple: {
 			type: 'boolean',
 			default: false,
 		},
-		filetext:{
+		filetext: {
 			type: 'string',
-			default: '',
+			default: ""
 		},
-		filetypesallowed:{
+		filetypesallowed: {
 			type: 'string',
-			default: '',
+			default: ""
 		},
 
 		//advanced
-		anchor:{
-			type:'string',
-			default: '',
+		anchor: {
+			type: 'string',
+			default: ""
 		},
-		style:{
-			type:'string',
+		style: {
+			type: 'string',
 			default: 'width: 100%;',
 		},
 
@@ -164,4 +164,4 @@ registerBlockType( 'fusedesk/new-case', {
 	 * @see ./save.js
 	 */
 	save,
-} );
+});

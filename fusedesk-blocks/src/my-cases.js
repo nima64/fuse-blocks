@@ -329,12 +329,6 @@ var _suggestionmap, _suggestionmap2, _suggestionmap3;
       label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('HTML anchor', 'fusedesk'),
       bind: 'anchor',
       help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Enter a word or two — without spaces — to make a unique web address just for this block, called an "anchor."', 'fusedesk')
-    },
-    style: {
-      type: 'text',
-      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Additional CSS styles(s) for the fields', 'fusedesk'),
-      bind: 'style',
-      help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('What CSS style to apply to our inputs', 'fusedesk')
     }
   }
 });
@@ -683,10 +677,6 @@ __webpack_require__.r(__webpack_exports__);
   anchor: {
     type: 'string',
     default: ''
-  },
-  style: {
-    type: 'string',
-    default: false
   }
 });
 
@@ -815,6 +805,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 /**
  * Internal dependencies
  */
+
 
 
 

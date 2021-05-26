@@ -1,124 +1,100 @@
 <?php
 
-/**
- * Registers a Gutenberg block and generates handle in the form blockname_handle
- * Behind the scenes, it also registers all assets so they can be enqueued
- * through the block editor in the corresponding context.
- *
- * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/writing-your-first-block-type/
- */
-class fusedesk_Block {
-    public $name;
-    public $meta = [];
-    public $editor_script_handle;
-    public $editor_style_handle;
-    public $script_handle;
-    public $style_handle;
-
-    function __construct(string $name){
-        $this->name = $name;
-        $this->editor_script_handle = $name.'-editor-script';
-        $this->script_handle = $name.'-script';
-        $this->editor_style_handle = $name.'-editor-style';
-        $this->style_handle = $name.'-style';
-    }
-
-    function register($additionArgs=[]){
-        $NAMESPACE = 'fusedesk';
-        $name = $this->name;
-        $editorStyleHandle = $this->editor_style_handle; 
-        $editorScriptHandle = $this->editor_script_handle; 
-        $asset_file = include( plugin_dir_path(__FILE__).'src/'.$name.'.asset.php');
-
-        wp_enqueue_style(
-            $editorStyleHandle,
-            plugins_url('src/'. $name . '.css',__FILE__),
-        );
-
-        wp_register_script(
-            $editorScriptHandle,
-            plugins_url('src/'.$name.'.js',__FILE__),
-            $asset_file['dependencies'],
-            $asset_file['version']
-        );
-
-        //localization / Internationalization
-        wp_set_script_translations($editorScriptHandle,'fusedesk',plugin_dir_path(__FILE__) . 'languages');
-
-        $meta = $this->meta;
-        $meta['api_version'] = 2;
-        $meta['editor_script'] = $editorScriptHandle;
-        $meta['editor_style'] = $editorStyleHandle;
-        $meta = array_merge($meta,$additionArgs);
-
-        return register_block_type($NAMESPACE.'/'.$name, $meta);
-
-    }
-}
-
-function fusedesk_blocks_category( $categories, $post ) {
-	return array_merge(
-		$categories,
-		array(
-			array(
-				'slug' => 'fusedesk',
-				'title' => __( 'FuseDesk Blocks', 'fusedesk' ),
-			),
-		)
-	);
+function fusedesk_blocks_category($categories, $post)
+{
+    return array_merge(
+        $categories,
+        array(
+            array(
+                'slug' => 'fusedesk',
+                'title' => __('FuseDesk Blocks', 'fusedesk'),
+            ),
+        )
+    );
 }
 
 //convert objects to strings for multiselect data
-function fusedesk_blocks_convert_obj_array_to_str($att){
-    if ( is_array($att) ){
+function fusedesk_blocks_convert_obj_array_to_str($att)
+{
+    if (is_array($att)) {
         $strJoin = '';
-        foreach($att as $obj){
-            $strJoin = $strJoin . $obj['id'].',';
+        foreach ($att as $obj) {
+            $strJoin = $strJoin . $obj['id'] . ',';
         }
         return $strJoin;
-    }else{
+    } else {
         return $att;
     }
 }
 
-function fusedesk_blocks_render_newcase($atts,$content=null){
-    $newatts = array_map('fusedesk_blocks_convert_obj_array_to_str', $atts);
-    return fusedesk_newcase($newatts, $content);
+
+//remove empty strings and empty arrays
+function fusedesk_blocks_filter_empty($att)
+{
+    if ( empty($att) || is_array($att) && count($att) > 0 ) {
+        return false;
+    }
+
+    return true;
+
 }
 
-function fusedesk_blocks_render_mycases($atts,$content){
+//convert objects to strings for multiselect data
+function fusedesk_blocks_render_newcase($atts, $content = null)
+{
     $newatts = array_map('fusedesk_blocks_convert_obj_array_to_str', $atts);
-    return fusedesk_mycases($newatts);
+    $filtered = array_filter($newatts,'fusedesk_blocks_filter_empty');
+    return fusedesk_newcase($filtered, $content);
 }
 
-function fusedesk_blocks_render_teamcases($atts,$content){
+function fusedesk_blocks_render_mycases($atts, $content)
+{
     $newatts = array_map('fusedesk_blocks_convert_obj_array_to_str', $atts);
-    return fusedesk_teamcases($newatts);
+    $filtered = array_filter($newatts,'fusedesk_blocks_filter_empty');
+    return fusedesk_mycases($filtered);
 }
 
-function fusedesk_blocks_init() {
+function fusedesk_blocks_render_teamcases($atts, $content)
+{
+    $newatts = array_map('fusedesk_blocks_convert_obj_array_to_str', $atts);
+    $filtered = array_filter($newatts,'fusedesk_blocks_filter_empty');
+    return fusedesk_teamcases($filtered);
+}
 
-    $newCaseBlock = new fusedesk_Block('new-case');
-    $myCasesBlock = new fusedesk_Block('my-cases');
-    $teamCasesBlock = new fusedesk_Block('team-cases');
+function fusedesk_blocks_register_block($block_name, $args = array())
+{
+    $BLOCKS_DIR = __DIR__ . '/blocks';
+    $block_editor_script_handle =  fusedesk_blocks_getHandle($block_name, 'editorScript');
+    wp_set_script_translations($block_editor_script_handle, 'fusedesk', plugin_dir_path(__FILE__) . 'languages');
+    register_block_type_from_metadata($BLOCKS_DIR . '/' . $block_name, $args);
+}
 
-    $newCaseBlock->register([
+function fusedesk_blocks_getHandle($block_name, $field_name)
+{
+    $namespace = 'fusedesk/';
+    return generate_block_asset_handle($namespace . $block_name, $field_name);
+}
+
+function fusedesk_blocks_init()
+{
+    fusedesk_blocks_register_block('new-case', [
         'render_callback' => 'fusedesk_blocks_render_newcase'
     ]);
 
-    $myCasesBlock->register([
+    fusedesk_blocks_register_block('my-cases', [
         'render_callback' => 'fusedesk_blocks_render_mycases'
     ]);
 
-    $teamCasesBlock->register([
-        'render_callback' => 'fusedesk_blocks_render_teamcases'
+    fusedesk_blocks_register_block('team-cases', [
+        'render_callback' => 'fusedesk_blocks_render_mycases'
     ]);
 
-    wp_localize_script($newCaseBlock->editor_script_handle, 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
+    $newcase_editor_script_handle =  fusedesk_blocks_getHandle('new-case', 'editorScript');
+
+    wp_localize_script($newcase_editor_script_handle, 'WPURLS', array('siteurl' => get_option('siteurl')));
 
     //adds fusedesk to categories
-    add_filter( 'block_categories', 'fusedesk_blocks_category', 10, 2);
+    add_filter('block_categories', 'fusedesk_blocks_category', 10, 2);
 }
 
-//NOTE admin_init will disable render_callback! 
-add_action( 'init', 'fusedesk_blocks_init' );
+add_action('init', 'fusedesk_blocks_init');

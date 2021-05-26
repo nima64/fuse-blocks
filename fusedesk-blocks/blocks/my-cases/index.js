@@ -23,6 +23,7 @@ import './styles/style.scss';
  */
 import Edit from './edit';
 import save from './save';
+import attributes from './attributes';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -38,7 +39,7 @@ registerBlockType('fusedesk/my-cases', {
 	category: 'fusedesk',
 	title: __('FuseDesk My Cases', 'fusedesk'),
 	description: __('Show your logged in users a list of their FuseDesk cases.', 'fusedesk'),
-	attributes: { ...mycases_attributes },
+	attributes: {...attributes},
 
 	/**
 	 * @see ./edit.js
