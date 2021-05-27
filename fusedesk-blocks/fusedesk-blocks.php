@@ -31,7 +31,7 @@ function fusedesk_blocks_convert_obj_array_to_str($att)
 //remove empty strings and empty arrays
 function fusedesk_blocks_filter_empty($att)
 {
-    if ( empty($att) || is_array($att) && count($att) > 0 ) {
+    if ( empty($att) || is_array($att) && !count($att) ) {
         return false;
     }
 
