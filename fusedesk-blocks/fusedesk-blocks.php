@@ -63,10 +63,9 @@ function fusedesk_blocks_render_teamcases($atts, $content)
 
 function fusedesk_blocks_register_block($block_name, $args = array())
 {
-    $BLOCKS_DIR = __DIR__ . '/build/blocks';
+    $BLOCKS_DIR = __DIR__ . '/build/src';
     $block_editor_script_handle =  fusedesk_blocks_getHandle($block_name, 'editorScript');
     wp_set_script_translations($block_editor_script_handle, 'fusedesk', plugin_dir_path(__FILE__) . 'languages');
-    //register_block_type_from_metadata($BLOCKS_DIR . '/' . $block_name, $args);
     return register_block_type_from_metadata($BLOCKS_DIR . '/' . $block_name, $args);
 }
 
