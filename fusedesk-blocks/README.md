@@ -10,6 +10,8 @@ Their representation/model is saved in controlsData.
 So to create a control, you must create an attribute and it's model.   
 The model must bind the attribute.   
 
+## About The Build System ##
+At the core the blocks are registered with [register_block_type_from_meta_data](https://developer.wordpress.org/reference/functions/register_block_type_from_metadata/), it only requires the directory where the block.json is located. Since it always looks for the file name block.json we have to seperate the block.jsons by folders hence why we have to keep the folder structure in the build.  
 
 ## Building Blocks ##
 To build a block

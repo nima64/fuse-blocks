@@ -13,7 +13,7 @@ function fusedesk_blocks_category($categories, $post)
     );
 }
 
-//convert objects to strings for multiselect data
+//converts object array to strings for multiselect data
 function fusedesk_blocks_convert_obj_array_to_str($att)
 {
     if (is_array($att)) {
@@ -63,10 +63,11 @@ function fusedesk_blocks_render_teamcases($atts, $content)
 
 function fusedesk_blocks_register_block($block_name, $args = array())
 {
-    $BLOCKS_DIR = __DIR__ . '/blocks';
+    $BLOCKS_DIR = __DIR__ . '/build/blocks';
     $block_editor_script_handle =  fusedesk_blocks_getHandle($block_name, 'editorScript');
     wp_set_script_translations($block_editor_script_handle, 'fusedesk', plugin_dir_path(__FILE__) . 'languages');
-    register_block_type_from_metadata($BLOCKS_DIR . '/' . $block_name, $args);
+    //register_block_type_from_metadata($BLOCKS_DIR . '/' . $block_name, $args);
+    return register_block_type_from_metadata($BLOCKS_DIR . '/' . $block_name, $args);
 }
 
 function fusedesk_blocks_getHandle($block_name, $field_name)

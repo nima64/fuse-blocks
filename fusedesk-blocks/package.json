@@ -6,10 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:js": "npx wp-scripts lint-js",
-    "buildall": "npx wp-scripts build $(for d in $(ls ./blocks/);do echo './blocks/'$d ; done) --output-path=./src",
-    "startall": "npx wp-scripts start $(for d in $(ls ./blocks);do echo './blocks/'$d ; done) --output-path=./src",
-    "buildblock": "npx wp-scripts build ./blocks/$npm_config_block --output-path=./src",
-    "startblock": "npx wp-scripts start ./blocks/$npm_config_block --output-path=./src"
+    "copyFolderStructure": "rsync -av -f'+ */' -f'- *' ./blocks ./build",
+    "copyBlockJson": "echo $(for d in $(ls ./blocks);do cp './blocks/'$d/block.json './build/blocks/'$d/block.json; done)", 
+    "xbuildall": "npx wp-scripts build $(for d in $(ls ./blocks/);do echo './blocks/'$d ; done) --output-path=./build/code",
+    "xstartall": "npx wp-scripts start $(for d in $(ls ./blocks);do echo './blocks/'$d ; done) --output-path=./build/code",
+    "startall": "npm run copyFolderStructure && npm run copyBlockJson && npm run xstartall",
+    "buildall": "npm run copyFolderStructure && npm run copyBlockJson && npm run xbuildall",
+    "buildblock": "npx wp-scripts build ./blocks/$npm_config_block --output-path=./build/code",
+    "startblock": "npx wp-scripts start ./blocks/$npm_config_block --output-path=./build/code"
   },
   "keywords": [],
   "author": "",
